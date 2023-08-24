@@ -1,0 +1,41 @@
+/*  DOMOPNORD  - Email report of Domestic Open Orders                       */
+/*                                                                          */
+/* Called via JSE: DOMOPNORD                                                */
+/*                                                                          */
+/*  DATE        PROGRAMMER  SCAN    DESCRIPTION                             */
+/*  --------    ----------  -----   --------------------------------------- */
+/*  2023-02-02  Keck                Created                                 */
+/*--------------------------------------------------------------------------*/
+
+             pgm
+             log        DOMOPNORD
+             RUNSQLSTM  SRCFILE(NBJSRC/QSQLSRC) SRCMBR(DOMOPNORD) COMMIT(*NONE) OUTPUT(*PRINT) +
+                          DBGVIEW(*STMT)
+
+             /* Change data area to enable column headings in the CPYTOIMPF command */
+             CRTDTAARA  DTAARA(QTEMP/QCPTOIMPF) TYPE(*CHAR) LEN(6) VALUE('NO')
+             monmsg     CPF0000
+
+             CPYTOIMPF  FROMFILE(QTEMP/DOMOPNORD) TOSTMF('/Finance/Wholesale/Domestic Open +
+                          Orders.csv') MBROPT(*REPLACE) STMFCCSID(*PCASCII) RCDDLM(*CRLF) +
+                          ADDCOLNAM(*SQL)
+
+             CHGAUT     OBJ('/Finance/Wholesale/Domestic Open Orders.csv') USER(*PUBLIC) +
+                          DTAAUT(*RWX) OBJAUT(*ALL) SUBTREE(*ALL)
+
+             DLYJOB     DLY(5) /* to head off possbile file lock/timing issues */
+
+             SNDSMTPEMM RCP((USNHSCEDICS@INTERNAL.NESTLE.COM) +
+                          (MELISSA.RITACCO@US.NESTLE.COM) +
+                          (GLENN.CLAY@US.NESTLE.COM) +
+                          (DAVID.KECK@US.NESTLE.COM) +
+                          (JEFF.BERGER@US.NESTLE.COM)) +
+                          SUBJECT('Domestic Open Order Report') +
+                          NOTE('Domestic Open Order Report.  Runs +
+                          from AS400 Scheduled Job: DOMOPNORD.') +
+                          ATTACH(('/Finance/Wholesale/Domestic Open +
+                          Orders.csv' *OCTET *BIN)) SMIME(*NONE)
+
+             log        DOMOPNORD
+
+             endpgm

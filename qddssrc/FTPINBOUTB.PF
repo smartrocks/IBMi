@@ -1,0 +1,25 @@
+     /*-------------------------------------------------------------------*/
+     /*                                                                   */
+     /* SOURCE NAME: FTPINBOUTB                                           */
+     /* DESCRIPTION: CONTROL FILE TO STORE FTP SERVER, IFS INBOUND AND    */
+     /*              OUTBOUND PATH AND IFS FILE DETAILS.                  */
+     /*-------------------------------------------------------------------*/
+     /*  MODIFICATIONS:                                                   */
+     /*  -------------                                                    */
+     /*   DATE      PGMR    PROJECT  DESCRIPTION                          */
+     /* --------  --------- -------  ------------------------------------ */
+     /* 03/24/15   SENTHIL                                                */
+     /*-------------------------------------------------------------------*/
+     A          R FTPINOUTR
+     A            INTERFACE     10          COLHDG('INTERFACE_NAME')
+     A            FTPSRVR       50          COLHDG('FTP_SERVER_IP')
+     A            FTPUSER       10          COLHDG('FTP_USER')
+     A            FTPPWD        10          COLHDG('FTP_PASSWORD')
+     A            SFTP           1          COLHDG('FTP_SECURE')
+     A            IFSFILNAM     25          COLHDG('IFS_FILENAME')
+     A            IFSFILEXT     10          COLHDG('IFS_FILE_EXTENSION')
+     A            IFSINBND      90          COLHDG('IFS_INBOUND_FOLDER')
+     A            IFSOUTBND     90          COLHDG('IFS_OUTBOUND_FOLDER')
+     A            IFSARCHFLR    90          COLHDG('IFS_ARCHIVE_FOLDER')
+     A            RMTDIR        90          COLHDG('FTP_REMOTE_DIRECTORY')
+     A            ARCHDAYS       4          COLHDG('IFS_ARCHIVE_DAYS')

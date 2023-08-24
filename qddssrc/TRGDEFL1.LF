@@ -1,0 +1,6 @@
+     A          R TRGDEFR                   PFILE(TRGDEFPF)
+     A
+     A          K TDFILE
+     A
+     A          K TDFLIB
+     A          S TDSTAT                    COMP(EQ 'P')

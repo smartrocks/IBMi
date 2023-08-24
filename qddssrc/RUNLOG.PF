@@ -1,0 +1,25 @@
+      *--------------------------------------------------------------------
+      * RUNLOG - Log of progam run start and end times
+      *
+      * Purpose: Enable analysis of program run frequency and duration
+      *          over time to identify programs needing optimization.
+      *
+      * Author  Date        Project      Description
+      * Keck    2019-09-16  TASK0213021  Created
+      *--------------------------------------------------------------------
+     A          R RUNLOGR
+     A            ID             9S 0       COLHDG('ID')
+     A            JOBNAME       10A         COLHDG('Job' 'Name')
+     A            JOBUSER       10A         COLHDG('Job' 'User')
+     A            JOBNUMBER      6S 0       COLHDG('Job' 'Number')
+     A            JOBDATE         L         COLHDG('Job' 'Date')
+     A            PROGRAM       10A         COLHDG('Program')
+     A            LIBRARY       10A         COLHDG('Library')
+     A            STARTDATE       L         COLHDG('Start' 'Date')
+     A            STARTTIME       T         COLHDG('Start' 'Time')
+     A            ENDDATE         L         COLHDG('End' 'Date')
+     A            ENDTIME         T         COLHDG('End' 'Time')
+     A            DURSECONDS     7S 0       COLHDG('Duration' 'Seconds')
+     A            PGMTYPE       10          COLHDG('Program' 'Type')
+     A            PGMDESC       50          COLHDG('Description')
+     A          K ID

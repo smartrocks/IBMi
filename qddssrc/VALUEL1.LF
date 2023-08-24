@@ -1,0 +1,17 @@
+      *---------------------------------------------------------------*
+      * Date       Programmer   Scan Desc
+      * 2022-06-16 Keck         dk01 permit multiple row for a single function
+      *                              by adding STRING as a key field
+      *---------------------------------------------------------------*
+dk01 A*                                     UNIQUE
+     A          R VALUER                    PFILE(VALUE)
+      *---------------------------------------------------------------*
+     A            FUNCTION
+     A            STRING
+     A            NUMBER
+     A            USER
+     A            DATE
+     A            TIME
+      *---------------------------------------------------------------*
+     A          K FUNCTION
+dk01 A          K STRING

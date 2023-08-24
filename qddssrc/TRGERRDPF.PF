@@ -1,0 +1,6 @@
+     A          R TRGERRDR
+      *
+     A            IMGDATA     8192          TEXT('Image Data')
+     A                                      COLHDG(' ' +
+     A                                             'Image' +
+     A                                             'Data')

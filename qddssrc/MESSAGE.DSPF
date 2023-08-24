@@ -1,0 +1,17 @@
+     A*%%TS  SD  20150225  140728  SJAYARAJ    REL-V5R4M0  5722-WDS
+     A*%%EC
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      PRINT
+     A*-------------------------------------------------------------------
+     A          R CONFIRM
+     A*%%TS  SD  20150225  140728  SJAYARAJ    REL-V5R4M0  5722-WDS
+     A                                      WINDOW(20 61 2 15 *NOMSGLIN)
+     A                                      KEEP
+     A            TITLE         15A  O  1  1COLOR(WHT)
+     A                                  2  1'Confirm Y/N:'
+     A            CONFIRMYN      1A  B  2 14VALUES('Y' 'N')
+     A                                      CHECK(ER)
+      *-------------------------------------------------------------------
+     A          R ASSUME
+     A                                      ASSUME
+     A            DUMMY          1      4 48

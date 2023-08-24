@@ -1,0 +1,471 @@
+/**************************************************************************/
+/*  HRINVPDF - Interface Invoice PDF's to High Radius                     */
+/*                                                                        */
+/*  This program was cloned from the Invoice Reprint program RPTINVCR2.   */
+/*  If any new wholesale division is added for which there is invoicing   */
+/*  then a new section should be added to this program for that division  */
+/*  to ensure all produced invoices are interfaced to High Radius.        */
+/*  Program EODRSTSTAT has been modified to capture each day's invoicing  */
+/*  to table INVHST.                                                      */
+/*                                                                        */
+/*  INVHST rows with status 'U' (unprocessed) will be                     */
+/*  processed in this program to produce Invoice Reprint PDF's. These are */
+/*  placed in the IFS. SOA/MFT will SFTP the files to High Radius.        */
+/*  SOA/MFT will be used to SFTP the files to High Radius.                */
+/*                                                                        */
+/*  Run with MS4OBJ04 or other MS4 library at top of *libl.               */
+/*  Run as service account user profile SVCHRINV. This user needs a       */
+/*  record in PRODFA/WINSFILE with Email Outq set to 'HRINVOICE'.         */
+/*                                                                        */
+/*  Date       Programmer Scan Description                                */
+/*  2020-12-21 Keck            Created/Cloned from RPTINVCR2              */
+/*  2022-06-13 Keck       dk01 monitor for CPYSPLF CPF3303                */
+/*                             spool file not found                       */
+/**************************************************************************/
+
+PGM  (&DltPrevPDF)
+             dcl &DltPrevPDF *char 1  /* Y = Delete PDF's from previous r*n */
+
+             DCL VAR(&DIV)   TYPE(*CHAR) LEN(2)
+             DCL VAR(&TYP)   TYPE(*CHAR) LEN(1) VALUE('R') /* Reprint */
+             DCL VAR(&ALIGN) TYPE(*CHAR) LEN(1) VALUE('N') /* Align Forms */
+             dcl &overlay   *char 10
+             dcl &spoolfile *char 10
+
+             /* Parameters for program HRINVPDF1 */
+             dcl var(&function) type(*char) len(50)  value(' ')
+             dcl var(&RtnCode)  type(*char) len(30)  value(' ')
+             dcl var(&Division) type(*dec)  len(2 0) value(0)
+             dcl var(&Customer) type(*dec)  len(9 0) value(0)
+             dcl var(&Order)    type(*dec)  len(6 0) value(0)
+             dcl var(&Seq)      type(*dec)  len(2 0) value(0)
+             dcl var(&Invoice)  type(*dec)  len(6 0) value(0)
+             dcl var(&FileName) type(*char) len(256) value(' ')
+             dcl var(&ZipFrom)  type(*char) len(256) value(' ')
+             dcl var(&ZipTo)    type(*char) len(256) value(' ')
+
+             dcl &Count       *dec (5 0)
+             dcl &Date        *char   8
+             dcl &InvoicePrt  *lgl
+             dcl &Max_PDF     *dec (5 0)  value(100)
+             dcl &PrtFilNam   *char  10
+             dcl &QDateTime   *char  20
+             dcl &RtnCod      *char  30
+             dcl &SbmNewJob   *lgl
+             dcl &Time        *char   6
+             dcl &TRUE        *lgl value('1')
+             dcl &TryCount    *dec (3 0)
+
+             CallSubr (init)
+
+/*- - - - - - - - - - - - - - - - - - - - */
+/* Create PDF Invoices for each Division  */
+/*- - - - - - - - - - - - - - - - - - - - */
+             chgvar &Division 1   /* Nature's Bounty */
+             chgvar &spoolfile 'INVOICE'
+             chgvar &overlay 'INVOVL01'
+             callSubr ProcessDiv
+
+             chgvar &Division 2   /* ARCO PHARMACEUTICALS */
+             chgvar &spoolfile 'SOLINTPRTF'
+             chgvar &overlay '*NONE'
+             callSubr ProcessDiv
+
+             chgvar &Division 9   /* Private Label  */
+             chgvar &spoolfile 'INVOICE'
+             chgvar &overlay 'INVOVL'
+             callSubr ProcessDiv
+
+             chgvar &Division 19  /* ARCO PHARMACEUTICALS BULK */
+             chgvar &spoolfile 'SOLDOMPRTF'
+             chgvar &overlay '*NONE'
+             callSubr ProcessDiv
+
+             chgvar &Division 32  /* ACTIVE NUTRITION */
+             chgvar &spoolfile 'INVOICE4'
+             chgvar &overlay 'INVOVLRS'
+             callSubr ProcessDiv
+
+             chgvar &Division 34  /* NPG - NATURAL PRODUCTS GROUP */
+             chgvar &spoolfile 'SOLDOMPRTF'
+             chgvar &overlay '*NONE'
+             callSubr ProcessDiv
+
+             chgvar &Division 35  /* Solgar International*/
+             chgvar &spoolfile 'SOLINTPRTF'
+             chgvar &overlay '*NONE'
+             callSubr ProcessDiv
+
+             chgvar &Division 36  /* US Nutrition Mexico  */
+             chgvar &spoolfile 'SOLINTPRTF'
+             chgvar &overlay '*NONE'
+             callSubr ProcessDiv
+
+             chgvar &Division 38  /* ESTER C */
+             chgvar &spoolfile 'INVOICE'
+             chgvar &overlay 'INVOVL'
+             callSubr ProcessDiv
+
+             chgvar &Division 40  /* Puritan's Pride Export */
+             chgvar &spoolfile 'SOLINTPRTF'
+             chgvar &overlay '*NONE'
+             callSubr ProcessDiv
+
+             callSubr ShutDown
+
+             RETURN
+
+
+
+/***************/
+/* Subroutines */
+/***************/
+
+Subr Init
+             log HRINVPDF   /* log program run duration */
+
+             /* Hold the Invoice output queue so spool files credted by   */
+             /* this program don't print. Release the outq at end of job. */
+             HLDOUTQ WP10
+             monmsg CPF0000
+
+             DLTF       FILE(QTEMP/ORDSTATZ)
+             MONMSG MSGID(CPF2105)
+
+             DLTF       FILE(QTEMP/SLMINVP )
+             MONMSG MSGID(CPF2105)
+
+             DLTF       FILE(QTEMP/RPTINJ  )
+             MONMSG MSGID(CPF2105)
+
+             DLTF       FILE(QTEMP/RPTINJ2 )
+             MONMSG MSGID(CPF2105)
+
+             DLTF       FILE(QTEMP/BTLWK1  )
+             MONMSG MSGID(CPF2105)
+
+             /*******************************/
+             /* Create work files in QTEMP  */
+             /*******************************/
+             CRTDUPOBJ  OBJ(ORDSTATZ) FROMLIB(NBJDTA) OBJTYPE(*FILE) +
+                          TOLIB(QTEMP) DATA(*no) CST(*no) TRG(*no)
+             MONMSG     MSGID(CPF2130) EXEC(CLRPFM +
+                          FILE(QTEMP/ORDSTATZ))
+             CHGPF file(qtemp/ORDSTATZ) ReUseDlt(*YES)  /* reuse deleted recs */
+
+             CRTDUPOBJ  OBJ(SLMINVP) FROMLIB(NBJDTA) OBJTYPE(*FILE) +
+                          TOLIB(QTEMP) DATA(*no) CST(*no) TRG(*no)
+             MONMSG     MSGID(CPF2130) EXEC(CLRPFM +
+                          FILE(QTEMP/SLMINVP))
+
+             CRTDUPOBJ  OBJ(RPTINJ) FROMLIB(NBJDTA) OBJTYPE(*FILE) +
+                          TOLIB(QTEMP) DATA(*no) CST(*no) TRG(*no)
+             MONMSG     MSGID(CPF2130) EXEC(CLRPFM +
+                          FILE(QTEMP/RPTINJ))
+
+             CRTDUPOBJ  OBJ(RPTINJ2) FROMLIB(NBJDTA) OBJTYPE(*FILE) +
+                          TOLIB(QTEMP) DATA(*no) CST(*no) TRG(*no)
+             MONMSG     MSGID(CPF2130) EXEC(CLRPFM +
+                          FILE(QTEMP/RPTINJ2))
+
+             CRTDUPOBJ  OBJ(BTLWK1) FROMLIB(NBJDTA) OBJTYPE(*FILE) +
+                          TOLIB(QTEMP)
+             MONMSG     MSGID(CPF2130) EXEC(CLRPFM +
+                          FILE(QTEMP/BTLWK1))
+
+             OVRDBF     FILE(ORDSTATZ) TOFILE(QTEMP/ORDSTATZ)
+             OVRDBF     FILE(ORDSTAT)  TOFILE(QTEMP/ORDSTATZ)
+             OVRDBF     FILE(SLMINVP)  TOFILE(QTEMP/SLMINVP)
+             OVRDBF     FILE(ORDISTA)  TOFILE(QTEMP/ORDSTATZ)
+             OVRDBF     FILE(TMPINJ)   TOFILE(QTEMP/RPTINJ)
+             OVRDBF     FILE(TMPINJV)  TOFILE(QTEMP/RPTINJ2)
+             OVRDBF     FILE(BTLWK1)   TOFILE(QTEMP/BTLWK1)
+             OVRDBF     FILE(ITMMSTV0) TOFILE(PRODFA/ITMMSTV0)
+             OVRDBF     FILE(SUFFMSTP) TOFILE(PRODFA/SUFFMSTP)
+
+             MOVLIB PRODPA  *LAST
+             MOVLIB EDFILES *LAST
+
+             chgvar &TYP 'R' /* Report) */
+                    /* Type (P=Plain Paper, F=Invoice Form, E=EDI, R=Report) */
+
+             chgvar &ALIGN 'N' /* Align Forms - No */
+
+             if (&DltPrevPDF *eq 'Y') then(do)
+                /* delete invoice PDF's created during the previous run */
+                DEL OBJLNK('/highradius/Interfaces/Out/InvoicePDF/Work/*.*')
+                monmsg (CPFA093)   /* Name matching pattern not found. */
+             enddo
+EndSubr
+
+
+
+Subr ProcessDiv /* creates all PDF invoices for a division */
+
+    chgvar &RtnCode    ' '
+    chgvar &InvoicePrt '0'
+
+    DoUntil cond(&RtnCode *eq 'EOF')   /* main DO loop */
+       CallSubr Setup    /* Load work files, Get next invoice */
+          if cond(&RtnCode *eq 'EOF') then(LEAVE)
+          if cond(&RtnCode *eq 'INVOICE_NOT_FOUND') then(ITERATE)
+
+       CallSubr PrintInv   /* print the invoice                     */
+       CallSubr CreatePDF  /* convert spool file to PDF in the IFS  */
+
+       chgvar &Function 'SET_INVHST_RECORD_STATUS_TO_PROCESSED'
+       call HRINVPDF1 (&Function &RtnCode &Division &Customer +
+                       &Order &Seq &Invoice)
+
+       chgvar &InvoicePrt '1'  /* at least one invoice printed for the division */
+       CallSubr Limit          /* limit number PDF files in a zip file*/
+    EndDo
+
+    if (&InvoicePrt) then(do)
+       chgvar &SbmNewJob '1'  /* EOF for Division and an invoice was printed     */
+       callSubr Limit         /* this will submit a new job for the new division */
+    enddo
+    else do
+       /* no invoices for this division. Return to try next division */
+    enddo
+
+EndSubr
+
+
+
+Subr Limit
+
+    /* since the invoice print jobs can produce approx 11 spool file each                 */
+    /* and since the system is configured for a maximun of 9999 spool file per job        */
+    /* we limit this job to MAX_PDF invoices,                                             */
+    /* after which we end this job and start another.                                     */
+    /* Also submit a new job if the SbmNewJob indicator is true.                          */
+
+    chgvar &Count (&Count + 1)
+
+    if ( (&Count *ge &MAX_PDF)  *OR  &SbmNewJob) then(do)
+
+       /* Create a ZIP file containing all the PDF Invoices for this run */
+       callSubr CrtZipFile
+
+       SBMJOB     CMD(CALL PGM(HRINVPDF) PARM('Y')) +
+                    JOB(HRINVPDF) JOBQ(HIGHRADIUS) +
+                    USER(SVCHRINV) SYSLIBL(*SYSVAL) +
+                    CURLIB(*CRTDFT) INLLIBL(*JOBD) LOG(4 0 +
+                    *SECLVL) LOGCLPGM(*YES)
+
+       callSubr ShutDown
+    enddo
+
+EndSubr
+
+
+
+Subr PrintInv /* Print Invoice */
+
+    Select
+       when (&division *eq  1  *or +
+             &division *eq  9  *or +
+             &division *eq 19  *or +
+             &division *eq 32  *or +
+             &division *eq 38) then(do)
+                /* Note: the file override for div 19 printer file SOLDOMPRTF is coded  */
+                /* in the invoice print program INV2HJ.                                 */
+                CALL PGM(INV2HJ) PARM(&div '      ' '  ' 'R' &ALIGN 'N' ' ' ' ' &TYP)
+             enddo
+
+       when (&division *eq  2 *or +
+             &division *eq 36 *or +
+             &division *eq 35 *or +
+             &division *eq 40) +
+             then(CALL PGM(INV2AR) PARM(&div '      ' '  ' 'R' &ALIGN &TYP))
+             /* Note: the file override for these divisions is coded  */
+             /* in the invoice print program INV2AR.                  */
+
+       when (&division *eq 34) then(do)
+                /* WRITE TO SOLGAR INVOICE WORK FILE  - reads through work file RPTINJ */
+                /* for division 34 and writes to work file RPTINJ2.                    */
+                CALL       PGM(INV3BC1) PARM(&div 'R')
+
+                CALL       PGM(INV3BC2) PARM(&div '      ' '  ' 'R' +
+                                              &ALIGN 'N' ' ' ' ' &TYP)
+             /* Note: the file override for this division (file SOLDOMPRTF) is coded  */
+             /* in the invoice print program INV3BC2.                                 */
+             enddo
+    EndSelect
+
+EndSubr
+
+
+
+Subr Setup    /* Setup to print an invoice. Get Invoice to print. */
+
+             /* File lock prevents clearing QTEMP/ORDSTATZ so delete rows.*/
+             /* The file is set to re-use deleted rows.                   */
+             runsql SQL('delete from qtemp/ORDSTATZ') Commit(*none) Naming(*sys)
+             clrpfm QTEMP/SLMINVP
+             clrpfm QTEMP/RPTINJ
+             clrpfm QTEMP/RPTINJ2
+             clrpfm QTEMP/BTLWK1
+
+             /* load work file QTEMP/ORDSTATZ with an unprocessed invoice */
+             /* header from INVHST for the current division.              */
+             /* The call returns the key values and the pdf file name.    */
+             chgvar &Function 'LOAD_NEXT_INVOICE_TO_ORDSTATZ_FOR_DIVISION'
+             call HRINVPDF1 (&Function &RtnCode &Division &Customer +
+                            &Order &Seq &Invoice &FileName)
+             /*Note: &RtnCode values (EOF, INVOICE_NOT_FOUND, blank) */
+
+
+             /* Load invoice detail work file QTEMP/RPTINJ */
+             CALL       PGM(INV1JR)
+
+             chgvar &div &division  /* convert divsion from dec to char */
+
+             OVRPRTF    FILE(INVOICE) TOFILE(NBINV) DEVTYPE(*AFPDS) +
+                           CPI(10) FONT(*CPI) FRONTOVL(&Overlay) +
+                           OUTQ(HRINVOICE) OVRSCOPE(*JOB)
+
+             OVRPRTF    FILE(INVOICE4) TOFILE(NBINV) DEVTYPE(*AFPDS) +
+                           CPI(10) FONT(*CPI) FRONTOVL(&Overlay) +
+                           OUTQ(HRINVOICE) OVRSCOPE(*JOB) /* for div 32 */
+
+             OVRPRTF    FILE(INVOICEA) TOFILE(RXINV) OUTQ(HRINVOICE)
+             OVRPRTF    FILE(INVOICER) TOFILE(RXINV) OUTQ(HRINVOICE)
+EndSubr
+
+
+
+Subr CreatePDF
+
+    /*** CREATE PDF INVOICE FROM SPOOL FILE ***/
+    /* Unfortunately, division 9 invoices can have one of two different file names,   */
+    /* one for Private Label and one for Rexall. This program can't easily tell which.*/
+    /* It's possible invoices for other divisions will also produce invoices with     */
+    /* unpredicatble names (due to embeded overrides and conditional logic). So the   */
+    /* approach here is to try to create a PDF based on all spool file names which    */
+    /* are used to produce invoice spool files, so we are assured of finding the      */
+    /* one which does have the data for the current invoice.                          */
+
+    if (&Division *eq 19 *OR +
+        &Division *eq 34) then(do)
+       /* Solgar Domestic Printer File: SOLDOMPRTF */
+       chgvar &PrtFilNam 'SOLDOMPRTF'
+       CallSubr CreatePDF2
+       RtnSubr /* no need to check for other printer files */
+    Enddo
+
+    if (&Division *eq 2  *OR +
+        &Division *eq 35 *OR +
+        &Division *eq 36 *OR +
+        &Division *eq 40) then(do)
+       /* Solgar International Printer File: SOLINTPRTF */
+       chgvar &PrtFilNam 'SOLINTPRTF'
+       CallSubr CreatePDF2
+       RtnSubr /* no need to check for other printer files */
+    enddo
+
+    INVOICE:
+       chgvar &PrtFilNam 'INVOICE'
+       CallSubr CreatePDF2
+       if (&RtnCod *eq 'RETURN FROM SUBROUTINE') then(do)
+          RtnSubr
+       enddo
+
+    INVOICE4:
+       chgvar &PrtFilNam 'INVOICE4'
+       CallSubr CreatePDF2
+       if (&RtnCod *eq 'RETURN FROM SUBROUTINE') then(do)
+          RtnSubr
+       enddo
+
+    SOLDOMPRTF:
+       chgvar &PrtFilNam 'SOLDOMPRTF'
+       CallSubr CreatePDF2
+
+EndSubr /* Subr CreatePDF */
+
+
+
+Subr CreatePDF2
+    /* Copy the only spool file and delete, so the next spool file is also the only.  */
+    chgvar &TryCount 0  /* Some errors resolve with delay and retry */
+
+    DOWHILE &True
+       CPYSPLF FILE(&PrtFilNam) TOFILE(*TOSTMF) SPLNBR(*ONLY) +
+               TOSTMF(&FileName) WSCST(*PDF)
+             MONMSG     MSGID(CPF3309 CPF3303) EXEC(DO) /* spool +
+                          file does not exist - dk01 */
+          chgvar &RtnCod 'TRY NEXT INVOICE FILE NAME'
+          RtnSubr
+       enddo
+
+       monmsg (CPFCE06) exec(do)      /* Error occurred while transforming print data */
+          chgvar &TryCount (&TryCount + 1)
+          if (&TryCount *ge 3) then(do)  /* try again and let it fail */
+             CPYSPLF FILE(&PrtFilNam) TOFILE(*TOSTMF) SPLNBR(*ONLY) +
+                     TOSTMF(&FileName) WSCST(*PDF)
+              LEAVE
+          enddo
+
+          else do
+             dlyjob 30  /* delay 30 seconds and try again */
+             ITERATE
+          enddo
+       enddo
+
+       LEAVE
+    enddo
+
+    DLTSPLF FILE(&PrtFilNam) SPLNBR(*ONLY)
+    monmsg CPF0000
+
+    chgvar &RtnCod 'RETURN FROM SUBROUTINE'
+    RtnSubr
+
+EndSubr
+
+
+
+Subr CrtZipFile
+
+    chgvar &ZipFrom '/HighRadius/Interfaces/Out/InvoicePDF/Work'
+
+    chgvar &ZipTo '/HighRadius/Interfaces/Out/InvoicePDF'
+
+    RTVSYSVAL  SYSVAL(QDATETIME) RTNVAR(&QDATETIME)
+    chgvar &Date   %sst(&qdateTime  1 8)
+    chgvar &Time   %sst(&qdateTime  9 6)
+
+    chgvar &FileName (&Date *TCAT '-' *TCAT &Time *TCAT '_INVOICES' *TCAT '.zip')
+    chgvar &ZipTo (&ZipTo *TCAT '/' *TCAT &FileName)
+
+    /* CPYTOARCF FROMFILE(&WORKPATH) TOARCF(&QualFile) */   /* create the Zip file */
+
+    chgvar &Function 'CREATE_ZIP_FILE'
+    call HRINVPDF1 (&Function &RtnCode &Division &Customer +
+                    &Order &Seq &Invoice &FileName &ZipFrom &ZipTo)
+
+EndSubr
+
+
+
+Subr ShutDown
+
+   /* Close down the helper program */
+   chgvar &Function 'SHUTDOWN'
+   call HRINVPDF1 (&Function &RtnCode)
+
+   CLROUTQ HRINVOICE
+   monmsg cpf0000
+
+   RLSOUTQ WP10
+   monmsg cpf0000
+
+   log HRINVPDF   /* log program run duration */
+
+   RETURN  /* exit program */
+
+EndSubr
+
+ENDPGM

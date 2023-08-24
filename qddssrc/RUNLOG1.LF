@@ -1,0 +1,14 @@
+      *---------------------------------------------------
+      * RUNLOG1
+      *
+      * Date       Programmer  Project Scan Desc
+      * ---------- ----------  ------- ---- --------------
+      * 2019-11-07 Keck                     Created
+      *---------------------------------------------------
+     A                                      UNIQUE
+     A          R RUNLOGR                   PFILE(RUNLOG)
+     A          K JOBNAME
+     A          K JOBUSER
+     A          K JOBNUMBER
+     A          K PROGRAM
+     A          S ENDDATE                   CMP(EQ '0001-01-01')

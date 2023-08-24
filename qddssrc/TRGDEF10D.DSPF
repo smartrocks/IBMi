@@ -1,0 +1,257 @@
+     A*%%TS  SD  20081006  133607  LYNDON      REL-V5R4M0  5722-WDS
+     A*%%EC
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      MSGLOC(24)
+     A                                      PRINT
+     A          R SFLFMT                    SFL
+     A*%%TS  SD  20070426  102605  LYNDON      REL-V5R4M0  5722-WDS
+     A  80                                  SFLNXTCHG
+     A            DAACTIVE       1A  P
+     A            HTDSTAT   R        H      REFFLD(TRGDEFR/TDSTAT *LIBL/TRGDEFP-
+     A                                      F)
+     A            HTDFILE   R        H      REFFLD(TRGDEFR/TDFILE *LIBL/TRGDEFP-
+     A                                      F)
+     A            HTDFLIB   R        H      REFFLD(TRGDEFR/TDFLIB *LIBL/TRGDEFP-
+     A                                      F)
+     A            HTDTIME   R        H      REFFLD(TRGDEFR/TDTIME *LIBL/TRGDEFP-
+     A                                      F)
+     A            HTDEVNT   R        H      REFFLD(TRGDEFR/TDEVNT *LIBL/TRGDEFP-
+     A                                      F)
+     A            HTDPGM    R        H      REFFLD(TRGDEFR/TDPGM *LIBL/TRGDEFPF)
+     A            HTDPLIB   R        H      REFFLD(TRGDEFR/TDPLIB *LIBL/TRGDEFP-
+     A                                      F)
+     A            DSOPT          2A  B 12  3
+     A            TDSTAT    R        O 12  9REFFLD(TRGDEFR/TDSTAT *LIBL/TRGDEFP-
+     A                                      F)
+     A            ACTIVE         1A  O 12 14DSPATR(&DAACTIVE)
+     A            TDFILE    R        O 12 19REFFLD(TRGDEFR/TDFILE *LIBL/TRGDEFP-
+     A                                      F)
+     A            TDFLIB    R        O 12 30REFFLD(TRGDEFR/TDFLIB *LIBL/TRGDEFP-
+     A                                      F)
+     A            TDTIME    R        O 12 42REFFLD(TRGDEFR/TDTIME *LIBL/TRGDEFP-
+     A                                      F)
+     A            TDEVNT    R        O 12 50REFFLD(TRGDEFR/TDEVNT *LIBL/TRGDEFP-
+     A                                      F)
+     A            TDPGM     R        O 12 59REFFLD(TRGDEFR/TDPGM *LIBL/TRGDEFPF)
+     A            TDPLIB    R        O 12 70REFFLD(TRGDEFR/TDPLIB *LIBL/TRGDEFP-
+     A                                      F)
+     A          R SFLCTL                    SFLCTL(SFLFMT)
+     A*%%TS  SD  20081006  133607  LYNDON      REL-V5R4M0  5722-WDS
+     A                                      SFLSIZ(0014)
+     A                                      SFLPAG(0010)
+     A                                      CA03(03 'EXIT')
+     A                                      CA04(04 'SEARCH')
+     A                                      CA05(05 'REFRESH')
+     A                                      CF06(06 'ADD')
+     A                                      CF11(11 'SORT')
+     A                                      CF12(12 'CANCEL')
+     A                                      CF16(16 'SEARCH')
+     A N26                                  PAGEDOWN(27 'ROLLUP')
+     A                                      BLINK
+     A                                      CSRLOC(CROW       CCOL)
+     A                                      RTNCSRLOC(*MOUSE &RCROW &RCCOL)
+     A                                      OVERLAY
+     A                                      SFLCSRRRN(&DCCRRN)
+     A N24                                  SFLDSP
+     A N25                                  SFLDSPCTL
+     A  25                                  SFLCLR
+     A  26                                  SFLEND(*MORE)
+     A            SFINDX         4S 0H      SFLRCDNBR(CURSOR)
+     A            DCCRRN         5S 0H
+     A            CROW           3S 0H
+     A            CCOL           3S 0H
+     A            RCROW          3S 0H
+     A            RCCOL          3S 0H
+     A            PGMNAME       10A  O  1  3COLOR(BLU)
+     A                                  1 37'NBTY Inc'
+     A                                      COLOR(WHT)
+     A                                  1 72DATE
+     A                                      EDTCDE(Y)
+     A                                      COLOR(BLU)
+     A                                  2  3USER
+     A                                      COLOR(BLU)
+     A                                  2 23'Trigger Definition File Maintenanc-
+     A                                      e'
+     A                                      DSPATR(HI)
+     A                                  2 72TIME
+     A                                      COLOR(BLU)
+     A                                  4  3'Type options, press Enter.'
+     A                                      COLOR(BLU)
+     A                                  4 70'Key List  '
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                  5  4'2=Edit'
+     A                                      COLOR(BLU)
+     A                                  5 12'3=Copy'
+     A                                      COLOR(BLU)
+     A                                  5 20'4=Delete'
+     A                                      COLOR(BLU)
+     A                                  5 30'12=Add Trigger'
+     A                                      COLOR(BLU)
+     A                                  5 46'14=Remove Trigger'
+     A                                      COLOR(BLU)
+     A            KEYFLD1       10A  O  5 70
+     A                                  6  3'16=Work Object Lock'
+     A                                      COLOR(BLU)
+     A                                  6 24'?=Check Active Status'
+     A                                      COLOR(BLU)
+     A            KEYFLD2       10A  O  6 70
+     A            KEYFLD3       10A  O  7 70
+     A                                  8 19'Search String ...'
+     A                                      COLOR(BLU)
+     A            DSSRCHSTR     10A  B  8 37DSPATR(HI)
+     A**                                  8 47'Show Active Sts :'
+     A**                                      DSPATR(HI)
+     A**            SHWACT         1A  B  8 65
+     A            KEYFLD4       10A  O  8 70
+     A                                 10  7'Proc'
+     A                                      DSPATR(HI)
+     A                                 10 13'Act'
+     A                                      DSPATR(HI)
+     A                                 10 42'Trigger'
+     A                                      DSPATR(HI)
+     A                                 10 50'Trigger'
+     A                                      DSPATR(HI)
+     A                                 10 59'Trigger'
+     A                                      DSPATR(HI)
+     A                                 10 70'Trigger'
+     A                                      DSPATR(HI)
+     A                                 11  2'Opt'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                 11  7'Flag'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                 11 13'Sts'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                 11 19'File Name '
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                 11 30'File Lib  '
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                 11 42'Time   '
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                 11 50'Event  '
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                 11 59'Program   '
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                 11 70'Library   '
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A          R CMDKEY
+     A*%%TS  SD  20081006  132955  LYNDON      REL-V5R4M0  5722-WDS
+     A                                 23  4'F3=Exit'
+     A                                      COLOR(BLU)
+     A  60                             23 13'F5=Hide Act Status'
+     A                                      COLOR(BLU)
+     A N60                             23 14'F5=Show Act Status'
+     A                                      COLOR(BLU)
+     A                                 23 33'F6=Add'
+     A                                      COLOR(BLU)
+     A                                 23 41'F11=Chg Sort'
+     A                                      COLOR(BLU)
+     A                                 23 55'F12=Cancel'
+     A                                      COLOR(BLU)
+     A                                 23 67'F16=Search'
+     A                                      COLOR(BLU)
+     A          R RCDFORMAT
+     A*%%TS  SD  20070425  155734  LYNDON      REL-V5R4M0  5722-WDS
+     A                                      CA03(03 'EXIT')
+     A                                      CF12(12 'CANCEL')
+     A                                      BLINK
+     A                                      OVERLAY
+     A                                      CSRLOC(CROW       CCOL)
+     A            CROW           3S 0H
+     A            CCOL           3S 0H
+     A            DATDFILE       1A  P
+     A            DATDFLIB       1A  P
+     A            DATDTIME       1A  P
+     A            DATDEVNT       1A  P
+     A            DATDPGM        1A  P
+     A            DATDPLIB       1A  P
+     A            DATDSTAT       1A  P
+     A            DACONFIRM      1A  P
+     A            PGMNAME       10A  O  1  3COLOR(BLU)
+     A                                  1 37'NBTY Inc'
+     A                                      COLOR(WHT)
+     A                                  1 72DATE
+     A                                      EDTCDE(Y)
+     A                                      COLOR(BLU)
+     A                                  2  3USER
+     A                                      COLOR(BLU)
+     A                                  2 23'Trigger Definition File Maintenann-
+     A                                      ce'
+     A                                      DSPATR(HI)
+     A                                  2 72TIME
+     A                                      COLOR(BLU)
+     A            MODMODE       15A  O  3 33DSPATR(HI)
+     A            HEADMSG       50A  O  5  4COLOR(BLU)
+     A                                  7  4'Status ....... :'
+     A                                      DSPATR(HI)
+     A            DSTDSTAT  R        B  7 21REFFLD(TRGDEFR/TDSTAT *LIBL/TRGDEFP-
+     A                                      F)
+     A                                      DSPATR(&DATDSTAT)
+     A                                  7 24'(P=Process, I=Ignore)'
+     A                                      COLOR(BLU)
+     A                                  9  4'File Name .... :'
+     A                                      DSPATR(HI)
+     A            DSTDFILE  R        B  9 21REFFLD(TRGDEFR/TDFILE *LIBL/TRGDEFP-
+     A                                      F)
+     A                                      DSPATR(&DATDFILE)
+     A                                 10  6'Library .... :'
+     A                                      DSPATR(HI)
+     A            DSTDFLIB  R        B 10 23REFFLD(TRGDEFR/TDFLIB *LIBL/TRGDEFP-
+     A                                      F)
+     A                                      DSPATR(&DATDFLIB)
+     A                                 12  4'Trigger Time . :'
+     A                                      DSPATR(HI)
+     A            DSTDTIME  R        B 12 21REFFLD(TRGDEFR/TDTIME *LIBL/TRGDEFP-
+     A                                      F)
+     A                                      DSPATR(&DATDTIME)
+     A                                 12 30'(*BEFORE, *AFTER)'
+     A                                      COLOR(BLU)
+     A                                 13  4'Trigger Event  :'
+     A                                      DSPATR(HI)
+     A            DSTDEVNT  R        B 13 21REFFLD(TRGDEFR/TDEVNT *LIBL/TRGDEFP-
+     A                                      F)
+     A                                      DSPATR(&DATDEVNT)
+     A                                 13 30'(*UPDATE, *INSERT, *DELETE)'
+     A                                      COLOR(BLU)
+     A                                 15  4'Trigger Program:'
+     A                                      DSPATR(HI)
+     A            DSTDPGM   R        B 15 21REFFLD(TRGDEFR/TDPGM *LIBL/TRGDEFPF)
+     A                                      DSPATR(&DATDPGM)
+     A                                 16  6'Library .....:'
+     A                                      DSPATR(HI)
+     A            DSTDPLIB  R        B 16 23REFFLD(TRGDEFR/TDPLIB *LIBL/TRGDEFP-
+     A                                      F)
+     A                                      DSPATR(&DATDPLIB)
+     A            FOOTMSG       35A  O 21 25DSPATR(&DACONFIRM)
+     A                                 23  4'F3=Exit'
+     A                                      COLOR(BLU)
+     A                                 23 23'F12=Cancel'
+     A                                      COLOR(BLU)
+     A          R ASSUME
+     A                                      KEEP
+     A                                      ASSUME
+     A                                  1  2' '
+     A          R MSGSFL
+     A                                      SFL
+     A                                      SFLMSGRCD(24)
+     A            MSGKEY                    SFLMSGKEY
+     A            MSPGMQ                    SFLPGMQ
+     A          R MSGCTL
+     A                                      SFLCTL(MSGSFL)
+     A                                      OVERLAY
+     A                                      SFLSIZ(2)
+     A                                      SFLPAG(1)
+     A                                      SFLINZ
+     A                                      SFLDSP
+     A                                      SFLDSPCTL
+     A  90                                  SFLEND
+     A            MSPGMQ                    SFLPGMQ

@@ -1,0 +1,180 @@
+     A*%%TS  SD  20061110  152325  LYNDON      REL-V5R3M0  5722-WDS
+     A*%%EC
+     A*%%FD Manufacturing Trigger Driver PGMNAM  Maintenance
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      MSGLOC(24)
+     A                                      PRINT
+     A          R SFLFMT                    SFL
+     A*%%TS  SD  20061110  152325  LYNDON      REL-V5R3M0  5722-WDS
+     A  80                                  SFLNXTCHG
+     A            HTEFNAM   R   25A  H      REFFLD(TRGEMSGR/TEFNAM *LIBL/TRGEMS-
+     A                                      GPF)
+     A            HTELNAM   R   25A  H      REFFLD(TRGEMSGR/TELNAM *LIBL/TRGEMS-
+     A                                      GPF)
+     A            HTEDEPT   R   25A  H      REFFLD(TRGEMSGR/TEDEPT *LIBL/TRGEMS-
+     A                                      GPF)
+     A            HTEMAIL   R   50A  H      REFFLD(TRGEMSGR/TEMAIL *LIBL/TRGEMS-
+     A                                      GPF)
+     A            HTEGRP1   R   10A  H      REFFLD(TRGEMSGR/TEGRP1 *LIBL/TRGEMS-
+     A                                      GPF)
+     A            HTEGRP2   R   10A  H      REFFLD(TRGEMSGR/TEGRP2 *LIBL/TRGEMS-
+     A                                      GPF)
+     A            DSOPT          2A  B  9  3
+     A            DSTENAME      30A  O  9  7
+     A            DSTEDEPT  R        O  9 39REFFLD(TRGEMSGR/TEDEPT *LIBL/TRGEMS-
+     A                                      GPF)
+     A            DSTEGRP1  R        O  9 66REFFLD(TRGEMSGR/TEGRP1 *LIBL/TRGEMS-
+     A                                      GPF)
+     A          R SFLCTL                    SFLCTL(SFLFMT)
+     A*%%TS  SD  20061110  152325  LYNDON      REL-V5R3M0  5722-WDS
+     A                                      SFLSIZ(0014)
+     A                                      SFLPAG(0013)
+     A                                      CA03(03 'EXIT')
+     A                                      CA04(04 'SEARCH')
+     A                                      CF06(06 'ADD')
+     A                                      CF12(12 'CANCEL')
+     A N26                                  PAGEDOWN(27 'ROLLUP')
+     A                                      BLINK
+     A                                      CSRLOC(CROW       CCOL)
+     A                                      RTNCSRLOC(*MOUSE &RCROW &RCCOL)
+     A                                      OVERLAY
+     A                                      SFLCSRRRN(&DCCRRN)
+     A N24                                  SFLDSP
+     A N25                                  SFLDSPCTL
+     A  25                                  SFLCLR
+     A  26                                  SFLEND(*MORE)
+     A            SFINDX         4S 0H      SFLRCDNBR(CURSOR)
+     A            DCCRRN         5S 0H
+     A            CROW           3S 0H
+     A            CCOL           3S 0H
+     A            RCROW          3S 0H
+     A            RCCOL          3S 0H
+     A            PGMNAME       10A  O  1  3COLOR(BLU)
+     A                                  1 37'NBTY Inc'
+     A                                      COLOR(WHT)
+     A                                  1 72DATE
+     A                                      EDTCDE(Y)
+     A                                      COLOR(BLU)
+     A                                  2  3USER
+     A                                      COLOR(BLU)
+     A                                  2 29'eMail Group Maintenance'
+     A                                      DSPATR(HI)
+     A                                  2 72TIME
+     A                                      COLOR(BLU)
+     A                                  4  3'Type options, press Enter.'
+     A                                      COLOR(BLU)
+     A                                  5  4'2=Edit'
+     A                                      COLOR(BLU)
+     A                                  5 14'3=Copy'
+     A                                      COLOR(BLU)
+     A                                  5 24'4=Delete'
+     A                                      COLOR(BLU)
+     A                                  8  2'Opt'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                  8  7'Last Name, First Name         '
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                  8 39'Department               '
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                  8 66'eMail Group'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A          R CMDKEY
+     A*%%TS  DD  20060912  095709  LyndonTrah  REL-V5.0.1  WDSc
+     A                                 23  4'F3=Exit'
+     A                                      COLOR(BLU)
+     A                                 23 14'F6=Add'
+     A                                      COLOR(BLU)
+     A                                 23 24'F12=Cancel'
+     A                                      COLOR(BLU)
+     A*%%GP SCREEN1    03
+     A          R RCDFORMAT
+     A*%%TS  SD  20061110  144658  LYNDON      REL-V5R3M0  5722-WDS
+     A                                      CA03(03 'EXIT')
+     A                                      CF12(12 'CANCEL')
+     A                                      BLINK
+     A                                      OVERLAY
+     A                                      CSRLOC(CROW       CCOL)
+     A            CROW           3S 0H
+     A            CCOL           3S 0H
+     A            DATEFNAM       1A  P
+     A            DATELNAM       1A  P
+     A            DATEDEPT       1A  P
+     A            DATEMAIL       1A  P
+     A            DATEGRP1       1A  P
+     A            DATEGRP2       1A  P
+     A            DACONFIRM      1A  P
+     A            PGMNAME       10A  O  1  3COLOR(BLU)
+     A                                  1 37'NBTY Inc'
+     A                                      COLOR(WHT)
+     A                                  1 72DATE
+     A                                      EDTCDE(Y)
+     A                                      COLOR(BLU)
+     A                                  2  3USER
+     A                                      COLOR(BLU)
+     A                                  2 29'eMail Group Maintenance'
+     A                                      DSPATR(HI)
+     A                                  2 72TIME
+     A                                      COLOR(BLU)
+     A            MODMODE       15A  O  3 33DSPATR(HI)
+     A            HEADMSG       50A  O  5  4COLOR(BLU)
+     A                                  7  4'First Name . . .:'
+     A                                      DSPATR(HI)
+     A            DSTEFNAM  R        B  7 22REFFLD(TRGEMSGR/TEFNAM *LIBL/TRGEMS-
+     A                                      GPF)
+     A                                      DSPATR(&DATEFNAM)
+     A                                  8  4'Last Name  . . .:'
+     A                                      DSPATR(HI)
+     A            DSTELNAM  R        B  8 22REFFLD(TRGEMSGR/TELNAM *LIBL/TRGEMS-
+     A                                      GPF)
+     A                                      DSPATR(&DATELNAM)
+     A                                 10  4'Department . . .:'
+     A                                      DSPATR(HI)
+     A            DSTEDEPT  R        B 10 22REFFLD(TRGEMSGR/TEDEPT *LIBL/TRGEMS-
+     A                                      GPF)
+     A                                      DSPATR(&DATEDEPT)
+     A                                 12  4'eMail Address  .:'
+     A                                      DSPATR(HI)
+     A            DSTEMAIL  R        B 12 22REFFLD(TRGEMSGR/TEMAIL *LIBL/TRGEMS-
+     A                                      GPF)
+     A                                      DSPATR(&DATEMAIL)
+     A                                 14  4'eMail Group 1  .:'
+     A                                      DSPATR(HI)
+     A            DSTEGRP1  R        B 14 22REFFLD(TRGEMSGR/TEGRP1 *LIBL/TRGEMS-
+     A                                      GPF)
+     A                                      DSPATR(&DATEGRP1)
+     A                                 16  4'eMail Group 2  .:'
+     A                                      DSPATR(HI)
+     A            DSTEGRP2  R        B 16 22REFFLD(TRGEMSGR/TEGRP2 *LIBL/TRGEMS-
+     A                                      GPF)
+     A                                      DSPATR(&DATEGRP2)
+     A            FOOTMSG       35A  O 19 25DSPATR(&DACONFIRM)
+     A                                 23  4'F3=Exit'
+     A                                      COLOR(BLU)
+     A                                 23 23'F12=Cancel'
+     A                                      COLOR(BLU)
+     A*%%GP SCREEN4    01
+     A          R ASSUME
+     A*%%TS  DD  20060912  093333  LyndonTrah  REL-V5.0.1  WDSc
+     A                                      KEEP
+     A                                      ASSUME
+     A                                  1  2' '
+     A          R MSGSFL
+     A*%%TS  DD  20060912  093333  LyndonTrah  REL-V5.0.1  WDSc
+     A                                      SFL
+     A                                      SFLMSGRCD(24)
+     A            MSGKEY                    SFLMSGKEY
+     A            MSPGMQ                    SFLPGMQ
+     A          R MSGCTL
+     A*%%TS  DD  20060912  093333  LyndonTrah  REL-V5.0.1  WDSc
+     A                                      SFLCTL(MSGSFL)
+     A                                      OVERLAY
+     A                                      SFLSIZ(2)
+     A                                      SFLPAG(1)
+     A                                      SFLINZ
+     A                                      SFLDSP
+     A                                      SFLDSPCTL
+     A  90                                  SFLEND
+     A            MSPGMQ                    SFLPGMQ

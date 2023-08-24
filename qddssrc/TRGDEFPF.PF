@@ -1,0 +1,41 @@
+     A                                      UNIQUE
+     A          R TRGDEFR
+     A
+     A            TDSTAT         1A         COLHDG(' ' ' ' 'Status')
+     A                                      TEXT('Status')
+     A
+     A            TDFILE        10A         COLHDG(' ' 'File' 'Name')
+     A                                      TEXT('File Name')
+     A
+     A            TDFLIB        10A         COLHDG('File' 'Library' 'Name')
+     A                                      TEXT('File Library Name')
+     A
+     A            TDTIME         7A         COLHDG(' ' 'Trigger' 'Time')
+     A                                      TEXT('Trigger Time')
+     A
+     A            TDEVNT         7A         COLHDG(' ' 'Trigger' 'Event')
+     A                                      TEXT('Trigger Event')
+     A
+     A            TDPGM         10A         COLHDG(' ' 'Program' 'Name')
+     A                                      TEXT('Program Name')
+     A
+     A            TDPLIB        10A         COLHDG('Program' 'Library' 'Name')
+     A                                      TEXT('Pgm Lib Name')
+     A
+     A
+     A*‚ Audit Fields€
+     A
+     A            TDCRTU        10A         TEXT('Created By')
+     A                                      COLHDG(' ' 'Created' 'By')
+     A
+     A            TDCRTD          L         TEXT('Date Created')
+     A                                      COLHDG(' ' 'Date' 'Created')
+     A
+     A            TDCRTT          T         TEXT('Time Created')
+     A                                      COLHDG(' ' 'Time' 'Created')
+     A
+     A          K TDFILE
+     A          K TDFLIB
+     A          K TDTIME
+     A          K TDEVNT
+     A

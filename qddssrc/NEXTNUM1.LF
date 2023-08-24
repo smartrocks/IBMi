@@ -1,0 +1,19 @@
+      *************************************************************
+      * NextNum - Generic Next Number file
+      *
+      * 12/29/03 DEK Created
+      *************************************************************
+     A                                      UNIQUE
+     A          R NEXTNUMR                  PFILE(NEXTNUM)
+     A            FUNC
+     A            NEXTNUM
+     A            MIN
+     A            MAX
+     A            INC
+     A            CYCLEYN
+     A            ALGORITHM
+     A            DESC
+     A            DATE
+     A            TIME
+
+     A          K FUNC

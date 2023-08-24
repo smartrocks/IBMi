@@ -1,0 +1,20 @@
+      *--------------------------------------------------------------------
+      * STACKLOG - Log of program stacks
+      *
+      * Purpose: Logs program stacks in conjunction with the RUNLOG program
+      *          for the purpose of logging the start and end of job steps
+      *          in critical or long running jobs.
+      *
+      * Author  Date        Project      Description
+      * Keck    2019-09-16  TASK0213021  Created
+      *--------------------------------------------------------------------
+     A          R STACKLOGR
+     A            ID             9S 0       COLHDG('ID')
+     A            SEQ            5S 0       COLHDG('Seq')
+     A            PROGRAM       10A         COLHDG('Program')
+     A            LIBRARY       10A         COLHDG('Library')
+     A            JOBDATE         L         COLHDG('Job' 'Date')
+     A            SYSDATE         L         COLHDG('System' 'Date')
+     A            SYSTIME         T         COLHDG('System' 'Time')
+     A          K ID
+     A          K SEQ

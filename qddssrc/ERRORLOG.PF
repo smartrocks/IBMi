@@ -1,0 +1,14 @@
+      *********************************************************************
+      * Generic Error Log                                                 *
+      *                                                                   *
+      * Note: Please ensure process ID uniqueness by choosing / creating  *
+      *       a unique process ID in the MANFILES/PROCESS file            *
+      *********************************************************************
+     A          R ERRORR
+     A            PROCESS       10
+     A            DATE            L
+     A            TIME            T
+     A            JOBNAME       10
+     A            JOBUSER       10
+     A            JOBNUM         6
+     A            MSG          256

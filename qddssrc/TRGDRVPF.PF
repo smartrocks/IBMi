@@ -1,0 +1,39 @@
+     A                                      UNIQUE
+     A          R TRGDRVR
+      *
+     A            FILNAM        10A         TEXT('Filename')
+     A                                      COLHDG(' '          +
+     A                                             'Trigger on' +
+     A                                             'Filename  ' )
+     A            FILLIB        10A         TEXT('Library')
+     A                                      COLHDG('          ' +
+     A                                             'File in'    +
+     A                                             'Library ' )
+     A            EVENT          1A         TEXT('Event Code')
+     A                                      COLHDG('Event Code'  +
+     A                                             '1=Ins 2=Del' +
+     A                                             '3=Upd 4=Read' )
+     A            PGMNAM        10A         TEXT('Program to Call')
+     A                                      COLHDG('Trigger'    +
+     A                                             'Program to' +
+     A                                             'Call'         )
+     A            PGMLIB        10A         TEXT('Library')
+     A                                      COLHDG('          ' +
+     A                                             'Program in' +
+     A                                             'Library ' )
+     A            EMSGGRP1      10A         TEXT('Error eMail Group 1')
+     A                                      COLHDG('Error' +
+     A                                             'eMail   ' +
+     A                                             'Group 1')
+     A            EMSGGRP2      10A         TEXT('Error eMail Group 2')
+     A                                      COLHDG('Error' +
+     A                                             'eMail   ' +
+     A                                             'Group 2')
+     A            EXSTAT         1A         TEXT('Status')
+     A                                      COLHDG(' ' +
+     A                                             ' ' +
+     A                                             'Status')
+     A
+     A          K FILNAM
+     A          K FILLIB
+     A          K EVENT

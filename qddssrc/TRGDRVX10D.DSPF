@@ -1,0 +1,207 @@
+     A*%%TS  SD  20061109  092437  LYNDON      REL-V5R3M0  5722-WDS
+     A*%%EC
+     A*%%FD Manufacturing Trigger Driver PGMNAM  Maintenance
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      MSGLOC(24)
+     A                                      PRINT
+     A          R SFLFMT                    SFL
+     A*%%TS  SD  20061109  092437  LYNDON      REL-V5R3M0  5722-WDS
+     A  80                                  SFLNXTCHG
+     A            HXSTATUS  R        H      REFFLD(TRGDRVXR/XSTATUS *LIBL/TRGDR-
+     A                                      VXPF)
+     A            HXFILLIB  R        H      REFFLD(TRGDRVXR/XFILLIB *LIBL/TRGDR-
+     A                                      VXPF)
+     A            HXFILNAM  R        H      REFFLD(TRGDRVXR/XFILNAM *LIBL/TRGDR-
+     A                                      VXPF)
+     A            HXPGMLIB  R        H      REFFLD(TRGDRVXR/XPGMLIB *LIBL/TRGDR-
+     A                                      VXPF)
+     A            HXPGMNAM  R        H      REFFLD(TRGDRVXR/XPGMNAM *LIBL/TRGDR-
+     A                                      VXPF)
+     A            DSOPT          2A  B  9  3
+     A            DSXSTATUS R        O  9  8REFFLD(TRGDRVXR/XSTATUS *LIBL/TRGDR-
+     A                                      VXPF)
+     A            DSXFILLIB R        O  9 13REFFLD(TRGDRVXR/XFILLIB *LIBL/TRGDR-
+     A                                      VXPF)
+     A            DSXFILNAM R        O  9 25REFFLD(TRGDRVXR/XFILNAM *LIBL/TRGDR-
+     A                                      VXPF)
+     A            DSXPGMLIB R        O  9 38REFFLD(TRGDRVXR/XPGMLIB *LIBL/TRGDR-
+     A                                      VXPF)
+     A            DSXPGMNAM R        O  9 50REFFLD(TRGDRVXR/XPGMNAM *LIBL/TRGDR-
+     A                                      VXPF)
+     A          R SFLCTL                    SFLCTL(SFLFMT)
+     A*%%TS  SD  20061109  090706  LYNDON      REL-V5R3M0  5722-WDS
+     A                                      SFLSIZ(0014)
+     A                                      SFLPAG(0013)
+     A                                      CA03(03 'EXIT')
+     A                                      CA04(04 'SEARCH')
+     A                                      CF06(06 'ADD')
+     A                                      CF11(11 'CHGVIEW')
+     A                                      CF12(12 'CANCEL')
+     A N26                                  PAGEDOWN(27 'ROLLUP')
+     A                                      BLINK
+     A                                      CSRLOC(CROW       CCOL)
+     A                                      RTNCSRLOC(*MOUSE &RCROW &RCCOL)
+     A                                      OVERLAY
+     A                                      SFLCSRRRN(&DCCRRN)
+     A N24                                  SFLDSP
+     A N25                                  SFLDSPCTL
+     A  25                                  SFLCLR
+     A  26                                  SFLEND(*MORE)
+     A            SFINDX         4S 0H      SFLRCDNBR(CURSOR)
+     A            DCCRRN         5S 0H
+     A            CROW           3S 0H
+     A            CCOL           3S 0H
+     A            RCROW          3S 0H
+     A            RCCOL          3S 0H
+     A            PGMNAME       10A  O  1  3COLOR(BLU)
+     A                                  1 37'NBTY Inc'
+     A                                      COLOR(WHT)
+     A                                  1 72DATE
+     A                                      EDTCDE(Y)
+     A                                      COLOR(BLU)
+     A                                  2  3USER
+     A                                      COLOR(BLU)
+     A                                  2 22'Trigger Exception Program Maintena-
+     A                                      nce'
+     A                                      DSPATR(HI)
+     A                                  2 72TIME
+     A                                      COLOR(BLU)
+     A                                  4  3'Type options, press Enter.'
+     A                                      COLOR(BLU)
+     A                                  5  4'2=Edit'
+     A                                      COLOR(BLU)
+     A                                  5 14'3=Copy'
+     A                                      COLOR(BLU)
+     A                                  5 24'4=Delete'
+     A                                      COLOR(BLU)
+     A                                  6 38'Do not fire trigger if'
+     A                                      DSPATR(HI)
+     A                                  7 13'----- Triggered ------'
+     A                                      DSPATR(HI)
+     A                                  7 38'Calling Program is'
+     A                                      DSPATR(HI)
+     A                                  8  2'Opt'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                  8  7'Stat'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                  8 13'Library   / File      '
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                  8 38'Library   / Program   '
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A          R CMDKEY
+     A*%%TS  DD  20060912  095709  LyndonTrah  REL-V5.0.1  WDSc
+     A                                 23  4'F3=Exit'
+     A                                      COLOR(BLU)
+     A                                 23 14'F6=Add'
+     A                                      COLOR(BLU)
+     A N30                             23 23'F11=Sort File/Lib'
+     A                                      COLOR(BLU)
+     A  30                             23 23'F11=Sort Lib/File'
+     A                                      COLOR(BLU)
+     A                                 23 43'F12=Cancel'
+     A                                      COLOR(BLU)
+     A*%%GP SCREEN1    03
+     A          R RCDFORMAT
+     A*%%TS  SD  20061109  090706  LYNDON      REL-V5R3M0  5722-WDS
+     A                                      CA03(03 'EXIT')
+     A                                      CF12(12 'CANCEL')
+     A                                      BLINK
+     A                                      OVERLAY
+     A                                      CSRLOC(CROW       CCOL)
+     A            CROW           3S 0H
+     A            CCOL           3S 0H
+     A            DAHLPTXT       1A  P
+     A            DAXSTATUS      1A  P
+     A            DAXFILNAM      1A  P
+     A            DAXFILLIB      1A  P
+     A            DAXPGMNAM      1A  P
+     A            DAXPGMLIB      1A  P
+     A            DACONFIRM      1A  P
+     A            PGMNAME       10A  O  1  3COLOR(BLU)
+     A                                  1 37'NBTY Inc'
+     A                                      COLOR(WHT)
+     A                                  1 72DATE
+     A                                      EDTCDE(Y)
+     A                                      COLOR(BLU)
+     A                                  2  3USER
+     A                                      COLOR(BLU)
+     A                                  2 22'Trigger Exception Program Maintena-
+     A                                      nce'
+     A                                      DSPATR(HI)
+     A                                  2 72TIME
+     A                                      COLOR(BLU)
+     A            MODMODE       15A  O  3 33DSPATR(HI)
+     A            HEADMSG       50A  O  5  4COLOR(BLU)
+     A                                  7  4'Rule Status . . . . . .:'
+     A                                      DSPATR(HI)
+     A            DSXSTATUS R        B  7 29REFFLD(TRGDRVXR/XSTATUS *LIBL/TRGDR-
+     A                                      VXPF)
+     A                                      DSPATR(&DAXSTATUS)
+     A                                  7 31'(A)ctive (I)nactive'
+     A                                      DSPATR(&DAHLPTXT)
+     A                                  9  4'File Name . . . . . . .:'
+     A                                      COLOR(WHT)
+     A            DSXFILNAM R        B  9 29REFFLD(TRGDRVXR/XFILNAM *LIBL/TRGDR-
+     A                                      VXPF)
+     A                                      DSPATR(&DAXFILNAM)
+     A                                  9 43'Name'
+     A                                      DSPATR(&DAHLPTXT)
+     A                                 10  5'Library  . . . . . . .:'
+     A                                      COLOR(WHT)
+     A            DSXFILLIB R        B 10 30REFFLD(TRGDRVXR/XFILLIB *LIBL/TRGDR-
+     A                                      VXPF)
+     A                                      DSPATR(&DAXFILLIB)
+     A                                 10 43'Name, *LIBL'
+     A                                      DSPATR(&DAHLPTXT)
+     A                                 13  4'Do not fire trigger if calling pro-
+     A                                      gram is. . '
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                 15  4'Calling Program . . . .:'
+     A                                      COLOR(WHT)
+     A            DSXPGMNAM R        B 15 29REFFLD(TRGDRVXR/XPGMNAM *LIBL/TRGDR-
+     A                                      VXPF)
+     A                                      DSPATR(&DAXPGMNAM)
+     A                                 15 43'Name, generic*'
+     A                                      DSPATR(&DAHLPTXT)
+     A                                 16  5'Library'
+     A                                      COLOR(WHT)
+     A                                 16 14'. . . . . . .:'
+     A                                      COLOR(WHT)
+     A            DSXPGMLIB R        B 16 30REFFLD(TRGDRVXR/XPGMLIB *LIBL/TRGDR-
+     A                                      VXPF)
+     A                                      DSPATR(&DAXPGMLIB)
+     A                                 16 43'Name, *LIBL'
+     A                                      DSPATR(&DAHLPTXT)
+     A            FOOTMSG       35A  O 19 25DSPATR(&DACONFIRM)
+     A                                 23  4'F3=Exit'
+     A                                      COLOR(BLU)
+     A                                 23 23'F12=Cancel'
+     A                                      COLOR(BLU)
+     A*%%GP SCREEN4    01
+     A          R ASSUME
+     A*%%TS  DD  20060912  093333  LyndonTrah  REL-V5.0.1  WDSc
+     A                                      KEEP
+     A                                      ASSUME
+     A                                  1  2' '
+     A          R MSGSFL
+     A*%%TS  DD  20060912  093333  LyndonTrah  REL-V5.0.1  WDSc
+     A                                      SFL
+     A                                      SFLMSGRCD(24)
+     A            MSGKEY                    SFLMSGKEY
+     A            MSPGMQ                    SFLPGMQ
+     A          R MSGCTL
+     A*%%TS  DD  20060912  093333  LyndonTrah  REL-V5.0.1  WDSc
+     A                                      SFLCTL(MSGSFL)
+     A                                      OVERLAY
+     A                                      SFLSIZ(2)
+     A                                      SFLPAG(1)
+     A                                      SFLINZ
+     A                                      SFLDSP
+     A                                      SFLDSPCTL
+     A  90                                  SFLEND
+     A            MSPGMQ                    SFLPGMQ

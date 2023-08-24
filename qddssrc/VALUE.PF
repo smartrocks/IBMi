@@ -1,0 +1,9 @@
+      *---------------------------------------------------------------*
+     A          R VALUER
+      *---------------------------------------------------------------*
+     A            FUNCTION      30A         COLHDG('Function')
+     A            STRING        30A         COLHDG('String' 'Value')
+     A            NUMBER        15P 0       COLHDG('Numeric' 'Value')
+     A            USER          10          COLHDG('Change' 'User')
+     A            DATE            L         COLHDG('Change' 'Date')
+     A            TIME            T         COLHDG('Change' 'Time')

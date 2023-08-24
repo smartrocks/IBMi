@@ -1,0 +1,16 @@
+      *************************************************************
+      * NextNum - Generic Next Number file
+      *
+      * 12/29/03 DEK Created
+      *************************************************************
+     A          R NEXTNUMR
+     A            FUNC          50A         COLHDG('Function')
+     A            NEXTNUM       12P 0       COLHDG('Next' 'Number')
+     A            MIN           12P 0       COLHDG('Minimum' 'Value')
+     A            MAX           12P 0       COLHDG('Maximum' 'Value')
+     A            INC            5P 0       COLHDG('Increment')
+     A            CYCLEYN        1A         COLHDG('Auto' 'Recycle' 'YN')
+     A            ALGORITHM     15A         COLHDG('Special' 'Algorithm')
+     A            DESC          50A         COLHDG('Description')
+     A            DATE            L         COLHDG('Last' 'Date' 'Used')
+     A            TIME            T         COLHDG('Last' 'Time' 'Used')

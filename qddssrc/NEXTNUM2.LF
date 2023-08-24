@@ -1,0 +1,21 @@
+      *************************************************************
+      * NextNum2 - Generic Next Number file
+      *
+      * Shares access path with NextNum1.  Needed for NextNumber function.
+      *
+      * 01/08/04 DEK Created
+      *************************************************************
+     A                                      UNIQUE
+     A          R NEXTNUMR                  PFILE(NEXTNUM)
+     A            FUNC
+     A            NEXTNUM
+     A            MIN
+     A            MAX
+     A            INC
+     A            CYCLEYN
+     A            ALGORITHM
+     A            DESC
+     A            DATE
+     A            TIME
+
+     A          K FUNC

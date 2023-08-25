@@ -15,6 +15,7 @@ add following to config file
 		AddKeystoAgent
 		IdentityFile ~/.ssh/nbty_git_rsa   (substitute your private key file name)
 
+Add your public key to the github repository.
 
 ssh-add ~/.ssh/nbty_git_rsa
 

@@ -13,7 +13,7 @@ touch config   // to create config file
 add following to config file
 	Host *
 		AddKeystoAgent
-		IdentityFile ~/.ssh/nbty_git_rsa
+		IdentityFile ~/.ssh/nbty_git_rsa   (substitute your private key file name)
 
 
 ssh-add ~/.ssh/nbty_git_rsa

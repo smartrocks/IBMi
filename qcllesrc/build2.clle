@@ -1,0 +1,73 @@
+/*---------------------------------------------------------------------*/
+/* BUILD - create all ported code in local library                     */
+/*                                                                     */
+/* BUILD must be manually created. Once created it can be run and will */
+/* build all remaining components in the library passed in.            */
+/*                                                                     */
+/* A prerequisite to calling build BUILD is to Git CLONE the source    */
+/* code from GitHub https://github.com/smartrocks/IBMi                 */
+/*                                                                     */ 
+/* Parameters                                                          */
+/* &lib      Target library for created objects                        */
+/* &ifsPath  Path to IFS folder which contains all source files        */
+/*           ex: '/home/dave/smartrocks/ibmi'                          */
+/*           where the ibmi folder contains qddssrc, qclsrc, etc.      */
+/*---------------------------------------------------------------------*/
+
+pgm (&lib &ifsPath) 
+
+dcl &lib *char (10)       /* target library    */
+dcl &ifsPath *char (255)  /* source IFS folder */  
+dcl &ifsFile *char (255)  /* ifs file path and file name */
+dcl &mbrPath *char (255) 
+
+chgvar &ifsPath %trim(&ifspath)
+
+/* create source files in target library as needed */
+chkobj &lib/QDDSSRC *file
+monmsg (CPF9801) exec(CRTSRCPF FILE(&LIB/QDDSSRC) RCDLEN(92))
+
+chkobj &lib/QCLSRC *file
+monmsg (CPF9801) exec(CRTSRCPF FILE(&LIB/QCLSRC) RCDLEN(92))
+
+chkobj &lib/QCLLESRC *file
+monmsg (CPF9801) exec(CRTSRCPF FILE(&LIB/QCLLESRC) RCDLEN(92))
+
+chkobj &lib/QRPGLESRC *file
+monmsg (CPF9801) exec(CRTSRCPF FILE(&LIB/QRPGLESRC) RCDLEN(92))
+
+chkobj &lib/QSQLSRC *file
+monmsg (CPF9801) exec(CRTSRCPF FILE(&LIB/QSQLSRC) RCDLEN(92))
+
+chkobj &lib/QSRVSRC *file
+monmsg (CPF9801) exec(CRTSRCPF FILE(&LIB/QSRVSRC) RCDLEN(92))
+
+chkobj &lib/QBNDSRC *file
+monmsg (CPF9801) exec(CRTSRCPF FILE(&LIB/QBNDSRC) RCDLEN(92))
+
+/* copy source needed to build the IFSLIST utility */
+chgvar &ifsFile (&ifsPath *tcat '/QDDSSRC/IFSLIST.PF')
+chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib *tcat '.LIB/QDDSSRC.FILE/IFSLIST.MBR')
+CPYFRMSTMF FROMSTMF(&ifsFile) +
+TOMBR(&mbrPath) MBROPT(*REPLACE) STMFCCSID(*STMF) DBFCCSID(*FILE)                                                                  
+
+chgvar &ifsFile (&ifsPath *tcat '/QCLLESRC/IFSLISTCL.CLP')
+chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib *tcat '.LIB/QCLSRC.FILE/IFSLIST.MBR')
+CPYFRMSTMF FROMSTMF(&ifsFile) +
+TOMBR(&mbrPath) MBROPT(*REPLACE)
+
+chgvar &ifsFile (&ifsPath *tcat '/QRPGLESRC/IFSLIST.RPGLE')
+chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib *tcat '.LIB/QRPGLESRC.FILE/IFSLIST.MBR')
+CPYFRMSTMF FROMSTMF(&ifsFile) +
+TOMBR(&mbrPath) MBROPT(*REPLACE)
+
+chgvar &ifsFile (&ifsPath *tcat '/QCMDSRC/IFSLIST.CMD')
+chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib *tcat '.LIB/QCMDSRC.FILE/IFSLIST.MBR')
+CPYFRMSTMF FROMSTMF(&ifsFile) +
+TOMBR(&mbrPath) MBROPT(*REPLACE)
+
+
+CHGPFM FILE(DAVIDKECK1/QDDSSRC) MBR(IFSLIST) SRCTYPE(PF) TEXT('Message Log')
+
+endpgm
+

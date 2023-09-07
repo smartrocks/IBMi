@@ -15,10 +15,11 @@
       * IFS Directory List
       *------------------------------------------------------------------------------------------
       * External Prototypes and Declarations
-     d/copy NBTYGPL/QRPGLESRC,stdTypH
-     d/copy NBTYGPL/QRPGLESRC,stmIOH
+     d*/copy NBTYGPL/QRPGLESRC,stdTypH
+     d*/copy NBTYGPL/QRPGLESRC,stmIOH
+     d*/copy QRPGLESRC,stdTypH
+     d/copy QRPGLESRC,stmIOH
 
-dl01 d*folder          s             50
 dl01 d folder          s            256
      d handle          s                   like( streamDirHandleType )
      d path            s             50

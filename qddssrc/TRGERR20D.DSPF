@@ -23,18 +23,18 @@
      A          R PRMPTSFL                  SFL
      A*%%TS  SD  20070320  141333  LYNDON      REL-V5R4M0  5722-WDS
      A            DSPFRRN       10S 0H
-     A            ERRORID   R        O  5  5REFFLD(TRGERRHR/ERRORID NBTYGPL/TRG-
+     A            ERRORID   R        O  5  5REFFLD(TRGERRHR/ERRORID *LIBL/TRG-
      A                                      ERRHPF)
      A                                      EDTCDE(Z)
-     A            FILELIB   R        O  5 14REFFLD(TRGERRHR/FILELIB NBTYGPL/TRG-
+     A            FILELIB   R        O  5 14REFFLD(TRGERRHR/FILELIB *LIBL/TRG-
      A                                      ERRHPF)
-     A            FILENAME  R        O  5 26REFFLD(TRGERRHR/FILENAME NBTYGPL/TR-
+     A            FILENAME  R        O  5 26REFFLD(TRGERRHR/FILENAME *LIBL/TR-
      A                                      GERRHPF)
-     A            ERRSTS    R        O  5 38REFFLD(TRGERRHR/ERRSTS NBTYGPL/TRGE-
+     A            ERRSTS    R        O  5 38REFFLD(TRGERRHR/ERRSTS *LIBL/TRGE-
      A                                      RRHPF)
-     A            CALLPGM   R        O  5 45REFFLD(TRGERRHR/CALLPGM NBTYGPL/TRG-
+     A            CALLPGM   R        O  5 45REFFLD(TRGERRHR/CALLPGM *LIBL/TRG-
      A                                      ERRHPF)
-     A            CALLUSER  R        O  5 57REFFLD(TRGERRHR/CALLUSER NBTYGPL/TR-
+     A            CALLUSER  R        O  5 57REFFLD(TRGERRHR/CALLUSER *LIBL/TR-
      A                                      GERRHPF)
      A            FLD001        60   O  6 14
      A          R PRMPTCTL                  SFLCTL(PRMPTSFL)

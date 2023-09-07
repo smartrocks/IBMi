@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------*/
-/* BUILD - create all ported code in local library                     */
+/* BUILD2 - copy all src from IFS to src PF's and compile              */
 /*                                                                     */
 /* BUILD must be manually created. Once created it can be run and will */
 /* build all remaining components in the library passed in.            */
@@ -17,57 +17,186 @@
 pgm (&lib &ifsPath) 
 
 dcl &lib *char (10)       /* target library    */
-dcl &ifsPath *char (255)  /* source IFS folder */  
-dcl &ifsFile *char (255)  /* ifs file path and file name */
-dcl &mbrPath *char (255) 
+dcl &ifsPath *char (256)  /* source IFS folder */  
+dcl &ifsFile *char (256)  /* ifs file path and file name */
+dcl &mbrPath *char (256)
+dcl &ifsSrcPath *char (256) 
+dcl &pigsFly *lgl value('0')
+dcl &len *int
+
+dclf IFSLIST 
 
 chgvar &ifsPath %trim(&ifspath)
+chgvar &ifsSrcPath (&ifspath *tcat '/qddssrc')
+IFSLIST &ifsSrcPath
+ovrdbf IFSLIST QTEMP/IFSLIST
 
-/* create source files in target library as needed */
-chkobj &lib/QDDSSRC *file
-monmsg (CPF9801) exec(CRTSRCPF FILE(&LIB/QDDSSRC) RCDLEN(92))
+callsubr delete_LF  /* delete all PF's for which we have source */
+callsubr comp_PF    /* copy source and compile PF's             */
+callsubr comp_LF    /* copy source and compile LF's             */
+callsubr comp_DSPF  /* copy source and compile DSPF's           */
+callsubr comp_SRV   /* copy source for QSRVSRV                  */
 
-chkobj &lib/QCLSRC *file
-monmsg (CPF9801) exec(CRTSRCPF FILE(&LIB/QCLSRC) RCDLEN(92))
 
-chkobj &lib/QCLLESRC *file
-monmsg (CPF9801) exec(CRTSRCPF FILE(&LIB/QCLLESRC) RCDLEN(92))
+/******************/
+/* Delete LF's    */
+/******************/
+subr delete_LF
+close   /* close the IFSLIST file */
 
-chkobj &lib/QRPGLESRC *file
-monmsg (CPF9801) exec(CRTSRCPF FILE(&LIB/QRPGLESRC) RCDLEN(92))
+dountil &pigsFly
+rcvf RCDFMT(IFSLISTR) /* get columns NAME and TYPE */
+monmsg CPF0864 exec(LEAVE)
 
-chkobj &lib/QSQLSRC *file
-monmsg (CPF9801) exec(CRTSRCPF FILE(&LIB/QSQLSRC) RCDLEN(92))
+if (&type *ne '*STMF') then(ITERATE)
+chgvar &len %scan('.LF'  &name)
+if (&len *eq 0) then(ITERATE)
 
-chkobj &lib/QSRVSRC *file
-monmsg (CPF9801) exec(CRTSRCPF FILE(&LIB/QSRVSRC) RCDLEN(92))
+chgvar &len (&len - 1)
+chgvar &name (%sst(&name 1 &len)) /* w/o extension */
 
-chkobj &lib/QBNDSRC *file
-monmsg (CPF9801) exec(CRTSRCPF FILE(&LIB/QBNDSRC) RCDLEN(92))
+DLTF &LIB/&name
+monmsg CPF2105 /* file not found */
 
-/* copy source needed to build the IFSLIST utility */
-chgvar &ifsFile (&ifsPath *tcat '/QDDSSRC/IFSLIST.PF')
-chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib *tcat '.LIB/QDDSSRC.FILE/IFSLIST.MBR')
+enddo
+
+endsubr
+
+
+
+/******************/
+/* Compile PF's   */
+/******************/
+subr comp_PF
+close   /* close the IFSLIST file */
+
+dountil &pigsFly
+rcvf RCDFMT(IFSLISTR) /* get columns NAME and TYPE */
+monmsg CPF0864 exec(LEAVE)
+
+if (&type *ne '*STMF') then(ITERATE)
+chgvar &len %scan('.PF'  &name)
+if (&len *eq 0) then(ITERATE)
+
+chgvar &ifsFile (&ifsPath *tcat '/QDDSSRC/' *tcat &name) 
+chgvar &len (&len - 1)
+chgvar &name (%sst(&name 1 &len)) /* w/o extension */
+chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib +
+                  *tcat '.LIB/QDDSSRC.FILE/' + 
+                  *tcat &name *tcat '.MBR')
+
 CPYFRMSTMF FROMSTMF(&ifsFile) +
-TOMBR(&mbrPath) MBROPT(*REPLACE) STMFCCSID(*STMF) DBFCCSID(*FILE)                                                                  
+TOMBR(&mbrPath) MBROPT(*REPLACE) STMFCCSID(*STMF) DBFCCSID(*FILE)    
 
-chgvar &ifsFile (&ifsPath *tcat '/QCLLESRC/IFSLISTCL.CLP')
-chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib *tcat '.LIB/QCLSRC.FILE/IFSLIST.MBR')
+CHGPFM FILE(&LIB/QDDSSRC) MBR(&name) SRCTYPE(PF)
+
+DLTF &LIB/&name
+monmsg CPF2105 /* file not found */
+CRTPF FILE(&lib/&name) SRCFILE(&lib/QDDSSRC) LVLCHK(*NO)
+
+enddo
+
+endsubr
+
+
+
+/******************/
+/* Compile LF's   */
+/******************/
+subr comp_LF
+close                 /* close the IFSLIST file */
+
+dountil &pigsFly
+rcvf RCDFMT(IFSLISTR) /* get columns NAME and TYPE */
+monmsg CPF0864 exec(LEAVE)
+
+if (&type *ne '*STMF') then(ITERATE)
+chgvar &len %scan('.LF'  &name)
+if (&len *eq 0) then(ITERATE)
+
+chgvar &ifsFile (&ifsPath *tcat '/QDDSSRC/' *tcat &name) 
+chgvar &len (&len - 1)
+chgvar &name (%sst(&name 1 &len)) /* w/o extension */
+chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib +
+                  *tcat '.LIB/QDDSSRC.FILE/' + 
+                  *tcat &name *tcat '.MBR')
+
 CPYFRMSTMF FROMSTMF(&ifsFile) +
-TOMBR(&mbrPath) MBROPT(*REPLACE)
+TOMBR(&mbrPath) MBROPT(*REPLACE) STMFCCSID(*STMF) DBFCCSID(*FILE)    
 
-chgvar &ifsFile (&ifsPath *tcat '/QRPGLESRC/IFSLIST.RPGLE')
-chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib *tcat '.LIB/QRPGLESRC.FILE/IFSLIST.MBR')
+CHGPFM FILE(&LIB/QDDSSRC) MBR(&name) SRCTYPE(LF)
+
+DLTF &LIB/&name
+monmsg CPF2105 /* file not found */
+CRTLF FILE(&lib/&name) SRCFILE(&lib/QDDSSRC) LVLCHK(*NO)
+
+enddo
+
+endsubr
+
+
+
+/********************/
+/* Compile DSPF's   */
+/********************/
+subr comp_DSPF
+close                 /* close the IFSLIST file */
+
+dountil &pigsFly
+rcvf RCDFMT(IFSLISTR) /* get columns NAME and TYPE */
+monmsg CPF0864 exec(LEAVE)
+
+if (&type *ne '*STMF') then(ITERATE)
+chgvar &len %scan('.DSPF'  &name)
+if (&len *eq 0) then(ITERATE)
+
+chgvar &ifsFile (&ifsPath *tcat '/QDDSSRC/' *tcat &name) 
+chgvar &len (&len - 1)
+chgvar &name (%sst(&name 1 &len)) /* w/o extension */
+chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib +
+                  *tcat '.LIB/QDDSSRC.FILE/' + 
+                  *tcat &name *tcat '.MBR')
+
 CPYFRMSTMF FROMSTMF(&ifsFile) +
-TOMBR(&mbrPath) MBROPT(*REPLACE)
+TOMBR(&mbrPath) MBROPT(*REPLACE) STMFCCSID(*STMF) DBFCCSID(*FILE)    
 
-chgvar &ifsFile (&ifsPath *tcat '/QCMDSRC/IFSLIST.CMD')
-chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib *tcat '.LIB/QCMDSRC.FILE/IFSLIST.MBR')
+CHGPFM FILE(&LIB/QDDSSRC) MBR(&name) SRCTYPE(DSPF)
+
+CRTDSPF FILE(&LIB/&NAME) SRCFILE(&LIB/QDDSSRC) REPLACE(*YES)
+enddo
+
+endsubr
+
+
+
+/*********************************************/
+/* Copy IFS source for QSRVCSRC to source PF */
+/*********************************************/
+subr comp_SRV
+close                 /* close the IFSLIST file */
+
+dountil &pigsFly
+rcvf RCDFMT(IFSLISTR) /* get columns NAME and TYPE */
+monmsg CPF0864 exec(LEAVE)
+
+if (&type *ne '*STMF') then(ITERATE)
+chgvar &len %scan('.BND'  &name)
+if (&len *eq 0) then(ITERATE)
+
+chgvar &ifsFile (&ifsPath *tcat '/QSRVSRC/' *tcat &name) 
+chgvar &len (&len - 1)
+chgvar &name (%sst(&name 1 &len)) /* w/o extension */
+chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib +
+                  *tcat '.LIB/QBNDSRC.FILE/' + 
+                  *tcat &name *tcat '.MBR')
+
 CPYFRMSTMF FROMSTMF(&ifsFile) +
-TOMBR(&mbrPath) MBROPT(*REPLACE)
+TOMBR(&mbrPath) MBROPT(*REPLACE) STMFCCSID(*STMF) DBFCCSID(*FILE)    
 
+CHGPFM FILE(&LIB/QSRVSRC) MBR(&name) SRCTYPE(BND)
 
-CHGPFM FILE(DAVIDKECK1/QDDSSRC) MBR(IFSLIST) SRCTYPE(PF) TEXT('Message Log')
+enddo
+
+endsubr
 
 endpgm
-

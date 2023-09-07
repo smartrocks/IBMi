@@ -1,11 +1,12 @@
 pgm
 
 dcl &lib  *char (10)
-dcl &path *char (255)
+dcl &path *char (256)
 
 chgvar &lib 'DAVIDKECK1'
 chgvar &path '/home/davidkeck/smartrocks/ibmi'
 
-call build (&lib &path)
+call build1 (&lib &path)  /* create source PF's and IFSLIST utility        */
+call build2 (&lib &path)  /* copy all src from IFS to src PF's and compile */
 
 endpgm

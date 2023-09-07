@@ -12,7 +12,7 @@
       //
       // Copyright (C) Julian Monypenny 2002
       //=====================================================================
-      /copy NBTYGPL/QRPGLESRC,stdTypH
+      /copy QRPGLESRC,stdTypH
      d streamError     c                   -1
      d streamErrorId   s                   like( intType )
      d                                     based( streamErrorIdPtr )

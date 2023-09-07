@@ -1,4 +1,4 @@
      A          R IFSLISTR
-     A            NAME          50          COLHDG('Unqualified' +
+     A            NAME         256          COLHDG('Unqualified' +
      A                                      'Object Name')
      A            TYPE          10          COLHDG('Object' 'Type')

@@ -1,0 +1,11 @@
+pgm
+
+dcl &lib  *char (10)
+dcl &path *char (255)
+
+chgvar &lib 'DAVIDKECK1'
+chgvar &path '/home/davidkeck/smartrocks/ibmi'
+
+call build (&lib &path)
+
+endpgm

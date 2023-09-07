@@ -1,0 +1,162 @@
+      /if not defined( streamIOH )
+      /define          streamIOH
+      /else
+      /eof
+      /endif
+      //=====================================================================
+      // Date       Pgmr     Proj  Task  Scan  Desc
+      // 2005-07-11 Keck     11264 2.00        Created - Used by pgm IFSLIST
+      //=====================================================================
+      // Stream IO Header:
+      //   Perform stream IO on a file in the IFS (UNIX style API).
+      //
+      // Copyright (C) Julian Monypenny 2002
+      //=====================================================================
+      /copy NBTYGPL/QRPGLESRC,stdTypH
+     d streamError     c                   -1
+     d streamErrorId   s                   like( intType )
+     d                                     based( streamErrorIdPtr )
+     d streamDirHandleType...
+     d                 s                   like( ptrType )
+     d streamDirPtrType...
+     d                 s                   like( ptrType )
+     d streamFileHandleType...
+     d                 s                   like( intType )
+     d streamReturnType...
+     d                 s                   like( intType )
+       // option - required
+     d readStream      c                   1
+     d writeStream     c                   2
+     d readWriteStream...
+     d                 c                   4
+       // option - optional
+     d createStream    c                   8
+     d exclusiveStream...
+     d                 c                   16
+     d truncateStream  c                   64
+     d nonBlankStream  c                   128
+     d appendStream    c                   256
+     d shareNoneStream...
+     d                 c                   2000000
+     d shareReadStream...
+     d                 c                   0200000
+     d shareReadWriteStream...
+     d                 c                   1000000
+     d shareWriteStream...
+     d                 c                   0400000
+     d textDataStream  c                   16777216
+     d codePageStream  c                   8388608
+       // mode
+     d userReadStream  c                   256
+     d userWriteStream...
+     d                 c                   128
+     d userExecStream  c                   64
+     d userDoAllStream...
+     d                 c                   448
+     d groupReadStream...
+     d                 c                   32
+     d groupWriteStream...
+     d                 c                   16
+     d groupExecStream...
+     d                 c                   8
+     d groupDoAllStream...
+     d                 c                   56
+     d othersReadStream...
+     d                 c                   4
+     d othersWriteStream...
+     d                 c                   2
+     d othersExecStream...
+     d                 c                   1
+     d othersDoAllStream...
+     d                 c                   7
+       // codePage
+     d asciiStreamCodePage...
+     d                 c                   819
+     d jobStreamCodePage...
+     d                 c                   65535
+       // end of line ids
+     d crStreamEol     c                   x'0D'
+     d crLfStreamEol   c                   x'0D25'
+     d lfStreamEol     c                   x'25'
+     d lfCrStreamEol   c                   x'250D'
+     d streamDirEntry  ds                  qualified based( streamDirEntryPtr )
+       // Null on error
+     d                               52
+     d  len                                like( intType )
+     d  path                        641
+        // C string
+     d streamInfo      ds                  qualified
+     d  mode                               like( unsignedIntType )
+     d  fileNbr                            like( unsignedIntType )
+     d  links                              like( unsignedSmallIntType )
+     d                                2
+     d  userNbr                            like( unsignedIntType )
+     d  groupNbr                           like( unsignedIntType )
+     d  size                               like( unsignedIntType )
+     d  timeUsed                           like( unsignedIntType )
+     d  timeChanged                        like( unsignedIntType )
+     d  timeStatusChanged...
+     d                                     like( unsignedIntType )
+     d  systemNbr                          like( unsignedIntType )
+     d  blockSize                          like( unsignedIntType )
+     d  allocation                         like( unsignedIntType )
+     d  type                               like( nameType )
+        // *DIR, *STMF, object type
+     d  codePage                           like( unsignedSmallIntType )
+     d  ccsid                              like( unsignedSmallIntType )
+     d                               60
+     d  generationNbr                      like( unsignedIntType )
+     d getStreamErrorId...
+     d                 pr                  extproc( '__errno' )
+     d                                     like( streamErrorIdPtr )
+     d getStreamInfo   pr                  extproc( 'lstat' )
+     d                                     like( streamReturnType )
+     d  path                               like( ptrType ) value
+     d                                     options( *string )
+     d  streamInfo_                        like( streamInfo )
+     d openStreamFile  pr                  extproc( 'open' )
+     d                                     like( streamFileHandleType )
+     d  file                               like( ptrType ) value
+     d                                     options( *string )
+     d  option                             like( intType ) value
+     d  mode                               like( unsignedIntType ) value
+     d                                     options( *nopass )
+     d  codePage                           like( unsignedIntType ) value
+     d                                     options( *nopass )
+     d closeStreamFile...
+     d                 pr                  extproc( 'close' )
+     d                                     like( streamReturnType )
+     d  fileHandle                         like( streamFileHandleType ) value
+     d getStreamFile   pr                  extproc( 'read' )
+     d                                     like( streamReturnType )
+     d  fileHandle                         like( streamFileHandleType ) value
+     d  bufferPtr                          like( ptrType ) value
+     d  bufferLen                          like( unsignedIntType ) value
+     d putStreamFile   pr                  extproc( 'write' )
+     d                                     like( streamReturnType )
+     d  fileHandle                         like( streamFileHandleType ) value
+     d  bufferPtr                          like( ptrType ) value
+     d  bufferLen                          like( unsignedIntType ) value
+     d getCurrStreamDir...
+     d                 pr                  extproc( 'getcwd' )
+     d  path                               like( stringType )
+        // C string
+     d  size                               like( intType ) value
+     d setCurrStreamDir...
+     d                 pr                  extproc( 'chdir' )
+     d                                     like( streamReturnType )
+     d  path                               like( ptrType ) value
+     d                                     options( *string )
+     d openStreamDir   pr                  extproc( 'opendir' )
+     d                                     like( streamDirHandleType )
+     d  path                               like( ptrType ) value
+     d                                     options( *string )
+     d closeStreamDir  pr                  extproc( 'closedir' )
+     d                                     like( streamReturnType )
+     d  dirHandle                          like( streamDirHandleType ) value
+     d resetStreamDir  pr                  extproc( 'rewinddir' )
+     d  dirHandle                          like( streamDirHandleType ) value
+     d nextStreamDirEntry...
+     d                 pr                  extproc( 'readdir' )
+     d                                     like( streamDirEntryPtr )
+     d  dirHandle                          like( streamDirHandleType ) value

@@ -1,0 +1,61 @@
+      /if not defined( stdTypH )
+      /define          stdTypH
+      /else
+      /eof
+      /endif
+      //=====================================================================
+      // Date       Pgmr     Proj  Task  Scan  Desc
+      // 2005-07-11 Keck     11264 2.00        Created - Used by pgm IFSLIST
+      //=====================================================================
+      // Standard Data Types Header:
+      //   Standard data types for use in any program.
+      //
+      // Copyright (C) Julian Monypenny 1997
+      //=====================================================================
+     d nullPtr         s               *
+     d apiFormatType   s              8    based( nullPtr )
+     d bigIntType      s             20i 0 based( nullPtr )
+     d binType         s              9b 0 based( nullPtr )
+     d boolType        s              1n   based( nullPtr )
+     d bufferType      s          32767    based( nullPtr )
+     d charType        s              1    based( nullPtr )
+     d commandType     s           3000    based( nullPtr )
+     d dateType        s               d   based( nullPtr ) datfmt( *iso )
+     d decTyp          s             15p 5 based( nullPtr )
+     d doubleType      s              8f   based( nullPtr )
+     d floatType       s              4f   based( nullPtr )
+     d intType         s             10i 0 based( nullPtr )
+     d messageIdType   s              7    based( nullPtr )
+     d nameType        s             10    based( nullPtr )
+     d procPtrType     s               *   based( nullPtr ) procptr
+     d ptrType         s               *   based( nullPtr )
+     d qualFileType    ds                  based( nullPtr ) qualified
+     d  size                               like( smallIntType )
+     d  name                               like( nameType )
+     d  lib                                like( nameType )
+     d  member                             like( nameType )
+     d qualNameType    ds                  based( nullPtr ) qualified
+     d  name                               like( nameType )
+     d  lib                                like( nameType )
+     d smallBinType    s              4b 0 based( nullPtr )
+     d smallIntType    s              5i 0 based( nullPtr )
+     d stringType      s            256    based( nullPtr )
+     d textType        s             50    based( nullPtr )
+     d timestampType   s               z   based( nullPtr )
+     d timeType        s               t   based( nullPtr ) timfmt( *iso )
+     d tinyIntType     s              3i 0 based( nullPtr )
+     d tokenType       s             32    based( nullPtr )
+     d unsignedIntType...
+     d                 s             10u 0 based( nullPtr )
+     d unsignedBigIntType...
+     d                 s             20u 0 based( nullPtr )
+     d unsignedSmallIntType...
+     d                 s              5u 0 based( nullPtr )
+     d unsignedTinyIntType...
+     d                 s              3u 0 based( nullPtr )
+     d varBufferType   s          32767    based( nullPtr ) varying
+     d varCommandType  s           3000    based( nullPtr ) varying
+     d varNameType     s             10    based( nullPtr ) varying
+     d varStringType   s            256    based( nullPtr ) varying
+     d varTextType     s             50    based( nullPtr ) varying
+     d varTokenType    s             32    based( nullPtr ) varying

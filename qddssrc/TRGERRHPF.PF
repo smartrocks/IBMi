@@ -1,0 +1,63 @@
+     A          R TRGERRHR
+      *
+     A            ERRORID        7S 0       TEXT('Error ID')
+     A                                      COLHDG(' '          +
+     A                                             'Unique' +
+     A                                             'Error ID ' )
+     A            FILENAME      10A         TEXT('Filename')
+     A                                      COLHDG(' '          +
+     A                                             'Trigger on' +
+     A                                             'Filename  ' )
+     A            FILELIB       10A         TEXT('Library')
+     A                                      COLHDG('          ' +
+     A                                             'File in'    +
+     A                                             'Library ' )
+     A            MEMBER        10A         TEXT('Member')
+     A                                      COLHDG('          ' +
+     A                                             ' '          +
+     A                                             'Member ' )
+     A            EVENT          1A         TEXT('Event Code')
+     A                                      COLHDG('Event Code'  +
+     A                                             '1=Ins 2=Del' +
+     A                                             '3=Upd 4=Read' )
+     A            EVENTTIM       1A         TEXT('Event Time')
+     A                                      COLHDG('Event Time'  +
+     A                                             '1=After    ' +
+     A                                             '2=Before    ' )
+     A            CMTLVL        10A         TEXT('Commit Level')
+     A                                      COLHDG(' '    +
+     A                                             'Commit' +
+     A                                             'Level'        )
+     A            CALLPGM       10A         TEXT('Calling Program')
+     A                                      COLHDG('          ' +
+     A                                             'Calling ' +
+     A                                             'Program ' )
+     A            CALLUSER      10A         TEXT('Calling User')
+     A                                      COLHDG('          ' +
+     A                                             'Calling   ' +
+     A                                             'User ')
+     A            ERRSTS         5A         TEXT('Error Status')
+     A                                      COLHDG('Error ' +
+     A                                             'Status   ' +
+     A                                             'Code    ')
+     A            SYSNAME       10A         TEXT('System Name')
+     A                                      COLHDG('          ' +
+     A                                             'System   ' +
+     A                                             'Name ')
+     A            DRVRNAME      10A         TEXT('Trigger Name')
+     A                                      COLHDG('Trigger   ' +
+     A                                             'Driver    ' +
+     A                                             'Name ')
+     A            ERRPGM        21A         TEXT('Error Pgm')
+     A                                      COLHDG('Error     ' +
+     A                                             'Occurred in' +
+     A                                             'Program ')
+     A            ERRMSG       255A         TEXT('Error Message')
+     A                                      COLHDG(' ' +
+     A                                             'Error ' +
+     A                                             'Message')
+     A            ERRDRRN       11S 0       TEXT('Detail RRN')
+     A                                      COLHDG(' ' +
+     A                                             'Detail' +
+     A                                             'RRN')
+     A          K ERRORID

@@ -1,10 +1,25 @@
-pgm
+/*---------------------------------------------------------------------*/
+/* BUILD - copy all src from IFS to src PF's and compile              */
+/*                                                                     */
+/* BUILD must be manually created. Once created it can be run and will */
+/* build all remaining components in the library passed in.            */
+/*                                                                     */
+/* A prerequisite to calling build BUILD is to Git CLONE the source    */
+/* code from GitHub https://github.com/smartrocks/IBMi                 */
+/*                                                                     */ 
+/* Parameters                                                          */
+/* &lib      Target library for created objects                        */
+/* &ifsPath  Path to IFS folder which contains all source files        */
+/*           ex: '/home/dave/smartrocks/ibmi'                          */
+/*           where the ibmi folder contains qddssrc, qclsrc, etc.      */
+/*---------------------------------------------------------------------*/
+pgm (&lib &path)
 
 dcl &lib  *char (10)
 dcl &path *char (256)
 
-chgvar &lib 'DAVIDKECK1'
-chgvar &path '/home/davidkeck/smartrocks/ibmi'
+/* chgvar &lib 'DAVIDKECK1' */
+/* chgvar &path '/home/davidkeck/smartrocks/ibmi' */
 
 call build1 (&lib &path)  /* create source PF's and IFSLIST utility        */
 call build2 (&lib &path)  /* copy all src from IFS to src PF's and compile */

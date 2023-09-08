@@ -9,7 +9,7 @@
       *       2. Copy the following compiler directives to the
       *          D-spec section of your program.
       */define PROTOTYPES
-      */copy NBTYGPL/QRPGLESRC,string
+      */include QSRVSRC,string
       */undefine PROTOTYPES
       *
       *----------------------------------------------------------

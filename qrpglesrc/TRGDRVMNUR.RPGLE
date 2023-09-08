@@ -7,7 +7,7 @@
 
      D* - -- - -- - -- - -- - -- - -- - -- - -- - -- - -- - -- - -- - -- -
      D
-     D* Execute Command (system)†Subprocedure Variables‚
+     D* Execute Command (system) Subprocedure Variables 
      D System          PR            10I 0 ExtProc('system')
      D  CmdText                        *   Value Options(*String)
      D

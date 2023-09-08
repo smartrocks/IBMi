@@ -11,14 +11,14 @@
      F
       // - -- - -- - -- - -- - -- - -- - -- - -- - -- - -- - -- - -- - -- -
      D
-      // Execute Command (system)†Subprocedure Variables‚
+      // Execute Command (system) Subprocedure Variables 
      D System          PR            10I 0 ExtProc('system')
      D  CmdText                        *   Value Options(*String)
      D
      D ErrorCPF        S              7A   Import('_EXCP_MSGID')
      D ErrorFlag       S             10I 0 Inz(0)
      D
-      //‚Prototype Definitions€
+      // Prototype Definitions 
       /Copy prdsrc/protype,fnAutUsrP
       /Define PROTOTYPE
       /Include nbtygpl/qsrvsrc,fnString
@@ -219,7 +219,7 @@
      D
      D Svsfindx        s                   Like(sfindx)
      D
-      // ‚Message Subfile€
+      //  Message Subfile 
      D clrpgmmsg       pr                  extpgm('QMHRMVPM')
      D   callstkent                  10a   const
      D   callstkcntr                 10i 0 const
@@ -248,7 +248,7 @@
      D   messagekey    s              4a
      D   messageRmv    s             10a
      D
-      // ‚Error Messages for Error Subfile€
+      //  Error Messages for Error Subfile 
      D
      D errDuplicateRecord...
      D                 c                   'Duplicate record. Record already -
@@ -287,7 +287,7 @@
      D                 s               n   inz(*off)
      D modified...
      D                 s               n   inz(*off)
-      // ‚Cursor Positioning for Errors€  €
+      //  Cursor Positioning for Errors    
      D
      D CursorPosition...
      D                 ds
@@ -580,7 +580,7 @@
             LeaveSR;
           Endif;
 
-          // ‚Validate Status Code
+          //  Validate Status Code
 
           If (dsexstat <> 'A' and dsexstat <> 'I' );
             daexstat = Green_UL_RI;
@@ -592,7 +592,7 @@
             Endif;
           Endif;
 
-          // ‚Validate File Name
+          //  Validate File Name
 
           If (dsFilNam = ' ');
             daFilNam = Green_UL_RI;
@@ -604,13 +604,13 @@
             Endif;
           Endif;
 
-          // ‚Validate File Library
+          //  Validate File Library
 
           If (dsFilLib = ' ');
             dsFilLib = '*LIBL';
           Endif;
 
-          // ‚Validate Program Name
+          //  Validate Program Name
 
           If (dspgmnam = ' ');
             dapgmnam = Green_UL_RI;
@@ -622,13 +622,13 @@
             Endif;
           Endif;
 
-          // ‚Validate Program Library
+          //  Validate Program Library
 
           If (dsPgmLib = ' ');
             dsPgmLib = '*LIBL';
           Endif;
 
-          // ‚Validate Event Code
+          //  Validate Event Code
 
           Monitor;
             dsEventCd  = EventArray(%int(dsEvent));

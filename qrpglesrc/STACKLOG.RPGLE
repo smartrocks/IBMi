@@ -142,7 +142,7 @@
      D Prev_Program    s             10
      D ProcedureName   s            276    varying
      D SkipTwoEntries  s             10i 0
-     ‚* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /free
       * find out how much space to allocate to the receiver variable by
       * calling the API once and checking "BytesAvail".
@@ -212,7 +212,7 @@
         endsr;
 
       /end-free
-     ‚* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
      C     GetCallStack  begsr
      C                   call      'QWVRCSTK'
      C                   parm                    Receiver                       O
@@ -223,7 +223,7 @@
      C                   parm                    errDS                          B
 
      C                   endsr
-     ‚* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
      P fnStackLog...
      P                 E

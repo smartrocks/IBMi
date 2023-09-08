@@ -9,7 +9,7 @@
       *       2. Copy the following compiler directives to the
       *          D-spec section of your program.
       */define PROTOTYPES
-      */copy nbtygpl/qrpglesrc,API
+      */include qsrvsrc,API
       */undefine PROTOTYPES
       *
       *--------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ dk01 D                 PR           276    varying
       * Supporting Prototypes (Not Exported) *
       ****************************************
       /define PROTOTYPES
-      /copy NBTYGPL/QRPGLESRC,string
+      /include QSRVSRC,string
       /undefine PROTOTYPES
 
      D RtvJobInf       PR
@@ -482,7 +482,7 @@ dk01 D  ProcName       s            276    based( ProcNamePtr )
 dk01  * Miscellaneous Declarations
 dk01 D ProcedureName   s            276    varying
 dk01 D SkipTwoEntries  s             10i 0
-dk01 ‚* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+dk01  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 dk01  * find out how much space to allocate to the receiver variable by
 dk01  * calling the API once and checking "BytesAvail".
@@ -530,7 +530,7 @@ dk01 C                   eval      ProcedureName = *Blanks
 dk01 C                   exsr      #exit
 
 dk01 C                   endsr
-dk01 ‚* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+dk01  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dk01 C     #GetCallStack begsr
 dk01 C                   call      'QWVRCSTK'
 dk01 C                   parm                    Receiver                       O
@@ -547,7 +547,7 @@ dk01 C                   exsr      #exit
 dk01 C                   Endif
 
 dk01 C                   endsr
-dk01 ‚* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+dk01  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 dk01 C     #Exit         begsr
 dk01 C                   dealloc(N)              ReceiverPtr

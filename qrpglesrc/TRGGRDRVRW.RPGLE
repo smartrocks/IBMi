@@ -6,7 +6,7 @@
      Ftrgdrvl01 if   e           k Disk
      Ftrgdrvxl01if   e           k Disk
 
-      *‚// Execute Command (system)†Subprocedure Variables‚
+      * // Execute Command (system) Subprocedure Variables 
      D System          PR            10I 0 ExtProc('system')
      D  CmdText                        *   Value Options(*String)
      D
@@ -65,7 +65,7 @@
      D Pm_Wait         S              9B 0 Inz(0)
      D Pm_Action       S             10    Inz('*REMOVE')
 
-      *‚// -------------------------------------------------
+      * // -------------------------------------------------
 
      d TriggerPgm      pr                  extpgm('TRGGRDRVRW')
      d  TrgBuffer                          likeds(TrgInfo)

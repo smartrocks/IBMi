@@ -27,7 +27,7 @@
       *       2. Copy the following compiler directives to the
       *          D-spec section of your program.
       */define PROTOTYPES
-      */copy NBTYGPL/QRPGLESRC,value
+      */include QSRVSRC,value
       */undefine PROTOTYPES
       *
       *----------------------------------------------------------
@@ -49,19 +49,19 @@
      F                                     UsrOpn
      F                                     Rename(NextNumR : NNcommit)
      F                                     Commit
-     ‚* open under Commitment Control
+      * open under Commitment Control
 
      FnextNum2  uf   e           k disk    Prefix(NN_)
      F                                     UsrOpn
      F                                     Rename(NextNumR : NN)
-     ‚* open WITHOUT Commitment Control
-     ‚*----------------------------------------------------------
+      * open WITHOUT Commitment Control
+      *----------------------------------------------------------
 
       /endif
 
-     ‚*************************************************
-     ‚* Message Service Program Prototypes (Exported) *
-     ‚*************************************************
+      *************************************************
+      * Message Service Program Prototypes (Exported) *
+      *************************************************
      D NextNumber      PR            12p 0
      D  Function                     50    value
      D  UseCommitmentControl...
@@ -92,12 +92,11 @@ dk02 D                                     Varying
       /endif
 
 
-     ‚****************************************
-     ‚* Supporting Prototypes (Not Exported) *
-     ‚****************************************
+      ****************************************
+      * Supporting Prototypes (Not Exported) *
+      ****************************************
       /define PROTOTYPES
-      /copy NBTYGPL/QRPGLESRC,error
-      /copy NBTYGPL/QRPGLESRC,message
+      /include QSRVSRC,message
       /undefine PROTOTYPES
 
      D Luhn12Increment...
@@ -109,41 +108,41 @@ dk02 D                                     Varying
      D  Number                       12s 0 const
 
 
-     ‚***********************
-     ‚* Global Declarations *
-     ‚***********************
+      ***********************
+      * Global Declarations *
+      ***********************
      D False           s               n   inz(*off)
      D True            s               n   inz(*on)
 
 
 
-     ‚*######################
-     ‚* EXPORTED PROCEDURES *
-     ‚*######################
+      *######################
+      * EXPORTED PROCEDURES *
+      *######################
 
 
 
 
-     ‚***************************************************************************
-     ‚* Get Next Number                                                         *
-     ‚*                                                                         *
-     ‚* Note: For example, you could use this function to retrieve the next     *
-     ‚*       receipt number or purchase order number, and it will automatically*
-     ‚*       increment the value in the file and update the audit log values.  *
-     ‚*       Also, if the auto recycle flag is set for the given function ID,  *
-     ‚*       and the maximum number is exceeded, the value will be reset to    *
-     ‚*       the starting value again.                                         *
-     ‚*       If no value can be retrieved for the function code then ...       *
-     ‚*         1. A message will be logged to the error log file               *
-     ‚*         2. If the job is interactive, a window message to the user will *
-     ‚*            describe the problem.                                        *
-     ‚*         3. A dump is produced.                                          *
-     ‚*         4. The program will return Next Number = zero                   *
-     ‚*                                                                         *
-     ‚* Example ...                                                             *
-     ‚*    PO = NextNumber('PurchaseOrder');                                    *
-     ‚*                                                                         *
-     ‚*--------------------------------------------------------------------------
+      ***************************************************************************
+      * Get Next Number                                                         *
+      *                                                                         *
+      * Note: For example, you could use this function to retrieve the next     *
+      *       receipt number or purchase order number, and it will automatically*
+      *       increment the value in the file and update the audit log values.  *
+      *       Also, if the auto recycle flag is set for the given function ID,  *
+      *       and the maximum number is exceeded, the value will be reset to    *
+      *       the starting value again.                                         *
+      *       If no value can be retrieved for the function code then ...       *
+      *         1. A message will be logged to the error log file               *
+      *         2. If the job is interactive, a window message to the user will *
+      *            describe the problem.                                        *
+      *         3. A dump is produced.                                          *
+      *         4. The program will return Next Number = zero                   *
+      *                                                                         *
+      * Example ...                                                             *
+      *    PO = NextNumber('PurchaseOrder');                                    *
+      *                                                                         *
+      *--------------------------------------------------------------------------
      P NextNumber      B                   export
      D NextNumber      PI            12p 0
      D  Function                     50    value
@@ -160,17 +159,17 @@ dk02 D                                     Varying
      D NextNumber      s                   like(nn_NextNum)
      D wInc            s              5i 0
      D wNextNum        s                   like(nn_NextNum)
-     ‚*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     ‚* Open the appropriate next numbers file, as needed
+      *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      * Open the appropriate next numbers file, as needed
 
      C                   Select
      C                   When      %parms = 1
-š1e€ C                   eval      CommitmentControlIsActive = *off
+ 1e  C                   eval      CommitmentControlIsActive = *off
 
      C                   Other
-š1e€ C                   eval      CommitmentControlIsActive =
+ 1e  C                   eval      CommitmentControlIsActive =
      C                                                      UseCommitmentControl
-š1e€ C                   EndSL
+ 1e  C                   EndSL
 
      C                   if        not %open(nextNum1)       and
      C                             CommitmentControlIsActive                    using commit
@@ -184,31 +183,31 @@ dk02 D                                     Varying
 
      C                   if        CommitmentControlIsActive
      C     Function      chain     NNcommit
-š1e€ C                   else
+ 1e  C                   else
      C     Function      chain     NN
-š1e€ C                   endif
+ 1e  C                   endif
 
      C                   exsr      increment
 
      C                   return    NextNumber
 
 
-     ‚*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     ‚* Increment the Next Number
+      *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      * Increment the Next Number
      C     increment     begsr
 
-š1b€ C                   Select
-     ‚* function code not defined.
-š1x€ C                   When      CommitmentControlIsActive and
-š1x€ C                             not %found(NextNum1)
+ 1b  C                   Select
+      * function code not defined.
+ 1x  C                   When      CommitmentControlIsActive and
+ 1x  C                             not %found(NextNum1)
      C                   eval      Msg1 = 'Next Number Function Code not ' +
      C                                    'found for:'
      C                   exsr      error
      C                   LeaveSR
 
-     ‚* function code not defined.
-š1x€ C                   When      NOT CommitmentControlIsActive and
-š1x€ C                             not %found(NextNum2)
+      * function code not defined.
+ 1x  C                   When      NOT CommitmentControlIsActive and
+ 1x  C                             not %found(NextNum2)
      C                   eval      Msg1 = 'Next Number Function Code not ' +
      C                                    'found for:'
      C                   exsr      error
@@ -219,46 +218,46 @@ dk02 D                                     Varying
 
          if nn_Algorithm = 'LUHN12';
             wNextNum = Luhn12NextNumber(nn_NextNum);
-š1x€        wInc     = Luhn12Increment(wNextNum);
+ 1x         wInc     = Luhn12Increment(wNextNum);
          else;
             wNextNum = nn_NextNum;
-š1x€        wInc     = nn_Inc;
+ 1x         wInc     = nn_Inc;
          endif;
 
       /end-free
 
-š1b€ C                   Select
-     ‚* simple increment is all that's needed.
-š1x€ C                   When      %dec((wNextNum +  wInc) : 13 : 0) <= nn_Max
+ 1b  C                   Select
+      * simple increment is all that's needed.
+ 1x  C                   When      %dec((wNextNum +  wInc) : 13 : 0) <= nn_Max
      C                   eval      NextNumber = wNextNum
      C                   eval      nn_NextNum = wNextNum + wInc
      C                   exsr      UpdNxtNum
 
-     ‚* maximum value exceeded.  reset next number to the minimum value
-     ‚* Note: LUHN numbers may reset to any number.  When NextNumber is called
-     ‚*       the value will automatically be corrected.
-š1x€ C                   When      nn_CycleYN = 'Y'
+      * maximum value exceeded.  reset next number to the minimum value
+      * Note: LUHN numbers may reset to any number.  When NextNumber is called
+      *       the value will automatically be corrected.
+ 1x  C                   When      nn_CycleYN = 'Y'
      C                   eval      NextNumber = wNextNum
      C                   eval      nn_NextNum = nn_Min
      C                   exsr      UpdNxtNum
 
-     ‚* maximum value exceeded.  unable to automatically reset.
-š1x€ C                   Other
+      * maximum value exceeded.  unable to automatically reset.
+ 1x  C                   Other
      C                   eval      Msg1 = 'Maximum Next Number not reset for ' +
      C                                    'Function Code: '
      C                   exsr      error
 
      C                   If        CommitmentControlIsActive
      C                   unlock    NextNum1
-š1e€ C                   Else
+ 1e  C                   Else
      C                   unlock    NextNum2
-š1e€ C                   EndIf
+ 1e  C                   EndIf
 
-š1e€ C                   EndSL
+ 1e  C                   EndSL
 
      C                   EndSR
-     ‚*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     ‚* Update Next Number
+      *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      * Update Next Number
      C     UpdNxtNum     begsr
 
      C                   time                    nn_Date
@@ -266,41 +265,41 @@ dk02 D                                     Varying
 
      C                   If        CommitmentControlIsActive
      C                   update    NNcommit
-š1e€ C                   Else
+ 1e  C                   Else
      C                   update    NN
-š1e€ C                   EndIf
+ 1e  C                   EndIf
 
      C                   endsr
-     ‚*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     ‚* Handle Error retrieving Next Number
+      *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      * Handle Error retrieving Next Number
      C     error         begsr
 
      C                   eval      Msg2 = Function
      C                   eval      Msg3 = 'Please call the Help Desk.'
      C                   callp     WinMsg(Msg1 : Msg2 : Msg3)
-     C                   callp     LogError('NEXTNUMBER' : Msg1 + Msg2)
+     C                   callp     Logmsg('NEXTNUMBER' : Msg1 + Msg2)
      C                   dump(a)
      C                   eval      NextNumber = *zero
      C                   eval      ErrorOccurred = True
 
      C                   endsr
-     ‚*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
      P NextNumber      E
 
 
 
 
-     ‚***************************************************************************
-     ‚* Close Next Number File                                                  *
-     ‚*                                                                         *
-     ‚* Note: Programs which open the Next Number file by calling the NEXTNUM   *
-     ‚*       function should call this function, as the former                 *
-     ‚*       opens the Next Number file.                                       *
-     ‚*                                                                         *
-     ‚* Example ...                                                             *
-     ‚*    CloseNextNumberFile;                                                 *
-     ‚*                                                                         *
-     ‚*--------------------------------------------------------------------------
+      ***************************************************************************
+      * Close Next Number File                                                  *
+      *                                                                         *
+      * Note: Programs which open the Next Number file by calling the NEXTNUM   *
+      *       function should call this function, as the former                 *
+      *       opens the Next Number file.                                       *
+      *                                                                         *
+      * Example ...                                                             *
+      *    CloseNextNumberFile;                                                 *
+      *                                                                         *
+      *--------------------------------------------------------------------------
      P NextNumberCleanUp...
      P                 B                   export
      D NextNumberCleanUp...
@@ -316,22 +315,22 @@ dk02 D                                     Varying
 
 
 
-     ‚***************************************************************************
-     ‚* Next Number Reset                                                       *
-     ‚*                                                                         *
-     ‚* Note: Reset the next number for a given Function ID to the Min value.   *
-     ‚*       There is no return value.                                         *
-     ‚*       If no value can be retrieved for the function code then ...       *
-     ‚*         1. A message will be logged to the error log file               *
-     ‚*         2. If the job is interactive, a window message to the user will *
-     ‚*            describe the problem.                                        *
-     ‚*         3. A dump is produced.                                          *
-     ‚*         4. The program will return Next Number = zero                   *
-     ‚*                                                                         *
-     ‚* Example ...                                                             *
-     ‚*    NextNumberReset('My_Process');                                       *
-     ‚*                                                                         *
-     ‚*--------------------------------------------------------------------------
+      ***************************************************************************
+      * Next Number Reset                                                       *
+      *                                                                         *
+      * Note: Reset the next number for a given Function ID to the Min value.   *
+      *       There is no return value.                                         *
+      *       If no value can be retrieved for the function code then ...       *
+      *         1. A message will be logged to the error log file               *
+      *         2. If the job is interactive, a window message to the user will *
+      *            describe the problem.                                        *
+      *         3. A dump is produced.                                          *
+      *         4. The program will return Next Number = zero                   *
+      *                                                                         *
+      * Example ...                                                             *
+      *    NextNumberReset('My_Process');                                       *
+      *                                                                         *
+      *--------------------------------------------------------------------------
      P NextNumberReset...
      P                 B                   export
      D NextNumberReset...
@@ -347,17 +346,17 @@ dk02 D                                     Varying
      D Msg3            s             50
      D CommitmentControlIsActive...
      D                 s               n
-     ‚*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     ‚* Open the appropriate next numbers file, as needed
+      *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      * Open the appropriate next numbers file, as needed
 
      C                   Select
      C                   When      %parms = 1
-š1e€ C                   eval      CommitmentControlIsActive = *off
+ 1e  C                   eval      CommitmentControlIsActive = *off
 
      C                   Other
-š1e€ C                   eval      CommitmentControlIsActive =
+ 1e  C                   eval      CommitmentControlIsActive =
      C                                                      UseCommitmentControl
-š1e€ C                   EndSL
+ 1e  C                   EndSL
 
      C                   if        not %open(nextNum1)       and
      C                             CommitmentControlIsActive                    using commit
@@ -371,44 +370,44 @@ dk02 D                                     Varying
 
      C                   if        CommitmentControlIsActive
      C     Function      chain     NNcommit
-š1e€ C                   else
+ 1e  C                   else
      C     Function      chain     NN
-š1e€ C                   endif
+ 1e  C                   endif
 
      C                   exsr      Reset
 
      C                   return
 
 
-     ‚*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     ‚* Reset the Next Number to the Minimum number for the function
+      *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      * Reset the Next Number to the Minimum number for the function
      C     Reset         begsr
 
-š1b€ C                   Select
-     ‚* function code not defined.
-š1x€ C                   When      CommitmentControlIsActive and
-š1x€ C                             not %found(NextNum1)
+ 1b  C                   Select
+      * function code not defined.
+ 1x  C                   When      CommitmentControlIsActive and
+ 1x  C                             not %found(NextNum1)
      C                   eval      Msg1 = 'Next Number Function Code not ' +
      C                                    'found for:'
      C                   exsr      error
 
-     ‚* function code not defined.
-š1x€ C                   When      NOT CommitmentControlIsActive and
-š1x€ C                             not %found(NextNum2)
+      * function code not defined.
+ 1x  C                   When      NOT CommitmentControlIsActive and
+ 1x  C                             not %found(NextNum2)
      C                   eval      Msg1 = 'Next Number Function Code not ' +
      C                                    'found for:'
      C                   exsr      error
 
-     ‚* maximum value exceeded.  reset next number to the minimum value
-š1x€ C                   Other
+      * maximum value exceeded.  reset next number to the minimum value
+ 1x  C                   Other
      C                   eval      nn_NextNum = nn_Min
      C                   exsr      UpdNxtNum
 
-š1e€ C                   EndSL
+ 1e  C                   EndSL
 
      C                   EndSR
-     ‚*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     ‚* Update Next Number
+      *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      * Update Next Number
      C     UpdNxtNum     begsr
 
      C                   time                    nn_Date
@@ -416,42 +415,42 @@ dk02 D                                     Varying
 
      C                   If        CommitmentControlIsActive
      C                   update    NNcommit
-š1e€ C                   Else
+ 1e  C                   Else
      C                   update    NN
-š1e€ C                   EndIf
+ 1e  C                   EndIf
 
      C                   endsr
-     ‚*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     ‚* Handle Error retrieving Next Number
+      *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      * Handle Error retrieving Next Number
      C     error         begsr
 
      C                   eval      Msg2 = Function
      C                   eval      Msg3 = 'Please call the Help Desk.'
      C                   callp     WinMsg(Msg1 : Msg2 : Msg3)
-     C                   callp     LogError('NEXTNUMBER' : Msg1 + Msg2)
+     C                   callp     LogMsg('NEXTNUMBER' : Msg1 + Msg2)
      C                   dump(a)
      C                   eval      NextNumber = *zero
 
      C                   endsr
-     ‚*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
      P NextNumberReset...
      P                 E
 
 
 
 
-     ‚***************************************************************************
-     ‚* IsValid12DigitLUHN                                                      *
-     ‚*                                                                         *
-     ‚* Purpose: Test if input number is a valid 12 digit LUHN number.  LUHN    *
-     ‚*       is a type of modulus 10 check digit.  A complete definition       *
-     ‚*       can be found on the net.                                          *
-     ‚*                                                                         *
-     ‚* Example ...                                                             *
-     ‚*    If IsValid12DigitLUHN( MyNumber );                                   *
-     ‚*       ...                                                               *
-     ‚*    Endif                                                                *
-     ‚*--------------------------------------------------------------------------
+      ***************************************************************************
+      * IsValid12DigitLUHN                                                      *
+      *                                                                         *
+      * Purpose: Test if input number is a valid 12 digit LUHN number.  LUHN    *
+      *       is a type of modulus 10 check digit.  A complete definition       *
+      *       can be found on the net.                                          *
+      *                                                                         *
+      * Example ...                                                             *
+      *    If IsValid12DigitLUHN( MyNumber );                                   *
+      *       ...                                                               *
+      *    Endif                                                                *
+      *--------------------------------------------------------------------------
      P IsValid12DigitLUHN...
      P                 b                   export
      D IsValid12DigitLUHN...
@@ -543,25 +542,25 @@ wj07 D chech           S              1  0
 
 
 
-     ‚*##########################     *##########################   *##########################
-     ‚* NON-EXPORTED PROCEDURES *     * NON-EXPORTED PROCEDURES *   * NON-EXPORTED PROCEDURES *
-     ‚*##########################     *##########################   *##########################
+      *##########################     *##########################   *##########################
+      * NON-EXPORTED PROCEDURES *     * NON-EXPORTED PROCEDURES *   * NON-EXPORTED PROCEDURES *
+      *##########################     *##########################   *##########################
 
 
 
 
-     ‚***************************************************************************
-     ‚* Luhn12Increment                                                         *
-     ‚*                                                                         *
-     ‚* Purpose: Given any 12 digit number, determine the offset to the next    *
-     ‚*          LUHN number.  Overflow is handled by passing back a large      *
-     ‚*          increment.                                                     *
-     ‚*                                                                         *
-     ‚* Example ...                                                             *
-     ‚*    LUHNinc = Luhn12Increment( MyCurrentLUHNnumber );                    *
-     ‚*       ...                                                               *
-     ‚*    Endif                                                                *
-     ‚*--------------------------------------------------------------------------
+      ***************************************************************************
+      * Luhn12Increment                                                         *
+      *                                                                         *
+      * Purpose: Given any 12 digit number, determine the offset to the next    *
+      *          LUHN number.  Overflow is handled by passing back a large      *
+      *          increment.                                                     *
+      *                                                                         *
+      * Example ...                                                             *
+      *    LUHNinc = Luhn12Increment( MyCurrentLUHNnumber );                    *
+      *       ...                                                               *
+      *    Endif                                                                *
+      *--------------------------------------------------------------------------
      P Luhn12Increment...
      P                 b
      D Luhn12Increment...
@@ -597,19 +596,19 @@ wj07 D chech           S              1  0
 
 
 
-     ‚***************************************************************************
-     ‚* Luhn12NextNumber                                                        *
-     ‚*                                                                         *
-     ‚* Purpose: Given any 12 digit number, determine the next LUHN number.     *
-     ‚*          If the number passed in is itself valid, it will be returned   *
-     ‚*          as the result.  Otherwise, the next sequential number which    *
-     ‚*          has a LUHN check digit will be returned.                       *
-     ‚*                                                                         *
-     ‚* Example ...                                                             *
-     ‚*    LUHNnumber = Luhn12NextNUmber( MyNumber );                           *
-     ‚*       ...                                                               *
-     ‚*    Endif                                                                *
-     ‚*--------------------------------------------------------------------------
+      ***************************************************************************
+      * Luhn12NextNumber                                                        *
+      *                                                                         *
+      * Purpose: Given any 12 digit number, determine the next LUHN number.     *
+      *          If the number passed in is itself valid, it will be returned   *
+      *          as the result.  Otherwise, the next sequential number which    *
+      *          has a LUHN check digit will be returned.                       *
+      *                                                                         *
+      * Example ...                                                             *
+      *    LUHNnumber = Luhn12NextNUmber( MyNumber );                           *
+      *       ...                                                               *
+      *    Endif                                                                *
+      *--------------------------------------------------------------------------
      P Luhn12NextNumber...
      P                 b
      D Luhn12NextNumber...
@@ -644,26 +643,26 @@ wj07 D chech           S              1  0
      P                 e
 
 
-     ‚***************************************************************************
-     ‚* Get Next Number SQL - to be used in creating an SQL function           *
-     ‚*                                                                         *
-     ‚* Note: For example, you could use this function to retrieve the next     *
-     ‚*       receipt number or purchase order number, and it will automatically*
-     ‚*       increment the value in the file and update the audit log values.  *
-     ‚*       Also, if the auto recycle flag is set for the given function ID,  *
-     ‚*       and the maximum number is exceeded, the value will be reset to    *
-     ‚*       the starting value again.                                         *
-     ‚*       If no value can be retrieved for the function code then ...       *
-     ‚*         1. A message will be logged to the error log file               *
-     ‚*         2. If the job is interactive, a window message to the user will *
-     ‚*            describe the problem.                                        *
-     ‚*         3. A dump is produced.                                          *
-     ‚*         4. The program will return Next Number = zero                   *
-     ‚*                                                                         *
-     ‚* Example ...                                                             *
-     ‚*    PO = NextNumber('PurchaseOrder');                                    *
-     ‚*                                                                         *
-     ‚*--------------------------------------------------------------------------
+      ***************************************************************************
+      * Get Next Number SQL - to be used in creating an SQL function           *
+      *                                                                         *
+      * Note: For example, you could use this function to retrieve the next     *
+      *       receipt number or purchase order number, and it will automatically*
+      *       increment the value in the file and update the audit log values.  *
+      *       Also, if the auto recycle flag is set for the given function ID,  *
+      *       and the maximum number is exceeded, the value will be reset to    *
+      *       the starting value again.                                         *
+      *       If no value can be retrieved for the function code then ...       *
+      *         1. A message will be logged to the error log file               *
+      *         2. If the job is interactive, a window message to the user will *
+      *            describe the problem.                                        *
+      *         3. A dump is produced.                                          *
+      *         4. The program will return Next Number = zero                   *
+      *                                                                         *
+      * Example ...                                                             *
+      *    PO = NextNumber('PurchaseOrder');                                    *
+      *                                                                         *
+      *--------------------------------------------------------------------------
      P NextNumberSQL   B                   export
      D NextNumberSQL   PI            12p 0
      D  Function                     50    const
@@ -673,16 +672,16 @@ dk02 D                                     Varying
 
      D HldNextNumber   s                   like(nn_NextNum)
      D HldFunction     s             50
-     ‚*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     ‚* Open the appropriate next numbers file, as needed
+      *- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      * Open the appropriate next numbers file, as needed
 
         HldFunction = %trim(Function);
         select;
           when %parms = 1;
-š1e€        HldNextNumber = NextNumber(HldFunction);
+ 1e         HldNextNumber = NextNumber(HldFunction);
           other;
-š1e€        HldNextNumber = NextNumber(HldFunction: UseCommitmentControl);
-š1e€    endsl;
+ 1e         HldNextNumber = NextNumber(HldFunction: UseCommitmentControl);
+ 1e     endsl;
 
         return HldNextNumber;
 

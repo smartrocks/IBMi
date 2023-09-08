@@ -1,8 +1,0 @@
-STRPGMEXP PGMLVL(*CURRENT) SIGNATURE('API')
-  EXPORT SYMBOL(RunningInteractively)
-  EXPORT SYMBOL(RunningInBatch)
-  EXPORT SYMBOL(Command)
-  EXPORT SYMBOL(SystemName)
-  EXPORT SYMBOL(RtvDtaAra)
-  EXPORT SYMBOL(fnGetCallingProgramName)
-ENDPGMEXP

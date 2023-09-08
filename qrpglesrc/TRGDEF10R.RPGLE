@@ -13,7 +13,7 @@
      F
       // - -- - -- - -- - -- - -- - -- - -- - -- - -- - -- - -- - -- - -- -
      D
-      // Execute Command (system)†Subprocedure Variables‚
+      // Execute Command (system) Subprocedure Variables 
      D System          PR            10I 0 ExtProc('system')
      D  CmdText                        *   Value Options(*String)
      D
@@ -22,7 +22,7 @@
      D
      D systemString    S            256A
 
-      //‚Prototype Definitions€
+      // Prototype Definitions 
       /Copy prdsrc/protype,fnAutUsrP
       /Define PROTOTYPE
       /Include nbtygpl/qsrvsrc,fnString
@@ -212,7 +212,7 @@
      D
      D KeyListRa       ds                  Likeds(showKeyList) Dim(4)
      D
-      // ‚Message Subfile€
+      //  Message Subfile 
      D clrpgmmsg       pr                  extpgm('QMHRMVPM')
      D   callstkent                  10a   const
      D   callstkcntr                 10i 0 const
@@ -241,7 +241,7 @@
      D   messagekey    s              4a
      D   messageRmv    s             10a
      D
-      // ‚Error Messages for Error Subfile€
+      //  Error Messages for Error Subfile 
      D
      D errDuplicateRecord...
      D                 c                   'Duplicate record. Record already -
@@ -309,7 +309,7 @@
      D                 s               n   inz(*off)
      D modified...
      D                 s               n   inz(*off)
-      // ‚Cursor Positioning for Errors€  €
+      //  Cursor Positioning for Errors    
      D
      D CursorPosition...
      D                 ds
@@ -636,7 +636,7 @@
           Reset screenAttributes;
           reset cursorPosition;
 
-          // ‚Validate File Name
+          //  Validate File Name
           Select;
           When dstdfile =  ' ';
             datdfile = Green_UL_RI;
@@ -648,7 +648,7 @@
             Endif;
           Endsl;
 
-          // ‚Validate File Library
+          //  Validate File Library
           Select;
           When dstdflib =  ' ';
             datdflib = Green_UL_RI;
@@ -660,7 +660,7 @@
             Endif;
           Endsl;
 
-          // ‚Validate Program Name
+          //  Validate Program Name
           Select;
           When dstdpgm =  ' ';
             datdpgm = Green_UL_RI;
@@ -672,7 +672,7 @@
             Endif;
           Endsl;
 
-          // ‚Validate Program Library
+          //  Validate Program Library
           Select;
           When dstdplib =  ' ';
             datdplib = Green_UL_RI;
@@ -684,7 +684,7 @@
             Endif;
           Endsl;
 
-          // ‚Validate Trigger Time
+          //  Validate Trigger Time
           Select;
           When (dstdtime <> '*BEFORE' and dstdtime <> '*AFTER');
             datdtime = Green_UL_RI;
@@ -696,7 +696,7 @@
             Endif;
           Endsl;
 
-          // ‚Validate Trigger Event
+          //  Validate Trigger Event
           Select;
           When (dstdevnt <> '*UPDATE' and dstdevnt <> '*INSERT'
             and dstdevnt <> '*DELETE');
@@ -709,7 +709,7 @@
             Endif;
           Endsl;
 
-          // ‚Validate Status
+          //  Validate Status
           Select;
           When (dstdstat <> 'I' and dstdstat <> 'P');
             datdstat = Green_UL_RI;
@@ -721,7 +721,7 @@
             Endif;
           Endsl;
 
-          // ‚Determine if changes were made
+          //  Determine if changes were made
 
           If (CopyMode and not validationError);
             If (hiddenFields = screenFields);
@@ -735,7 +735,7 @@
             Endif;
           Endif;
 
-          // ‚Check for duplicates
+          //  Check for duplicates
 
           If (AddMode or CopyMode and not validationError);
             Setll(E) (dstdfile:dstdflib:dstdtime:dstdevnt) trgdefp;

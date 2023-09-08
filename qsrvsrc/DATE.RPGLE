@@ -9,7 +9,7 @@
       *       2. Copy the following compiler directives to the
       *          D-spec section of your program.
       */define PROTOTYPES
-      */copy NBTYGPL/QRPGLESRC,date
+      */include QSRVSRC,date
       */undefine PROTOTYPES
       *
       *----------------------------------------------------------
@@ -82,7 +82,7 @@ dk03 D                 Pr              d
       * Supporting Prototypes (Not Exported) *
       ****************************************
       /define PROTOTYPES
-      /include nbtygpl/qrpglesrc,API
+      /include qsrvsrc,API
       /undefine PROTOTYPES
 
 

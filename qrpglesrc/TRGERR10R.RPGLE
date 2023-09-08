@@ -5,7 +5,7 @@
 
      Ftrgemsgpf if   e           k Disk    Usropn
 
-      *// Execute Command (system)†Subprocedure Variables
+      *// Execute Command (system) Subprocedure Variables
      D System          PR            10I 0 ExtProc('system')
      D  CmdText                        *   Value Options(*String)
      D

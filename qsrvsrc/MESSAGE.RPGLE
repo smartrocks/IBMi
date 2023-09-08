@@ -9,7 +9,7 @@
       *       2. Copy the following compiler directives to the
       *          D-spec section of your program.
       */define PROTOTYPES
-      */include nbtygpl/qrpglesrc, MESSAGE
+      */include qsrvsrc, MESSAGE
       */undefine PROTOTYPES
       *
       *----------------------------------------------------------
@@ -81,42 +81,42 @@
       /endif
 
 
-     ‚****************************************
-     ‚* Supporting Prototypes (Not Exported) *
-     ‚****************************************
+       ****************************************
+       * Supporting Prototypes (Not Exported) *
+       ****************************************
       /define PROTOTYPES
-      /copy NBTYGPL/QRPGLESRC,string
+      /include QsrvSRC,string
       /undefine PROTOTYPES
 
      D PriorUserProc   PR           276    varying
 
 
-     ‚***********************
-     ‚* Global Declarations *
-     ‚***********************
+       ***********************
+       * Global Declarations *
+       ***********************
      D psds          esds                  extname(psds) prefix(psds_)
 
 
 
-     ‚*######################
-     ‚* EXPORTED PROCEDURES *
-     ‚*######################
+       *######################
+       * EXPORTED PROCEDURES *
+       *######################
 
 
 
 
-     ‚***************************************************************************
-     ‚* Message Cleanup                                                         *
-     ‚*                                                                         *
-     ‚* Close files opened by this service program.                             *
-     ‚*                                                                         *
-     ‚***************************************************************************
+       ***************************************************************************
+       * Message Cleanup                                                         *
+       *                                                                         *
+       * Close files opened by this service program.                             *
+       *                                                                         *
+       ***************************************************************************
      P MessageCleanup  B                   export
      D MessageCleanup  PI
 
-š1b€ C                   If        %open(message)
+  1b   C                   If        %open(message)
      C                   close     message
-š1e€ C                   Endif
+  1e   C                   Endif
 
      C                   return
 
@@ -125,39 +125,39 @@
 
 
 
-     ‚***************************************************************************
-     ‚* Confirm Prompt                                                          *
-     ‚*                                                                         *
-     ‚* This function will display a confirm prompt in a window, with a user    *
-     ‚* defined title.  User must respond with Y or N.  Prompt will default     *
-     ‚* to 'N'.  If the user presses 'Y' the function will return *ON, else     *
-     ‚* it will return *OFF.                                                    *
-     ‚* The title is centered.  The cursor is restricted to the confirm window. *
-     ‚*                                                                         *
-     ‚* Example                                                                 *
-     ‚* If Confirmed('Void Receipt')    // where 'Void Receipt' is title        *
-     ‚*    exsr VoidReceipt;                                                    *
-     ‚* EndIf;                                                                  *
-     ‚***************************************************************************
+       ***************************************************************************
+       * Confirm Prompt                                                          *
+       *                                                                         *
+       * This function will display a confirm prompt in a window, with a user    *
+       * defined title.  User must respond with Y or N.  Prompt will default     *
+       * to 'N'.  If the user presses 'Y' the function will return *ON, else     *
+       * it will return *OFF.                                                    *
+       * The title is centered.  The cursor is restricted to the confirm window. *
+       *                                                                         *
+       * Example                                                                 *
+       * If Confirmed('Void Receipt')    // where 'Void Receipt' is title        *
+       *    exsr VoidReceipt;                                                    *
+       * EndIf;                                                                  *
+       ***************************************************************************
      P Confirmed       B                   export
      D Confirmed       PI              N
      D  Title                        15    const
 
      D Response        s               n
 
-š1b€ C                   If        not %open(message)
+  1b   C                   If        not %open(message)
      C                   open      message
-š1e€ C                   Endif
+  1e   C                   Endif
 
      C                   eval      d_Title = CenterString(Title)
      C                   eval      d_ConfirmYN = 'N'
      C                   exfmt     confirm
 
-š1b€ C                   If        d_ConfirmYN = 'Y'
+  1b   C                   If        d_ConfirmYN = 'Y'
      C                   eval      response = *on
-š1x€ C                   Else
+  1x   C                   Else
      C                   eval      response = *off
-š1e€ C                   Endif
+  1e   C                   Endif
 
      C                   close     message
 
@@ -168,32 +168,32 @@
 
 
 
-     ‚***************************************************************************
-     ‚* Send Subfile Message                                                    *
-     ‚*                                                                         *
-     ‚* Example ...                                                             *
-     ‚*    SndSflMsg('Subfile Message Here !!');                                *
-     ‚*    write msgctl;                                                        *
-     ‚*    exfmt testr;                                                         *
-     ‚*    ClrMsgSfl();                                                         *
-     ‚*                                                                         *
-     ‚* Remember to include the DDS message subfile and subfile control         *
-     ‚* as follows.  set MSGKEY = *blanks, PROC = procedure name from PSDS.     *
-     ‚*------------------------------------------------------------------
-     ‚*         R MSGSFL                    SFL
-     ‚*                                     SFLMSGRCD(24)
-     ‚*           MSGKEY                    SFLMSGKEY
-     ‚*           PROC                      SFLPGMQ
-     ‚*------------------------------------------------------------------
-     ‚*         R MSGCTL                    SFLCTL(MSGSFL)
-     ‚*                                     SFLSIZ(2)
-     ‚*                                     SFLPAG(1)
-     ‚*                                     SFLDSP
-     ‚*                                     SFLDSPCTL
-     ‚*                                     SFLINZ
-     ‚* 90                                  SFLEND
-     ‚*           PROC                      SFLPGMQ
-     ‚******************************************************************
+       ***************************************************************************
+       * Send Subfile Message                                                    *
+       *                                                                         *
+       * Example ...                                                             *
+       *    SndSflMsg('Subfile Message Here !!');                                *
+       *    write msgctl;                                                        *
+       *    exfmt testr;                                                         *
+       *    ClrMsgSfl();                                                         *
+       *                                                                         *
+       * Remember to include the DDS message subfile and subfile control         *
+       * as follows.  set MSGKEY = *blanks, PROC = procedure name from PSDS.     *
+       *------------------------------------------------------------------
+       *         R MSGSFL                    SFL
+       *                                     SFLMSGRCD(24)
+       *           MSGKEY                    SFLMSGKEY
+       *           PROC                      SFLPGMQ
+       *------------------------------------------------------------------
+       *         R MSGCTL                    SFLCTL(MSGSFL)
+       *                                     SFLSIZ(2)
+       *                                     SFLPAG(1)
+       *                                     SFLDSP
+       *                                     SFLDSPCTL
+       *                                     SFLINZ
+       * 90                                  SFLEND
+       *           PROC                      SFLPGMQ
+       ******************************************************************
      P SndSflMsg       B                   export
      D SndSflMsg       PI
      D  Msg                         256    varying value
@@ -208,10 +208,10 @@
      D MsgKey          s              4
      D Err             s             10I 0
 
-     ‚* Call the Send Program Message API, which has the effect of adding a
-     ‚* message to the message subfile for the given program / procedure.
+       * Call the Send Program Message API, which has the effect of adding a
+       * message to the message subfile for the given program / procedure.
      C                   eval      MsgQueue = PriorUserProc
-     ‚*
+       *
      C                   call      'QMHSNDPM'
      C                   parm                    MsgId
      C                   parm                    QualMsgFil
@@ -228,9 +228,9 @@
 
 
 
-     ‚*************************
-     ‚* Clear Message Subfile *
-     ‚*************************
+       *************************
+       * Clear Message Subfile *
+       *************************
      P ClrMsgSfl       B                   export
 
      D ClrMsgSfl       PI
@@ -241,8 +241,8 @@
      D Rmv             s             10    inz('*ALL')
      D Err             s             10I 0
 
-     ‚* Call the Remove Program Messages API, which has the effect of clearing
-     ‚* the message subfile for the given program / procedure.
+       * Call the Remove Program Messages API, which has the effect of clearing
+       * the message subfile for the given program / procedure.
      C                   eval      MsgQueue = PriorUserProc
 
      C                   call      'QMHRMVPM'
@@ -432,9 +432,9 @@
 
 
 
-     ‚*##########################      *##########################    *##########################
-     ‚* NON-EXPORTED PROCEDURES *      * NON-EXPORTED PROCEDURES *    * NON-EXPORTED PROCEDURES *
-     ‚*##########################      *##########################    *##########################
+       *##########################      *##########################    *##########################
+       * NON-EXPORTED PROCEDURES *      * NON-EXPORTED PROCEDURES *    * NON-EXPORTED PROCEDURES *
+       *##########################      *##########################    *##########################
 
 
 
@@ -444,14 +444,14 @@
 
 
 
-     ‚******************************************************************************
-     ‚* Retrieve Prior User Procedure Name from the call stack for the current job *
-     ‚*   skips over system procedure names (all those starting with letter "Q"    *
-     ‚******************************************************************************
+       ******************************************************************************
+       * Retrieve Prior User Procedure Name from the call stack for the current job *
+       *   skips over system procedure names (all those starting with letter "Q"    *
+       ******************************************************************************
      P PriorUserProc   B
      D PriorUserProc   PI           276    varying
 
-     ‚* Define parameters for the QWVRCSTK API (Retrieve Call Stack)
+       * Define parameters for the QWVRCSTK API (Retrieve Call Stack)
      D ReceiverLen     s             10i 0
      D ReceiverFmt     s              8    inz('CSTK0100')
      D JobIDinfoFmt    s              8    inz('JIDF0100')
@@ -485,61 +485,61 @@
      D  ProcNameOff                  10i 0
      D  ProcNameLen                  10i 0
 
-     ‚* the following isolates a procedure name in the call stack entry format
+       * the following isolates a procedure name in the call stack entry format
      D ProcNamePtr     s               *
      D  ProcName       s            276    based( ProcNamePtr )
 
-     ‚* Miscellaneous Declarations
+       * Miscellaneous Declarations
      D ProcedureName   s            276    varying
      D SkipTwoEntries  s             10i 0
-     ‚* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-     ‚* find out how much space to allocate to the receiver variable by
-     ‚* calling the API once and checking "BytesAvail".
+       * find out how much space to allocate to the receiver variable by
+       * calling the API once and checking "BytesAvail".
      C                   eval      ReceiverLen = 8
      C                   alloc     ReceiverLen   ReceiverPtr
      C                   exsr      #GetCallStack
 
-     ‚* call the API to get the call stack for real this time
+       * call the API to get the call stack for real this time
      C                   eval      ReceiverLen = BytesAvail
      C                   realloc   BytesAvail    ReceiverPtr
      C                   exsr      #GetCallStack
 
-     ‚* Get previous user call stack entry (skip IBM procedures)
+       * Get previous user call stack entry (skip IBM procedures)
      C                   exsr      #GetPrvUsrEnt
 
      C                   exsr      #exit
 
 
-     ‚* S U B R O U T I N E S
-     ‚* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+       * S U B R O U T I N E S
+       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
      C     #GetPrvUsrEnt begsr
-     ‚* Get previous user call stack entry (skip IBM procedures)
-     ‚* Stack entries in this list start with the last called procedure
-     ‚* SkipTwoEntries: skips this procedure (PriorUserProc) and the immediate
-     ‚* calling procedure which for now is only SndSflMsg.
+       * Get previous user call stack entry (skip IBM procedures)
+       * Stack entries in this list start with the last called procedure
+       * SkipTwoEntries: skips this procedure (PriorUserProc) and the immediate
+       * calling procedure which for now is only SndSflMsg.
 
      C                   eval      StackEntryPtr = ReceiverPtr + EntryOffset
-š1b€ C                   Do        NbrOfEntries
+  1b   C                   Do        NbrOfEntries
      C                   eval      ProcNamePtr = StackEntryPtr + ProcNameOff
 
-š2b€ C                   If        %subst(ProcName : 1 : 1) = 'Q'  or
+  2b   C                   If        %subst(ProcName : 1 : 1) = 'Q'  or
      C                             SkipTwoEntries < 2
      C                   eval      StackEntryPtr = StackEntryPtr + EntryLength
      C                   eval      SkipTwoEntries = SkipTwoEntries + 1
-š2x€ C                   Else
+  2x   C                   Else
      C                   eval      ProcedureName =
      C                                  %subst(ProcName : 1 : ProcNameLen)
-šLV€ C                   leaveSR
-š2e€ C                   Endif
+  LV   C                   leaveSR
+  2e   C                   Endif
 
-š1e€ C                   Enddo
+  1e   C                   Enddo
 
      C                   eval      ProcedureName = *Blanks
      C                   exsr      #exit
 
      C                   endsr
-     ‚* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
      C     #GetCallStack begsr
      C                   call      'QWVRCSTK'
      C                   parm                    Receiver                       O
@@ -549,14 +549,14 @@
      C                   parm                    JobIDinfoFmt                   I
      C                   parm                    err                            B
 
-š1b€ C                   If        ( ReceiverLen > 8  ) and
-š1b€ C                             ( InfoStatus = 'N' )
+  1b   C                   If        ( ReceiverLen > 8  ) and
+  1b   C                             ( InfoStatus = 'N' )
      C                   eval      ProcedureName = *Blanks
      C                   exsr      #exit
-š1e€ C                   Endif
+  1e   C                   Endif
 
      C                   endsr
-     ‚* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
      C     #Exit         begsr
      C                   dealloc(N)              ReceiverPtr

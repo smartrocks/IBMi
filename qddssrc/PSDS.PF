@@ -1,0 +1,37 @@
+      **********************************************
+      * Program Status Data Structure - Model File *
+      **********************************************
+                R PGMSTSDS
+                  PGM           10          TEXT('Program Name *PROGRAM')
+                  STATUS         5S 0       TEXT('Status Code *STATUS')
+                  PRVSTS         5S 0       TEXT('Previous Status Code')
+                  SRCSEQ         8          TEXT('Source Statement Number')
+                  ROUTIN         8          TEXT('Routine Where Error Occurred +
+                                            Same as *ROUTINE')
+                  PCOUNT         3S 0       TEXT('Number of Parms *PARMS')
+                  MSGID          7          TEXT('Exception Error Message ID  ')
+                  ODT            4          TEXT('MI/ODT Number')
+                  MSGW          30          TEXT('Message Work Area')
+                  PGMLIB        10          TEXT('Program Object Library')
+                  EXCDTA        80          TEXT('Retrieved Exception Data')
+                  EXCID          4          TEXT('ID of the Exception That  +
+                                            Caused RPG9001')
+                  BLANK1        26          TEXT('Unused -  By IBM')
+                  FILE           8          TEXT('File Name Last Used')
+                  FILSTS        35          TEXT('Status Info. on the Last +
+                                            File used')
+                  JOB           10          TEXT('Job Name - CRT of Interactive+
+                                            Job')
+                  USER          10          TEXT('Current User ID')
+                  JOBNUM         6S 0       TEXT('Job Number')
+                  JOBEDT         6S 0       TEXT('Date Job Entered System')
+                  JOBSDT         6S 0       TEXT('Date of Program Execution')
+                  JOBSTM         6S 0       TEXT('Time of Program Execution')
+                  COMPDT         6S 0       TEXT('Date Program Was Compiled')
+                  COMPTM         6S 0       TEXT('Time Program Was Compiled')
+                  COMPLV         4          TEXT('Level of Compiler')
+                  SRCFIL        10          TEXT('SRC File Name')
+                  SRCLIB        10          TEXT('SRC Library Name')
+                  SRCMBR        10          TEXT('SRC Member Name')
+                  PROC          10          TEXT('Procedure Name')
+                  BLANK2        86          TEXT('Unused -  By IBM')

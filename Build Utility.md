@@ -10,6 +10,8 @@ IBM  i Stuff
     1. 
 
 ### configure git
+1. configure VS Code as your default editor
+    1. git config --global core.editor "code --wait"
 
 ### Clone from Github repository
 1. Clone github repository https://github.com/smartrocks/IBMi to an IBM i IFS

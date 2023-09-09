@@ -253,38 +253,38 @@ endsubr
 subr comp_SRV2
     /* STRING - no dependencies*/ 
     CRTRPGMOD MODULE(&LIB/STRING) SRCFILE(&LIB/QSRVSRC) +
-    DBGVIEW(*ALL) BNDDIR(&LIB/BLUESTAR)                                                            
+    DBGVIEW(*ALL)                                                             
 
     CRTSRVPGM SRVPGM(&LIB/STRING) EXPORT(*ALL) ALWLIBUPD(*YES) +    
-    BNDDIR(&LIB/BLUESTAR)
+    OPTION(*DUPPROC)
 
     /* API - needs STRING */
     CRTRPGMOD MODULE(&LIB/API) SRCFILE(&LIB/QSRVSRC) +
-    DBGVIEW(*ALL) BNDDIR(&LIB/BLUESTAR)                                                            
+    DBGVIEW(*ALL)                                                            
 
     CRTSRVPGM SRVPGM(&LIB/API) EXPORT(*ALL) ALWLIBUPD(*YES) +    
-    BNDDIR(&LIB/BLUESTAR)
+    OPTION(*DUPPROC)
 
     /* MESSAGE - needs STRING */
     CRTRPGMOD MODULE(&LIB/MESSAGE) SRCFILE(&LIB/QSRVSRC) +
-    DBGVIEW(*ALL) BNDDIR(&LIB/BLUESTAR)                                                            
+    DBGVIEW(*ALL)                                                           
 
     CRTSRVPGM SRVPGM(&LIB/MESSAGE) EXPORT(*ALL) ALWLIBUPD(*YES) +    
-    BNDDIR(&LIB/BLUESTAR)
+    OPTION(*DUPPROC)
 
     /* DATE needs API */
     CRTRPGMOD MODULE(&LIB/DATE) SRCFILE(&LIB/QSRVSRC) +
-    DBGVIEW(*ALL) BNDDIR(&LIB/BLUESTAR)                                                            
+    DBGVIEW(*ALL)                                                          
 
     CRTSRVPGM SRVPGM(&LIB/DATE) EXPORT(*ALL) ALWLIBUPD(*YES) +    
-    BNDDIR(&LIB/BLUESTAR)
+    OPTION(*DUPPROC)
 
     /* VALUE - needs MESSAGE*/
     CRTRPGMOD MODULE(&LIB/VALUE) SRCFILE(&LIB/QSRVSRC) +
-    DBGVIEW(*ALL) BNDDIR(&LIB/BLUESTAR)                                                            
+    DBGVIEW(*ALL)                                                           
 
     CRTSRVPGM SRVPGM(&LIB/VALUE) EXPORT(*ALL) ALWLIBUPD(*YES) +    
-    BNDDIR(&LIB/BLUESTAR)
+    OPTION(*DUPPROC)
 
 endsubr
 

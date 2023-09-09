@@ -314,7 +314,7 @@ dountil &forever
     CPYFRMSTMF FROMSTMF(&ifsFile) +
     TOMBR(&mbrPath) MBROPT(*REPLACE) STMFCCSID(*STMF) DBFCCSID(*FILE)    
 
-    CHGPFM FILE(&LIB/QRPGLESRC) MBR(&name) SRCTYPE(DSPF)
+    CHGPFM FILE(&LIB/QRPGLESRC) MBR(&name) SRCTYPE(RPGLE)
 
     CRTBNDRPG PGM(&LIB/&NAME) SRCFILE(&LIB/QRPGLESRC) +
     DBGVIEW(*ALL) REPLACE(*YES)                                                                     

@@ -1,10 +1,9 @@
       *********************************************************************
-      * Generic Error Log                                                 *
+      * Generic Message Log                                                 *
       *                                                                   *
-      * Note: Please ensure process ID uniqueness by choosing / creating  *
-      *       a unique process ID in the MANFILES/PROCESS file            *
+      * Note: Please ensure process ID uniqueness                         *
       *********************************************************************
-     A          R ERRORR
+     A          R MSGLOGR
      A            PROCESS       10
      A            DATE            L
      A            TIME            T

@@ -312,6 +312,21 @@ subr comp_SRV2
     CRTSRVPGM SRVPGM(&LIB/VALUE) EXPORT(*ALL) ALWLIBUPD(*YES) +    
     OPTION(*DUPPROC)
 
+        /* STUDENT2 - REST API POC */
+    CRTRPGMOD MODULE(&LIB/STUDENT2) SRCFILE(&LIB/QSRVSRC) +
+    DBGVIEW(*ALL)                                                           
+
+    CRTSRVPGM SRVPGM(&LIB/STUDENT2) EXPORT(*ALL) ALWLIBUPD(*YES) +    
+    OPTION(*DUPPROC)
+    
+    
+    /* STUDENTRSC - REST API POC */
+    CRTRPGMOD MODULE(&LIB/STUDENTRSC) SRCFILE(&LIB/QSRVSRC) +
+    DBGVIEW(*ALL)                                                           
+
+    CRTSRVPGM SRVPGM(&LIB/STUDENTRSC) EXPORT(*ALL) ALWLIBUPD(*YES) +    
+    OPTION(*DUPPROC)
+
 endsubr
 
 /*********************/

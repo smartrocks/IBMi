@@ -29,7 +29,7 @@
       * ---------------------   --------------   ---------------------------------------
       * NextNum                 VALUE            Get a Next Number
      D/define PROTOTYPES
-     D/include nbtygpl/qrpglesrc,VALUE
+     D/include qsrvsrc,VALUE
      D/undefine PROTOTYPES
 
       ***********************

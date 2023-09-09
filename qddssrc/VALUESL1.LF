@@ -1,0 +1,13 @@
+     A                                      UNIQUE
+     A          R VALUESR                   PFILE(VALUES)
+     A            FUNCTION
+     A            SDATEN
+     A            EDATEN
+     A            SDATEISO
+     A            EDATEISO
+     A            STRING
+     A            NUMBER
+     A            JOIN_A
+     A            JOIN_N
+
+     A          K FUNCTION

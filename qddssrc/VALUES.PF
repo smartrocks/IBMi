@@ -1,0 +1,10 @@
+     A          R VALUESR
+     A            FUNCTION      15          COLHDG('Function' 'Code')
+     A            SDATEN         9P 0       COLHDG('Numeric' 'Start Date')
+     A            EDATEN         9P 0       COLHDG('Numeric' 'End Date')
+     A            SDATEISO        L         COLHDG('ISO' 'Start Date')
+     A            EDATEISO        L         COLHDG('ISO' 'End Date')
+     A            STRING        30          COLHDG('String Data')
+     A            NUMBER        15P 5       COLHDG('Numeric Data')
+     A            JOIN_A         1          COLHDG('Alpha' 'Join')
+     A            JOIN_N        15P 0       COLHDG('Numeric' 'Join')

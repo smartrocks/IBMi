@@ -28,14 +28,40 @@ dclf IFSLIST
 
 ovrdbf IFSLIST QTEMP/IFSLIST
 
+callsubr crtNonSrc  /* create non-source based objects          */
 callsubr delete_LF  /* delete all PF's for which we have source */
 callsubr comp_PF    /* copy source and compile PF's             */
 callsubr comp_LF    /* copy source and compile LF's             */
 callsubr comp_DSPF  /* copy source and compile DSPF's           */
 callsubr comp_SQL   /* copy source for QSQLSRC                  */
 callsubr comp_SRV1  /* copy source for QSRVSRC                  */
-callsubr comp_SRV2  /* Create service programs                  */
+callsubr comp_SRV2  /* create service programs                  */
 callsubr comp_RPGLE /* copy source for QSQLSRC                  */
+
+/*-------------*/
+/* End of Main */
+/*-------------*/
+
+
+/*************************/
+/* S U B R O U T I N E S */
+/*************************/
+
+
+/**************************************/
+/* create non-source based objects    */
+/**************************************/
+SUBR SUBR(crtNonSrc) 
+    /* create model source files used by the Bluestar MESSAGE *SRVPGM */
+    CRTSRCPF FILE(DAVIDKECK1/SRCIN) RCDLEN(92) +
+    TEXT('Model Source PF needed by Bluestar Message srvpgm')  
+    monmsg (CPF5813 CPF7302)  /* file already exists */
+
+    CRTSRCPF FILE(DAVIDKECK1/SRCOUT) RCDLEN(92) +
+    TEXT('Model Source PF needed by Bluestar Message srvpgm') 
+    monmsg (CPF5813 CPF7302)  /* file already exists */
+ENDSUBR
+
 
 
 /******************/

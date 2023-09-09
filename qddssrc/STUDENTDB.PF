@@ -1,0 +1,12 @@
+      *--------------------------------------------------------------------
+      * STUDENTDB - Supports POC Student REST Web Sevice
+      *
+      * Author  Date        Project  Description
+      *--------------------------------------------------------------------
+     A                                      UNIQUE
+     A          R STUDENTR
+     A            STUDENTID      9A         COLHDG('Student' 'ID')
+     A            FIRSTNAME     50A         COLHDG('First' 'Name')
+     A            LASTNAME      50A         COLHDG('Last' 'Name')
+     A            GENDER        10A         COLHDG('Gender')
+     A          K STUDENTID

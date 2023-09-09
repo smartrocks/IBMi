@@ -1,0 +1,12 @@
+      *--------------------------------------------------------------------
+      * STUDCLASS - Supports POC Student REST Web Sevice
+      *
+      * Author  Date        Project  Description
+      *--------------------------------------------------------------------
+     A                                      UNIQUE
+     A          R STUDCLASSR
+     A            STUDENTID      9A         COLHDG('Student' 'ID')
+     A            CLASSID        9A         COLHDG('Class' 'ID')
+     A            DESCRIP       30A         COLHDG('Description')
+     A          K STUDENTID
+     A          K CLASSID

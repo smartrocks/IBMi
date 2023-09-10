@@ -30,6 +30,10 @@
       * Program Change Log
       *--------------------------------------------------------------------------------
       * Date       Pgmr     Proj        Scan Desc
+      * 2023-09-09 Keck                      Changed variable names which started with @
+      *                                      to now start with an x. Program wouldn't
+      *                                      otherwise compile. Apparrently naming rules
+      *                                      changed over the years.
       * 2009-04-05 Keck     P346902     dk02 added SndPgmMsg procedure
       * 04/14/2006 Keck     12142            Change reference from Center to CenterString
       * 07/25/2005 Keck     11264            added DisplayRecordLockMsg procedure
@@ -72,8 +76,8 @@
 
       * Log a message to the generic Message Log
      D LogMsg          PR
-     D  @Process                     10    Value
-     D  @Msg                        256    Value Varying
+     D  xProcess                     10    Value
+     D  xMsg                        256    Value Varying
 
 
       /if defined (PROTOTYPES)
@@ -411,17 +415,18 @@
       *--------------------------------------------------------------------------
      P LogMsg          B                   Export
      D LogMsg          PI
-     D  @Process                     10    Value
-     D  @Msg                        256    Value Varying
-     D @TimeStamp      s               z
+     D  xProcess                     10    Value
+     D  xMsg                        256    Value Varying
 
-     C                   eval      MsgLog_Process = @Process
+     D xTimeStamp      s               z
+
+     C                   eval      MsgLog_Process = xProcess
      C                   Time                    MsgLog_Date
      C                   Time                    MsgLog_Time
      C                   eval      MsgLog_JobName = psds_Job
      C                   eval      MsgLog_JobUser = psds_User
      C                   move      psds_JobNum   MsgLog_JobNum
-     C                   eval      MsgLog_Msg = @Msg
+     C                   eval      MsgLog_Msg = xMsg
 
      C                   open      MsgLog
      C                   write     MsgLogR

@@ -1,4 +1,4 @@
-      /copy QGPL/QSRVSRC,QILEHeader
+      /copy QSRVSRC,QILEHeader
      HBndDir('MFGBIND')
      HBndDir('TOOLBIND')
      HBnddir('QC2LE')

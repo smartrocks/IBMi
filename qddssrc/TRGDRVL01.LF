@@ -1,7 +1,0 @@
-     A          R TRGDRVR
-     A                                      PFILE(*LIBL/TRGDRVPF)
-     A
-     A          K FILNAM
-     A          K FILLIB
-     A          K EVENT
-     A          S EXSTAT                    COMP(EQ 'A')

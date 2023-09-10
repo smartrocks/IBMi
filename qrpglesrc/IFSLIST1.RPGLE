@@ -1,8 +1,8 @@
      H option(*nodebugio : *srcstmt) dftactgrp(*no) actgrp(*CALLER) indent('| ')
       *------------------------------------------------------------------------------------------
-      * IFSlist1 - List contents of an IFS Directory to a file
+      * IFSlist - List contents of an IFS Directory to a file
       *
-      * Purpose: This program is called by CLLE IFSLIST.  Given the path to an IFS folder, this
+      * Purpose: This program is called by IFSLISTCL.  Given the path to an IFS folder, this
       *          program will write the folder's directory listing to file QTEMP/IFSLIST.
       *------------------------------------------------------------------------------------------
       * Program Change Log
@@ -10,9 +10,6 @@
       * Date       Pgmr      Proj  Task  Scan Description
       * 2005-07-11 Keck      11264 2.00       Created
       * 2008-09-29 Drew      Morph       dl01 expand folder size
-      * 2023-09-10 Keck                       renamed progam from IFSLIST to IFSLIST1
-      *                                       so the calling CL would have same name as the CMD
-      *                                       to enable automation via the BUILD utility.
       *------------------------------------------------------------------------------------------
      FIFSLIST   O    E             DISK    Prefix(O_)
       * IFS Directory List

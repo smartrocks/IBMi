@@ -36,7 +36,9 @@ callsubr comp_DSPF  /* copy source and compile DSPF's           */
 callsubr comp_SQL   /* copy source for QSQLSRC                  */
 callsubr comp_SRV1  /* copy source for QSRVSRC                  */
 callsubr comp_SRV2  /* create service programs                  */
-callsubr comp_RPGLE /* copy source for QSQLSRC                  */
+callsubr comp_RPGLE /* copy source and compile QRPGLESRC        */
+callsubr comp_CLLE  /* copy source and compile QCLLESRC         */
+callsubr comp_CMD   /* copy source and compile QCMDSRC          */
 
 /*-------------*/
 /* End of Main */
@@ -329,6 +331,8 @@ subr comp_SRV2
 
 endsubr
 
+
+
 /*********************/
 /* Compile RPGLE's   */
 /*********************/
@@ -362,5 +366,78 @@ dountil &forever
 enddo
 
 endsubr
+
+
+
+/*********************/
+/* Compile CLLE's   */
+/*********************/
+subr comp_CLLE
+close                 /* close the IFSLIST file */
+chgvar &ifsSrcPath (&ifspath *tcat '/qcllesrc')
+IFSLIST &ifsSrcPath  /* load PF qtemp/IFSLIST with IFS file names */
+
+dountil &forever
+    rcvf RCDFMT(IFSLISTR) /* get columns NAME and TYPE */
+    monmsg CPF0864 exec(LEAVE)
+
+    if (&type *ne '*STMF') then(ITERATE)
+    chgvar &len %scan('.CLLE'  &name)
+    if (&len *eq 0) then(ITERATE)
+
+    chgvar &ifsFile (&ifsPath *tcat '/QCLLESRC/' *tcat &name) 
+    chgvar &len (&len - 1)
+    chgvar &name (%sst(&name 1 &len)) /* w/o extension */
+    chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib +
+                    *tcat '.LIB/QCLLESRC.FILE/' + 
+                    *tcat &name *tcat '.MBR')
+
+    CPYFRMSTMF FROMSTMF(&ifsFile) +
+    TOMBR(&mbrPath) MBROPT(*REPLACE) STMFCCSID(*STMF) DBFCCSID(*FILE)    
+
+    CHGPFM FILE(&LIB/QCLLESRC) MBR(&name) SRCTYPE(CLLE)
+
+    CRTBNDCL PGM(&LIB/&NAME) SRCFILE(&LIB/QCLLESRC) DFTACTGRP(*NO) +
+    ACTGRP(QILE) DBGVIEW(*ALL)                                                                                                                             
+enddo
+
+endsubr
+
+
+
+/*******************/
+/* Compile CMD's   */
+/*******************/
+subr comp_CMD
+close                 /* close the IFSLIST file */
+chgvar &ifsSrcPath (&ifspath *tcat '/qcmdsrc')
+IFSLIST &ifsSrcPath  /* load PF qtemp/IFSLIST with IFS file names */
+
+dountil &forever
+    rcvf RCDFMT(IFSLISTR) /* get columns NAME and TYPE */
+    monmsg CPF0864 exec(LEAVE)
+
+    if (&type *ne '*STMF') then(ITERATE)
+    chgvar &len %scan('.CMD'  &name)
+    if (&len *eq 0) then(ITERATE)
+
+    chgvar &ifsFile (&ifsPath *tcat '/QCMDSRC/' *tcat &name) 
+    chgvar &len (&len - 1)
+    chgvar &name (%sst(&name 1 &len)) /* w/o extension */
+    chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib +
+                    *tcat '.LIB/QCMDSRC.FILE/' + 
+                    *tcat &name *tcat '.MBR')
+
+    CPYFRMSTMF FROMSTMF(&ifsFile) +
+    TOMBR(&mbrPath) MBROPT(*REPLACE) STMFCCSID(*STMF) DBFCCSID(*FILE)    
+
+    CHGPFM FILE(&LIB/QCLLESRC) MBR(&name) SRCTYPE(CMD) 
+
+    CRTCMD CMD(&LIB/&NAME) PGM(&LIB/&NAME) SRCFILE(&LIB/QCMDSRC)                                                                  
+enddo
+
+
+endsubr
+
 
 endpgm

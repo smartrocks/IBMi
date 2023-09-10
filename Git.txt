@@ -56,3 +56,15 @@ git status
 
 ssh-keygen -t ed25519 -C davidkeck2014@gmail.com
 eval "$(shh-agent -s)"
+
+
+Show history of repository branches and merges etc. in a somewhat graphical form.
+	git log --oneline --graph --all --decorate
+
+Remove a file from both the local and remote repository
+	rm ~/myfolder/myfile.txt      	// note that Linux IS case sensitive
+	git add -u 						// tells git that deleted files are to be staged
+	git commit -m "some comment"
+	git push 
+
+

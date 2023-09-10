@@ -1,5 +1,5 @@
 /*-------------------------------------------------------------------*/
-/* IFSlistCL - List contents of an IFS folder to file QTEMP/IFSLIST  */
+/* IFSlist - List contents of an IFS folder to file QTEMP/IFSLIST    */
 /*                                                                   */
 /* Date       Pgmr   Proj  Task Scan Desc                            */
 /* 2005-07-11 Keck   11264           Created                         */
@@ -17,6 +17,6 @@ dcl &folder *char 256
              CRTPF      FILE(QTEMP/IFSLIST) SRCFILE(QDDSSRC) +
                           OPTION(*NOSRC *NOLIST)
 
-             call ifsList &folder
+             call ifsList1 &folder
 
 endpgm

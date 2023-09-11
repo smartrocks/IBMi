@@ -73,15 +73,15 @@ chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib +
 CPYFRMSTMF FROMSTMF(&ifsFile) +
 TOMBR(&mbrPath) MBROPT(*REPLACE) STMFCCSID(*STMF) DBFCCSID(*FILE)                                                                  
 
-chgvar &ifsFile (&ifsPath *tcat '/QCLLESRC/IFSLISTCL.CLLE')
+chgvar &ifsFile (&ifsPath *tcat '/QCLLESRC/IFSLIST.CLLE')
 chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib +
-                 *tcat '.LIB/QCLLESRC.FILE/IFSLISTCL.MBR')
+                 *tcat '.LIB/QCLLESRC.FILE/IFSLIST.MBR')
 CPYFRMSTMF FROMSTMF(&ifsFile) +
 TOMBR(&mbrPath) MBROPT(*REPLACE)
 
-chgvar &ifsFile (&ifsPath *tcat '/QRPGLESRC/IFSLIST.RPGLE')
+chgvar &ifsFile (&ifsPath *tcat '/QRPGLESRC/IFSLIST1.RPGLE')
 chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib +
-                *tcat '.LIB/QRPGLESRC.FILE/IFSLIST.MBR')
+                *tcat '.LIB/QRPGLESRC.FILE/IFSLIST1.MBR')
 CPYFRMSTMF FROMSTMF(&ifsFile) +
 TOMBR(&mbrPath) MBROPT(*REPLACE)
 
@@ -113,8 +113,8 @@ endsubr
 /**************************************/
 subr ChgSrcTyp
 CHGPFM FILE(&LIB/QDDSSRC) MBR(IFSLIST) SRCTYPE(PF) TEXT('IFS List Utility')
-CHGPFM FILE(&LIB/QCLLESRC) MBR(IFSLISTCL) SRCTYPE(CLLE) TEXT('IFS List Utility')
-CHGPFM FILE(&LIB/QRPGLESRC) MBR(IFSLIST) SRCTYPE(RPGLE) TEXT('IFS List Utility')
+CHGPFM FILE(&LIB/QCLLESRC) MBR(IFSLIST) SRCTYPE(CLLE) TEXT('IFS List Utility')
+CHGPFM FILE(&LIB/QRPGLESRC) MBR(IFSLIST1) SRCTYPE(RPGLE) TEXT('IFS List Utility')
 CHGPFM FILE(&LIB/QCMDSRC) MBR(IFSLIST) SRCTYPE(CMD) TEXT('IFS List Utility')
 endsubr
 
@@ -129,8 +129,8 @@ DLTF &LIB/IFSLIST
 monmsg CPF2105 /* file not found */
 CRTPF FILE(&LIB/IFSLIST) SRCFILE(&LIB/QDDSSRC) LVLCHK(*NO)
 
-CRTBNDCL PGM(&LIB/IFSLISTCL) SRCFILE(&LIB/QCLLESRC)
-CRTBNDRPG PGM(&LIB/IFSLIST) SRCFILE(&LIB/QRPGLESRC)    
+CRTBNDCL PGM(&LIB/IFSLIST) SRCFILE(&LIB/QCLLESRC)
+CRTBNDRPG PGM(&LIB/IFSLIST1) SRCFILE(&LIB/QRPGLESRC)    
 CRTCMD CMD(&LIB/IFSLIST) PGM(&LIB/IFSLISTCL) SRCFILE(&LIB/QCMDSRC)
 
 endsubr

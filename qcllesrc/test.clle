@@ -1,0 +1,14 @@
+PGM
+
+dcl &a *char (10) VALUE('CAT')
+dcl &b *char (10) 'DOG'
+dcl &bind *char (30)
+
+if COND(&a *eq &b) THEN(do)
+    chgvar &bind (&a *cat &b)
+enddo
+else (do) 
+    chgvar &bind (&a *cat &b)
+enddo
+
+ENDPGM

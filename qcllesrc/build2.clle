@@ -18,6 +18,8 @@ pgm (&lib &ifsPath)
 
 dcl &forever *lgl value('0')
 dcl &len *int
+dcl &len1 *int
+dcl &len2 *int
 dcl &lib *char (10)       /* target library    */
 dcl &ifsFile *char (256)  /* ifs file path and file name */
 dcl &ifsPath *char (256)  /* source IFS folder */  
@@ -346,23 +348,34 @@ dountil &forever
     monmsg CPF0864 exec(LEAVE)
 
     if (&type *ne '*STMF') then(ITERATE)
-    chgvar &len %scan('.RPGLE'  &name)
-    if (&len *eq 0) then(ITERATE)
+    chgvar &name %upper(&name)
+    chgvar &len1 %scan('.RPGLE'  &name)
+    chgvar &len2 %scan('.SQLRPGLE'  &name)
+    if ((&len1 *eq 0) *and (&len2 *eq 0)) then(ITERATE)
 
     chgvar &ifsFile (&ifsPath *tcat '/QRPGLESRC/' *tcat &name) 
-    chgvar &len (&len - 1)
+    chgvar &len (&len1 + &len2 - 1) /* because either &len1 or &len2 will be zero */
     chgvar &name (%sst(&name 1 &len)) /* w/o extension */
     chgvar &mbrPath ('/QSYS.LIB/' *tcat &lib +
                     *tcat '.LIB/QRPGLESRC.FILE/' + 
                     *tcat &name *tcat '.MBR')
 
     CPYFRMSTMF FROMSTMF(&ifsFile) +
-    TOMBR(&mbrPath) MBROPT(*REPLACE) STMFCCSID(*STMF) DBFCCSID(*FILE)    
+    TOMBR(&mbrPath) MBROPT(*REPLACE) STMFCCSID(*STMF) DBFCCSID(*FILE)  
 
+  if (&len1 *gt 0) then(do)
     CHGPFM FILE(&LIB/QRPGLESRC) MBR(&name) SRCTYPE(RPGLE)
 
     CRTBNDRPG PGM(&LIB/&NAME) SRCFILE(&LIB/QRPGLESRC) +
-    DBGVIEW(*ALL) REPLACE(*YES)                                                                     
+        DBGVIEW(*ALL) REPLACE(*YES) 
+  enddo
+  else (do)
+     CHGPFM FILE(&LIB/QRPGLESRC) MBR(&name) SRCTYPE(SQLRPGLE)
+
+     CRTSQLRPGI OBJ(&LIB/&NAME) SRCFILE(&lib/QRPGLESRC) + 
+     SRCMBR(&name) COMMIT(*NONE) OBJTYPE(*PGM) REPLACE(*YES) DBGVIEW(*SOURCE)   
+enddo
+
 enddo
 
 endsubr

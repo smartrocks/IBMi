@@ -1,0 +1,15 @@
+
+     A                                      UNIQUE
+     A          R CNTRY
+     A            CCODE          2A         TEXT('COUNTRY CODE')
+     A            CNAME         30A         TEXT('COUNTRY NAME')
+     A            GCODE          1A         TEXT('GROUPING CODE')
+     A            FILL1          2A         TEXT('FILLER 1 FIELD')
+     A            FILL2          1A         TEXT('FILLER 3 FIELD')
+     A            FILL3          2A         TEXT('FILLER 3 FIELD')
+     A            FILL4          1A         TEXT('FILLER 4 FIELD')
+     A            CISOCODE       2A         TEXT('ISO Country code')
+     A            CUNCODE        3A         TEXT('U.N. Country code')
+     A*
+     A*      THIS FILE WILL BE KEYED BY THE COUNTRY CODE
+     A          K CCODE

@@ -1,0 +1,227 @@
+     A*--------------------------------------------------------------
+     A*  **** NOTE: ANY CHANGES TO THIS FILE MUST ALSO BE APPLIED TO
+     A*             THE ORDER HEADER PURGE FILE 'TMPORDHD'.
+     A*--------------------------------------------------------------
+     A* MODIFICATIONS
+     A*--------------------------------------------------------------
+     A* DATE    PROGRAMMER    SCAN    DESCRIPTION
+     A* ------- ------------- ------  -----------------------
+     A*
+     A* 8/31/05 AL VEGA       AV001   Added the following fields to
+     A*                               ORDHDR file:
+     A*                               OHPLBY - Order Placed By
+     A*                               OHRTID - Routing Code
+     A*                               OHLNUM - # of line exclude 0 price
+     A*
+     A* 2/21/06 STEVE         SM001   NEW FIELD FOR TOTAL VAT TAX
+     A*
+     A* 8/25/06 VGIBBONE      VG001   NEW FIELDS FOR EDI REF AND SEQ#
+     A*
+     A*
+     A* 3/17/07 DOLORES       DG01    NEW FIELDS FOR AR GROUPING.
+     A*
+     A* 2/18/10 AL VEGA       AV002   Added the following fields
+     A*
+     A*                               For Web Order Project:
+     A*                               OHWEBR (15A) - WEB ORDER REF NO.
+     A*
+     A*                               For EDI Project:
+     A*                               OHAON (8A) - ARRIVE ON
+     A*                               OHANA (8A) - ARRIVE NOT AFTER
+     A*                               OHANB (8A) - ARRIVE NOT BEFORE
+     A*                               OHSON (8A) - SHIP ON
+     A*                               OHSNB (8A) - SHIP NOT BEFORE
+     A*                               OHSNA (8A) - SHIP NOT AFTER
+     A*                               OHCNS (8A) - CANCEL IF NOT
+     A*                                            SHIPPED BY
+     A*                               OHCNA (8A) - CANCEL IF NOT
+     A*                                            ARRIVED BY
+     A* 7/14/10 OWEN SEALY    OS04    PROJECT# 415794 DENIED PARTIES
+     A*
+     A* ------- ------------- ------  -----------------------
+     A                                      REF(NBJFLDREF)
+     A          R ORDHDRR
+     A            OHDIV     R
+     A            OHLAB     R
+     A            OHNUM     R
+     A            OHSEQ     R
+     A            OHTYPE    R
+     A            OHCUST    R
+     A            OHSHIP    R
+     A            OHCSPO    R
+     A            OHINV     R
+     A            OHASSC    R
+     A            OHPICK    R
+     A            OHSPCF    R
+     A            OHCSDA    R
+     A            OHCSMO    R
+     A            OHCSYR    R
+     A            OHCNDA    R
+     A            OHCNMO    R
+     A            OHCNYR    R
+     A            OHBO      R
+     A            OHCOMF    R
+     A            OHRATE    R
+     A            OHSLM1    R
+     A            OHSLM2    R
+     A            OHSLM3    R
+     A            OHSLM4    R
+     A            OHSLM5    R
+     A            OHSPL1    R
+     A            OHSPL2    R
+     A            OHSPL3    R
+     A            OHSPL4    R
+     A            OHSPL5    R
+     A            OHCLS1    R
+     A            OHDEPT    R
+     A            OHWHS     R
+     A            OHRSN     R
+     A            OHTERM    R
+     A            OHSNAM    R
+     A            OHSAD1    R
+     A            OHSAD2    R
+     A            OHSAD3    R
+     A            OHSCTY    R
+     A            OHSST     R
+     A            OHSZP1    R
+     A            OHSZP2    R
+     A            OHCMC1    R
+     A            OHCMC2    R
+     A            OHCMC3    R
+     A            OHCOM1    R
+     A            OHCOM2    R
+     A            OHCOM3    R
+     A            OHSTAT    R
+     A            OHPST     R
+     A            OHPCKD    R
+     A            OHPCKM    R
+     A            OHPCKY    R
+     A            OHENTD    R
+     A            OHENTM    R
+     A            OHENTY    R
+     A            OHENTO    R
+     A            OHCHGD    R
+     A            OHCHGM    R
+     A            OHCHGY    R
+     A            OHCHGO    R
+     A            OHSHDA    R
+     A            OHSHMO    R
+     A            OHSHYR    R
+     A            OHCOND    R
+     A            OHCONM    R
+     A            OHCONY    R
+     A            OHCONO    R
+     A            OHVIAC    R
+     A            OHVIA     R
+     A            OHCTNS    R
+     A            OHGTOT    R
+     A            OHMTOT    R
+     A            OHNTOT    R
+     A            OHDTO1    R
+     A            OHDTO2    R
+     A            OHDTO3    R
+     A            OHDTO4    R
+     A            OHDTO5    R
+     A            OHDRN1    R
+     A            OHDRN2    R
+     A            OHDRN3    R
+     A            OHDRN4    R
+     A            OHDRN5    R
+     A            OHCDSC    R               TEXT('DISCONTINUE USE AS OF 7/91')
+     A            OH$DSC    R               TEXT('DISCONTINUE USE AS OF 7/92')
+     A            OH$DCD    R
+     A            OHSDS1    R               TEXT('DISCONTINUE USE AS OF 7/92')
+     A            OHSCD1    R
+     A            OHSDS2    R               TEXT('DISCONTINUE USE AS OF 7/92')
+     A            OHSCD2    R
+     A            OHSDS3    R               TEXT('DISCONTINUE USE AS OF 7/92')
+     A            OHSCD3    R
+     A            OHFRTF    R
+     A            OHFRT     R
+     A            OHSPWT    R
+     A            OHSPRR    R
+     A            OHACDT    R
+     A            OHTERR    R
+     A            OHMSG1    R
+     A            OHMSG2    R
+     A            OHLNNO    R
+     A            OHUSR1    R               TEXT('PROCESSED COD TAG')
+     A            OHUSR2    R               TEXT('DC STICKER FLAG Y OR BLANK')
+     A            OHUSR3    R               TEXT('DELIVERY CONFORMATION "Y"/  ')
+     A            OHUSR4    R               TEXT('INVOICE PRICING METHOD')
+     A            OHUSR5    R               TEXT('NATIONAL PARCEL EXPIDITERS')
+     A            OHUSR6    R               TEXT('UPDATE INVENTORY?')
+     A            OHUSR7    R               TEXT('ARCO ALLOC. FLAG')
+     A            OHUSR8    R               TEXT('FLAG J CHGS(NOT USED)')
+     A            OHUSR9    R               TEXT('LINE DSC OVERIDE')
+     A            OHXSR1         2          TEXT('PROMOTION CODE')
+     A            OHXSR2         2          TEXT('GOOD N NATURAL EXTENSION')
+     A            OHXSR3         2          TEXT('WHAT DETS? "A " "B " "AB" ')
+     A            OHXSR4         2          TEXT('WAREHOUSE TO USE FOR CA WHS')
+     A            OHXSR5         2          TEXT('NY OVERRIDE OEENTRPG')
+     A            OHXSR6         2          TEXT('TRANSFERS FROM COMPANY')
+     A            OHXSR7         2          TEXT('TRANSFERS TO COMPANY')
+     A            OHXSR8         2          TEXT('NOT USED (DO QRY)')
+     A            OHXSR9         2          TEXT('1ST DIGITS # BOXES')
+     A            OHXS10         2          TEXT('LST DIGITS # BOXES')
+     A            OHCC#         17          TEXT('CREDIT CARD NUMBER')
+     A            OHEXDT         4          TEXT('EXPIRATION DATE')
+     A            OHAUTH         6          TEXT('AUTHORIZATION #')
+     A            OHDSC1         6          TEXT('DISCOUNT % 1 AS OF 7/92')
+     A            OHDSC2         6          TEXT('DISCOUNT % 2 AS OF 7/92')
+     A            OHDSC3         6          TEXT('DISCOUNT % 3 AS OF 7/92')
+     A            OHDSC4         6          TEXT('DISCOUNT % 4 AS OF 7/92')
+     A            OHDSC5         6          TEXT('DISCOUNT % 5 AS OF 7/92')
+     A            OHGBK         11          TEXT('GROSS BOOKED AMOUNT')
+     A            OHYSR1         1          TEXT('PRINT SERVER FLAG')
+     A            OHYSR2         1          TEXT('EACHES PICKING FLAG')
+     A            OHYSR3         1          TEXT('MC     PICKING FLAG')
+     A            OHYSR4         2          TEXT('USED IN EDI 856')
+     A            OHYSR5         2          TEXT('E=EACHES,M=MC,X=MIX')
+     A            OHYSR6         2          TEXT('LOTUS NOTES REPLICAT')
+     A*                                     ' '=REPLICATE, 'P'=DO NOT
+     A            OHYSR7         7          TEXT('EDI REF# & SEQ#')
+     A*                              ALPHA FIELD CONTAINS PACKED DATA
+     A            OHOPNO         1          TEXT('OPENING ORDER Y/N')
+     A            OHALP1         1          TEXT('Bulk Production Scheduling')
+     A                                      COLHDG('Blk' 'Prd' 'Sch')
+     A            OHALP2         1          TEXT('IN The Box Invoice Flag')
+     A*                                     'Y'=Yes, 'N'=No
+     A            OHALP3         1          TEXT('STANDARD/NON-STANDARD')
+OS004A            OHALP4         1          TEXT('DENIED PARTIES FLAG')
+     A            OHALP5         2          TEXT('PICKING DOC PRINT WAREHOUSE')
+     A            OHALP6         2          TEXT('ADDL ALPHA 6')
+     A            OHALP7         6          TEXT('ADDL ALPHA 7')
+     A            OHALP8         8          TEXT('SHIP TO ARIVE DATE')
+     A            OHALP9         8          TEXT('ADDL ALPHA 9')
+AV001A            OHPLBY        30          TEXT('ORDER PLACED BY')
+AV001A            OHRTID        10          TEXT('ROUTING CODE')
+AV001A            OHLNUM         3          TEXT('# Of Line Exclude 0 Price')
+SM001A            OHVTX$         9          TEXT('VAT TAX AMOUNT 9,999,999.99')
+SM001A            OHPCD$         9          TEXT('POSTAL/COD $  9,999,999.99')
+VG001A            OHEREF         9          TEXT('EDI REFERENCE #')
+VG001A            OHESEQ         3          TEXT('EDI SEQ #')
+DG01 A            OHWSR2         7          TEXT('AR GROUP NO.')
+AV002A            OHWEBR        15          TEXT('WEB ORDER REFERENCE')
+AV002A                                      COLHDG('WEB ORDER' 'REFERENCE')
+AV002A            OHAON          8          TEXT('ARRIVE ON')
+AV002A                                      COLHDG('ARRIVE' 'ON')
+AV002A            OHANA          8          TEXT('ARRIVE NOT AFTER')
+AV002A                                      COLHDG('ARRIVE' 'NOT AFTER')
+AV002A            OHANB          8          TEXT('ARRIVE NOT BEFORE')
+AV002A                                      COLHDG('ARRIVE' 'NOT BEFORE')
+AV002A            OHSON          8          TEXT('SHIP ON')
+AV002A                                      COLHDG('SHIP ON')
+AV002A            OHSNB          8          TEXT('SHIP NOT BEFORE')
+AV002A                                      COLHDG('SHIP' 'NOT BEFORE')
+AV002A            OHSNA          8          TEXT('SHIP NOT AFTER')
+AV002A                                      COLHDG('SHIP' 'NOT AFTER')
+AV002A            OHCNS          8          TEXT('CANCEL IF NOT SHIPPED BY')
+AV002A                                      COLHDG('CANCEL IF -
+AV002A                                      NOT' 'SHIPPED BY')
+AV002A            OHCNA          8          TEXT('CANCEL IF NOT ARRIVED BY')
+AV002A                                      COLHDG('CANCEL IF -
+AV002A                                      NOT' 'ARRIVED BY')
+     A          K OHDIV
+     A          K OHNUM
+     A          K OHSEQ

@@ -1,0 +1,7 @@
+     A          R ORDHDRR                   PFILE(ORDHDR)
+     A                                      TEXT('ORDER BY CUST/INV')
+     A          K OHDIV
+     A          K OHCUST
+     A          K OHINV
+     A          K OHNUM
+     A**

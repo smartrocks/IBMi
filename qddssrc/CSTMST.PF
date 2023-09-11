@@ -1,0 +1,222 @@
+     A*-------------------------------------------------------------
+     A*   CUSTOMER MASTER FILE
+      *
+      *  3/08/05  CAROLYN HAU  CH01 ADDED ADDITIONAL FIELDS FOR AR
+      *                             TRAFFIC AND SOME EXTRAS
+      * 07/21/06  BORIS SIM.   BS01 ADD FIELDS FOR TRAFFIC FUNCTIONS
+      * 12/05/07  OWEN SEALY   OS01 ADD FIELDS FOR TPM BANNER
+      *
+      * 03/09/09  AL VEGA     AV001 ADD FIELDS FOR DOCTOR REFERRAL INFO
+      *
+      * 10/26/2009 R.Padula      RP001  P398347 - CMZSR7 used to flag Auto
+      *                                    Product entry. ONLY CHANGED TEXT!!!.
+      *
+      * 02/02/10  AL VEGA     AV002 ADD WEB CUSTOMER FLAG (Y/N)
+      *
+      * 03/10/10  C HAU CORRECT SOME TEXT   CH02
+     A*-------------------------------------------------------------
+     A                                      REF(NBJFLDREF)
+     A          R CSTMSTR
+     A            CMDIV     R
+     A            CMNUM     R
+     A            CMNAME    R
+     A            CMALPH    R
+     A            CMADD1    R
+     A            CMADD2    R
+     A            CMADD3    R
+     A            CMCITY    R
+     A            CMST      R
+     A            CMZIP1    R
+     A            CMZIP2    R
+     A            CMSLM1    R
+     A            CMSLM2    R
+     A            CMSLM3    R
+     A            CMSLM4    R
+     A            CMSLM5    R
+     A            CMSPL1    R
+     A            CMSPL2    R
+     A            CMSPL3    R
+     A            CMSPL4    R
+     A            CMSPL5    R
+     A            CMRATE    R
+     A            CMMSG1    R
+     A            CMMSG2    R
+     A            CMCDRN    R
+     A            CMCDSC    R               TEXT('DISCONTINUE USE AS OF 7/92')
+     A            CM$DSC    R               TEXT('DISCONTINUE USE AS OF 7/92')
+     A            CM$DCD    R
+     A            CMSDS1    R               TEXT('DISCONTINUE USE AS OF 7/92')
+     A            CMSCD1    R
+     A            CMSDS2    R               TEXT('DISCONTINUE USE AS OF 7/92')
+     A            CMSCD2    R
+     A            CMAREA    R
+     A            CMEXC     R
+     A            CMTEL     R
+     A            CMEXT     R
+     A            CMCONT    R
+     A            CMAFFL    R
+     A            CMTERR    R
+     A            CMPRIC    R
+     A            CMCLS1    R
+     A            CMREF2    R
+     A            CMREF3    R
+     A            CMTRMS    R
+     A            CMDUNS    R
+     A            CMDB      R
+     A            CMVND     R
+     A            CMPART    R
+     A            CMBACK    R
+     A            CMFRT     R
+     A            CMUSR1    R               TEXT('10% FREIGHT ADD ON Y/" "')
+     A            CMUSR2    R
+     A            CMUSR3    R
+     A            CMUSR4    R               TEXT('OVR METHOD OF SHP 1')
+     A            CMUSR5    R               TEXT('OVR METHOD OF SHP 2')
+     A            CMUSR6    R               TEXT('INSIDE DELIVERY REQ')
+     A            CMUSR7    R               TEXT('USE STD SRP FILE?')
+     A            CMUSR8    R               TEXT('COUNTRY CODE4 ARCO INTERNAT.')
+     A            CMUSR9    R               TEXT('IVENTRY UPDATE AT -90 STATUS')
+     A*                                           N=OMIT UPDATE  ' '=UPDATE
+     A            CMDSFL    R
+     A            CMSTPR    R
+     A            CMSTDU    R
+     A            CMSTCR    R
+     A            CMCOMF    R
+     A            CMCOMM    R
+     A            CMDBA     R
+     A            CMOPER    R
+     A            CMDATE    R
+     A            CMDEL     R
+     A            CMLABL         1          COLHDG('PRINT PRICE LABELS?')
+     A            CMABBR        15          COLHDG('15 CHAR NAME ABBR.')
+     A            CMFLMT         9  0       COLHDG('CHARGE FREIGHT LIMIT')
+     A            CMLABP         2          COLHDG('PRIVATE LABEL')
+     A            CMSHRK         5          COLHDG('UNUSED FIELD')
+     A            CMTRAY         5          COLHDG('UNUSED FIELD')
+     A            CMCASE         5          COLHDG('UNUSED FIELD')
+     A            CMLEAD         2          COLHDG('UNUSED FIELD')
+     A            CMCOOP         4          COLHDG('COOP NUMBER')
+     A            CMXSR1         2          COLHDG('PRT CODE PRC-SRP LBL')
+     A            CMXSR2         2          COLHDG('CRED CUST DISC %')
+     A            CMXSR3         2          COLHDG('CRED CUST DISC CODE')
+     A            CMXSR4         2          COLHDG('CRED DISC 3 %')
+     A            CMXSR5         2          COLHDG('CRED DISC 3 CODE')
+     A            CMXSR6         2          COLHDG('CRED DISC 4 %')
+     A            CMXSR7         2          COLHDG('CRED DISC 4 CODE')
+     A            CMXSR8         2          COLHDG('INVOIVE PRICE METHOD')
+     A            CMXSR9         2          TEXT('DELIVERY CONFIRMATION "Y/ "')
+     A            CMUBOX         5          COLHDG('UNUSED FIELD')
+     A            CMPRPT         2          COLHDG('PRICE POINTER')
+     A            CMYSR1         5          COLHDG('UNUSED FIELD')
+     A            CMYSR2         5          COLHDG('UNUSED FIELD')
+     A            CMYSR3         5          COLHDG('CRD CUST DISC REASON')
+     A            CMYSR4         5          COLHDG('NOT USED (DO QRY)')
+     A            CMYSR5         2          TEXT('WAREHOUSE TO USE CA WHSE')
+     A            CMYSR6         2          COLHDG('PROMO EXEMPT')
+     A*                                            IF 2ND POS = 'N'
+     A*                                               NO PAPER INVOICE
+     A            CMYSR7         2          COLHDG('NOT USED (DO QRY)')
+     A            CMYSR8         2          COLHDG('NOT USED (DO QRY)')
+     A            CMYSR9         2          COLHDG('NOT USED (DO QRY)')
+     A            CMDSC1         6          TEXT('DISCOUNT % 1 AS OF 7/92')
+     A            CMDSC2         6          TEXT('DISCOUNT % 2 AS OF 7/92')
+     A            CMDSC3         6          TEXT('DISCOUNT % 3 AS OF 7/92')
+     A            CMDSC4         6          TEXT('DISCOUNT % 4 AS OF 7/92')
+     A            CMDSC5         6          TEXT('DISCOUNT % 5 AS OF 7/92')
+     A            CMFAXA         3          COLHDG('FAX AREA CODE')
+     A            CMFAXX         3          COLHDG('FAX EXCHANGE')
+     A            CMFAXN         4          COLHDG('FAX NUMBER')
+     A            CMWSR1         7          COLHDG('BULK SHIP RULES')
+     A*                                      POS 1   PACKAGE METHOD
+     A*                                      POS 2   OVERSHIP      (Y,N)
+     A*                                      POS 3   MULTIPLE LOTS (Y,N)
+     A*                                      POS 4-5 PROD EXPIRE MONTHS
+     A*                                      POS 6-7 NOT USED DO QRY
+     A            CMWSR2         7          COLHDG('A/R GROUP NO.')
+     A            CMWSR3         2          COLHDG('CONVERT TO PICK LAB')
+     A            CMWSR4         2          COLHDG('POS1 CUST TYPE' 'POS2 OPN')
+     A*                                     POS1 M=MAINT. G=GROWTH
+     A*                                     POS2 NOT USED AS OF 7/31/02
+     A            CMWSR5         1          TEXT('LOTUS NOTES REPLICAT')
+     A*                                     ' '=REPLICATE, 'R'=DO NOT
+     A            CMWSR6         1          COLHDG('VIT CENTER')
+     A*                                     'E'=EACHES,'M'=MC,'B'=BOTH
+     A            CMWSR7         1          TEXT('Y=INVOICE AT BILL1')
+     A            CMWSR8         2          TEXT('UNUSED')
+     A            CMWSR9         2          TEXT('UNUSED')
+     A            CMZSR1         1          TEXT('REXALL CUSTOMER')
+CH02 A            CMZSR2         1          TEXT('INTERCO TRANSFER')
+     A            CMZSR3         1          TEXT('UNUSED')
+     A            CMMLP          7          TEXT('REXALL CST TYPE')
+     A            CMEMAL        60          TEXT('E-MAIL ADDRESS')
+     A            CMZSR4         5          TEXT('UNUSED')
+     A            CMZSR5         5          TEXT('UNUSED')
+     A            CMZSR6         1          TEXT('UNUSED')
+RP001A            CMZSR7         1          TEXT('Exclude Auto Prod Entry')
+     A            CMZSR8        10          TEXT('UNUSED')
+     A            CMPCR1         2          TEXT('PREFERRED CARRIER 1')
+     A            CMPCR2         2          TEXT('PREFERRED CARRIER 2')
+     A            CMPCR3         2          TEXT('PREFERRED CARRIER 3')
+     A            CMVSR1         1          TEXT('UNUSED')
+     A            CMVSR2         1          TEXT('UNUSED')
+     A            CMVSR3         1          TEXT('UNUSED')
+     A            CMVSR4         2          TEXT('UNUSED')
+CH02 A            CMVSR5         3          TEXT('VOLUME CATAGORY ')
+     A            CMVSR6         3          TEXT('UNUSED')
+     A            CMVSR7        10          TEXT('UNUSED')
+     A            CMSINC         6          TEXT('CUST SINCE MM/DD/YY 6,0')
+     A            CMVOLC         1          TEXT('CUST VOLUME CLASS')
+     A            CMESHC         1          TEXT('EMAIL SHIP CONFIRM')
+     A            CMEPRM         1          TEXT('EMAIL PROMO')
+     A            CMTIL1        10          TEXT('CONTACT 1 TITLE')
+     A            CMDOB1         4          TEXT('CONTACT 1 DOB MM/DD 4,0')
+     A            CMCNT2        30          TEXT('CONTACT 2 NAME')
+     A            CMTIL2        10          TEXT('CONTACT 2 TITLE')
+     A            CMDOB2         4          TEXT('CONTACT 2 DOB MM/DD 4,0')
+     A            CMCNT3        30          TEXT('CONTACT 3 NAME')
+     A            CMTIL3        10          TEXT('CONTACT 3 TITLE')
+     A            CMDOB3         4          TEXT('CONTACT 3 DOB MM/DD 4,0')
+     A            CMSCON        30          TEXT('RECEIVING CONTACT NAME')
+     A            CMSP#1        20          TEXT('RECIEVING 1 PHONE#')
+     A            CMSPT1         2          TEXT('RECIEVING 1 PHONE# TYPE')
+     A            CMSPE1         5          TEXT('RECIEVING 1 PHONE# EXT')
+     A            CMSP#2        20          TEXT('RECIEVING 2 PHONE#')
+     A            CMSPT2         2          TEXT('RECIEVING 2 PHONE# TYPE')
+     A            CMSPE2         5          TEXT('RECIEVING 2 PHONE# EXT')
+     A            CMAPPD         3          TEXT('REC APPOINTMENT DAYS 3,0')
+     A            CMAPDB         3          TEXT('REC APPT DAYS BEFORE 3,0')
+     A            CMAPDA         3          TEXT('REC APPT DAYS AFTER 3,0')
+     A            CMNPC1         2          TEXT('NON PREF CARRIER1')
+     A            CMNPC2         2          TEXT('NON PREF CARRIER2')
+     A            CMNPC3         2          TEXT('NON PREF CARRIER3')
+CH02 A            CMXTR1         1          TEXT('FAX/EMAIL PREFERENCES')
+CH02 A            CMXTR2         2          TEXT('ALTERNATE HEADING')
+     A            CMXTR3         3          TEXT('PRICE GROUP')
+     A            CMXTR4         5          TEXT('EXTRA FIELD 4')
+     A            CMXTR5        10          TEXT('EXTRA FIELD 5')
+     A            CMXTR6        20          TEXT('EXTRA FIELD 6')
+BS01 A            CMPSP1         2          TEXT('PREF SMALL PACKAGE CARR1')
+ |   A            CMPSP2         2          TEXT('PREF SMALL PACKAGE CARR2')
+ |   A            CMPSP3         2          TEXT('PREF SMALL PACKAGE CARR3')
+ |   A            CMNSP1         2          TEXT('NON PREF SMALL PACKAGE CARR1')
+ |   A            CMNSP2         2          TEXT('NON PREF SMALL PACKAGE CARR2')
+ |   A            CMNSP3         2          TEXT('NON PREF SMALL PACKAGE CARR3')
+ |   A            CMPTL1         2          TEXT('PREF TRAILER LOAD CARR1')
+ |   A            CMPTL2         2          TEXT('PREF TRAILER LOAD CARR2')
+ |   A            CMPTL3         2          TEXT('PREF TRAILER LOAD CARR3')
+BS01 A            CMNTL1         2          TEXT('NON PREF TRAILER LOAD CARR1')
+BS01 A            CMRCEM        35          TEXT('RECV.E-MAIL ADDRESS')
+BS01 A            CMRCV1        35          TEXT('RECEIVING INFORMATION 1')
+BS01 A            CMRCV2        35          TEXT('RECEIVING INFORMATION 2')
+OS001A            CMDDTE          Z         COLHDG('DELETED DATE/TIME')
+  |  A            CMTPMF         1          TEXT('TPM FLAG')
+  |  A            CMTPMD          Z         COLHDG('TPM DATE/TIME')
+OS001A            CMTPCD         7          COLHDG('TPM CODE')
+      *
+AV001A            CMDRFL         1          COLHDG('DOC REF FLAG')
+AV001A            CMDRNO        10          COLHDG('DOC REF ID#')
+AV001A            CMDRID        10          COLHDG('DOC REF IN DATE')
+AV001A            CMDROD        10          COLHDG('DOC REF OUT DATE')
+AV002A            CMWEBF         1          COLHDG('WEB CUSTOMER (Y/N)')
+     A          K CMDIV
+     A          K CMNUM

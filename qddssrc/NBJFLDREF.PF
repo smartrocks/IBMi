@@ -1,0 +1,1616 @@
+     A****************************************************************
+     A*
+     A*         NATURE'S BOUNTY     FIELD REFERENCE FILE
+     A*         WLS, JAMISON BUSINESS SYSTEMS
+     A****************************************************************
+     A*
+     A          R FLDREF                    TEXT('FIELDR REFERENCE FILE')
+     A*
+     A****************************************************************
+     A*
+     A*  THE FOLLOWING FILES ARE DEFINED BELOW:
+     A*
+     A****************************************************************
+     A*               CUSTOMER MASTER FILE     (CM..) CSTMST    X.4/15
+     A*               CUSTOMER INFORMATION     (CI..) CSTINF    X.4/18
+     A*               CUSTOMER A/R FILE        (CA..) CSTAR
+     A*               CUSTOMER LEDGER FILE     (CL..) CSTLDG
+     A*               CUSTOMER SALES FILE      (CS..) CSTDTA
+     A*               PRODUCT MASTER FILE      (PM..) PRDMST    X.4/11
+     A*               PRODUCT PRICE  FILE      (PP..) PRDPRC    X.4/11
+     A*               PRODUCT DATA FILE        (PD..) PRDDTA    X.5/2
+     A*               PRODUCT WAREHOUSE QTY.   (PW..) PRDWHS
+     A*               PRODUCT TRANSACTION REG. (PT..) PRDTRN
+     A*               PRODUCT SALES FILE       (PS..) PRDSLS
+     A*               PRODUCT INFO FILE        (PI..) PRDINF   X.4/11
+     A*               SPECIAL DEAL MASTER      (SD..) DELMST   Z.4/12
+     A*               UNIVERSAL MESSAGE FILE   (UM..) UNIMSG   X.4/11
+     A*               SHIP TO MASTER FILE      (SH..) SHPMST   X.4/15
+     A*               SALESMAN MASTER FILE     (SM..) SLMMST   X.4/12
+     A*               SALESMAN DATA FILE       (SL..) SLMDTA   X.5/2
+     A*               SALESMAN OPEN TO SHIP    (SS..) SLMSHP   X.3/06
+     A*               SALESMAN BOOK/BILL FILE  (SB..) SLMBBB   X.3/06
+     A*               STATE VALIDATION FILE    (SV..) STCVLD   X.4/08
+     A*               G/L MASTER ... FROM GL FIELDREF
+     A*               TERMS MASTER             (TM..) TRMMST   X.4/19
+     A*               TERMS DOLLARS MASTER     (TD..) TRMDOL   X.6/87
+     A*               WAREHOUSE MASTER         (WH..) WHSMST   X.4/11
+     A*               LABEL MASTER             (LM..) LABMST   X.4/11
+     A*               DIVISION MASTER          (DM..) DIVMST   X.4/11
+     A*               DIVISION DATA            (DD..) CMPDTA
+     A*               DISCOUNT MASTER          (DS..) DSCMST   X.4/16
+     A*               ORDER HEADER             (OH..) ORDHDR   X.4/15
+     A*               ORDER DETAIL             (OD..) ORDDET   X.4/15
+     A*               SPECIAL DISCOUNT         (SP..) SPCDSC   X.4/18
+     A*               STATE DISCOUNT           (ST..) STADSC   X.4/18
+     A*               REASON MASTER            (RM..) RSNMST   X.4/18
+     A*               DIVISION CONTROL         (DC..) DIVCTR
+     A*               LABEL    DATA            (LD..) LABDTA   X.5/2
+     A*               SHIP TO CODE             (SS..) SHCMST   X.5/2
+     A*               CREDIT/DEBIT HEADER      (CH..) CRDHDR
+     A*               CREDIT/DEBIT DETAIL      (CX..) CRDDET
+     A*               CREDIT/DEBIT TEXT        (CC..) CRDTXT
+     A*               CASH TRAN                       CSHBCH
+     A*               G/L  TRANS                      GLCTRN
+     A*               CASH CONTROL                    ARCTRL
+     A*               A/R OPEN ITEM                   OPNITM
+     A*               CASH HIST                       TRNHST
+     A*               CASH CONTROL HIST               ARCHST
+     A*               G/L HIST                        GLCHST
+     A*               TRANSACTION CODE         (TRN.) TRNMST
+     A*               MTD TOTALS INV,CR,DR     (MT..) MTDTOT
+     A*
+     A****************************************************************
+     A*  DIVISION CONTROL FILE
+     A** DIVCTRR
+     A*
+     A            DCDIV          2  0       COLHDG('DIVISON')
+     A            DCORD          6P 0       COLHDG('NEXT ORD NUM')
+     A            DCPCK          6P 0       COLHDG('NEXT PICK NUM')
+     A            DCINV          6P 0       COLHDG('NEXT INV NUM')
+     A            DCCRD          6P 0       COLHDG('NEXT CRED NUM')
+     A            DCDEB          6P 0       COLHDG('NEXT DEBIT NUM')
+     A****************************************************************
+     A*  CUSTOMER MASTER FILE
+     A** CSTMSTR
+     A*
+     A            CMDIV          2  0       TEXT('DIVISION')
+     A                                      COLHDG('DIV')
+     A            CMNUM          9  0       TEXT('ACCOUNT NUMBER')
+     A                                      COLHDG('CUSTOMER' +
+     A                                      'NUMBER')
+     A            CMNAME        30          TEXT('NAME')
+     A                                      COLHDG('NAME')
+     A            CMALPH        10          TEXT('ALPH LOOKUP KEY')
+     A                                      COLHDG('ALPHA KEY')
+     A            CMADD1        30          TEXT('ADDRESS LINE ONE')
+     A                                      COLHDG('ADDRESS ONE')
+     A            CMADD2        30          TEXT('ADDRESS LINE TWO')
+     A                                      COLHDG('ADDRESS TWO')
+     A            CMADD3        30          TEXT('ADDRESS LINE THREE')
+     A                                      COLHDG('ADDRESS THREE')
+     A            CMCITY        20          TEXT('CITY')
+     A                                      COLHDG('CITY')
+     A            CMST           2          TEXT('STATE')
+     A                                      COLHDG('ST')
+     A            CMZIP1         5          TEXT('FIVE NUMBER ZIP')
+     A                                      COLHDG('ZIP')
+     A            CMZIP2         4          TEXT('ADDITIONAL ZIP')
+     A                                      COLHDG('ZIP+')
+     A            CMSLM1         4  0       TEXT('ASSIGNED SALES REP')
+     A                                      COLHDG('SLM1')
+     A            CMSLM2         4  0       TEXT('SALESMAN 2')
+     A                                      COLHDG('SLM2')
+     A            CMSLM3         4  0       TEXT('SALESMAN 3')
+     A                                      COLHDG('SLM3')
+     A            CMSLM4         4  0       TEXT('SALESMAN 4')
+     A                                      COLHDG('SLM4')
+     A            CMSLM5         4  0       TEXT('SALESMAN 5')
+     A                                      COLHDG('SLM5')
+     A            CMSPL1         4  2       TEXT('SPLIT COMM 1')
+     A                                      COLHDG('COMM% 1')
+     A            CMSPL2         4  2       TEXT('SPLIT COMM 2')
+     A                                      COLHDG('COMM% 2')
+     A            CMSPL3         4  2       TEXT('SPLIT COMM 3')
+     A                                      COLHDG('COMM% 3')
+     A            CMSPL4         4  2       TEXT('SPLIT COMM 4')
+     A                                      COLHDG('COMM% 4')
+     A            CMSPL5         4  2       TEXT('SPLIT COMM 5')
+     A                                      COLHDG('COMM% 5')
+     A            CMRATE         4  2       TEXT('TOTAL COMM RATE')
+     A                                      COLHDG('TOT COMM%')
+     A            CMMSG1         3  0       TEXT('UNIV. MESSAGE')
+     A                                      COLHDG('MSG 1')
+     A            CMMSG2         3  0       TEXT('UNIV. MESSAGE 2')
+     A                                      COLHDG('MSG 2')
+     A            CMCDRN         3          TEXT('CUST DISC REASON')
+     A            CMCDSC         2P 0       TEXT('CUSTOMER DISCOUNT')
+     A                                      COLHDG('CSTDSC')
+     A            CM$DSC         2  0       TEXT('ELIGIBLE')
+     A                                      COLHDG('ELG')
+     A            CM$DCD         2A         TEXT('ELIGIBLE CODE')
+     A                                      COLHDG('ELG. ')
+     A            CMSDS1         2P 0       TEXT('SPECIAL  % 1')
+     A                                      COLHDG('SPL%1')
+     A            CMSCD1         2A         TEXT('SPECIAL  CODE 1')
+     A                                      COLHDG('SPLD1')
+     A            CMSDS2         2P 0       TEXT('SPECIAL  % 2')
+     A                                      COLHDG('SPL%2')
+     A            CMSCD2         2A         TEXT('SPECIAL  CODE 2')
+     A                                      COLHDG('SPLD2')
+     A            CMAREA         3          TEXT('TELEPHONE AREA CODE')
+     A                                      COLHDG('AREA')
+     A            CMEXC          3          TEXT('TELEPHONE EXCHANGE')
+     A                                      COLHDG('EXCH')
+     A            CMTEL          4          TEXT('TELEPHONE NUMBER')
+     A                                      COLHDG('TELNO')
+     A            CMEXT          4          TEXT('EXTENSION')
+     A                                      COLHDG('EXT')
+     A            CMCONT        30          TEXT('CONTACT')
+     A                                      COLHDG('CONTACT')
+     A            CMAFFL         2          TEXT('GROUP AFFILIATION')
+     A                                      COLHDG('GROUP')
+     A            CMTERR         3          TEXT('TERRITORY')
+     A                                      COLHDG('FR')
+     A            CMPRIC         2          TEXT('PRICE CODE')
+     A                                      COLHDG('PR')
+     A            CMCLS1         2          TEXT('CLASS SUBFIELD')
+     A                                      COLHDG('R1')
+     A            CMREF2         2          TEXT('CLASS SUBFIELD')
+     A                                      COLHDG('R2')
+     A            CMREF3         2          TEXT('CLASS SUBFIELD')
+     A                                      COLHDG('R3')
+     A            CMTRMS         2          TEXT('TERMS CODE')
+     A                                      COLHDG('TR')
+     A            CMDUNS         9          TEXT('DUNS NUMBER')
+     A                                      COLHDG('DUNS')
+     A            CMDB           3          TEXT('DUN AND BRADSTREET RATING')
+     A                                      COLHDG('D&B')
+     A            CMVND         10          TEXT('ACCOUNTS NATURES NUMBER')
+     A                                      COLHDG('VENDOR #')
+     A            CMPART         1          TEXT('PARTIAL SHIPMENTS ALLOWED')
+     A                                      COLHDG('PART?')
+     A            CMBACK         1          TEXT('BACK ORDERS ALLOWED')
+     A                                      COLHDG('BACK?')
+     A            CMFRT          1          TEXT('CHARGE FREIGHT')
+     A                                      COLHDG('FRT?')
+     A                                      VALUES('Y' 'N')
+     A            CMUSR1         1          TEXT('FUTURE USER FLAGS')
+     A            CMUSR2         1          TEXT('HOLD STATEMENTS FLG')
+     A            CMUSR3         1          COLHDG('SPC' 'TOP')
+     A            CMUSR4         1          TEXT('OVR METHOD OF SHP 1')
+     A            CMUSR5         1          TEXT('OVR METHOD OF SHP 2')
+     A            CMUSR6         1          TEXT('INSIDE DELIVERY REQ')
+     A            CMUSR7         1          TEXT('USE STD SRP FILE?')
+     A            CMUSR8         1
+     A            CMUSR9         1
+     A            CMDSFL         1          TEXT('CUST DISC OVRRIDE OK')
+     A                                      COLHDG('DSC' 'OVR')
+     A            CMSTPR         1          TEXT('PRINT STATEMENTS ?')
+     A            CMSTDU         1          TEXT('DUE INVOICES ONLY ?')
+     A            CMSTCR         1          TEXT('PRINT CREDITS ON STATEMENT ?')
+     A            CMCOMF         1          TEXT('COMMENT PRINT FLAG')
+     A            CMCOMM        30          TEXT('COMMENTS FIELD')
+     A                                      COLHDG('COMMENTS')
+     A            CMDBA         10          TEXT('DOING BUSINESS AS')
+     A                                      COLHDG('DO BUS.' 'AS')
+     A            CMOPER        10          TEXT('LAST CHANGE OPER')
+     A            CMDATE         6  0       TEXT('LAST CHANGE DATE')
+     A            CMDEL          1          TEXT('DELETE FLAG')
+     A****************************************************************
+     A*  CUSTOMER INFORMATION FILE
+     A** CSTINFR
+     A*
+     A            CIDIV          2  0        TEXT('DIVISION')
+     A            CINUM          9  0        TEXT('NUMBER')
+     A            CISEQ          3  0        TEXT('LINE')
+     A            CILIN         70A          TEXT('TEXT')
+     A****************************************************************
+     A*  CUSTOMER AR INFORMATION FILE
+     A** CSTAINR
+     A*
+     A            CAINUM         9  0        TEXT('NUMBER')
+     A            CAISEQ         3  0        TEXT('LINE')
+     A            CAILIN        70A          TEXT('TEXT')
+     A****************************************************************
+     A*  CUSTOMER A/R FILE
+     A** CSTARR
+     A            CADIV          2  0       TEXT('DIVISION')
+     A            CACUST         9  0       TEXT('CUSTOMER')
+     A            CABAL         11P 2       TEXT('CUSTOMER OPEN BALANCE')
+     A            CAPDUE        11P 2       TEXT('CUSTOMER PAST DUE')
+     A            CACUR         11P 2       TEXT('CURRENT')
+     A            CA30          11P 2       TEXT('OVER 30 DAYS')
+     A            CA60          11P 2       TEXT('OVER 60 DAYS')
+     A            CA90          11P 2       TEXT('OVER 90 DAYS')
+     A            CA120         11P 2       TEXT('OVER 120 DAYS')
+     A            CAFUT         11P 2       TEXT('FUTURE DUE')
+     A            CAONOR        11P 2       TEXT('ORDERS OPEN')
+     A            CABKOR        11P 2       TEXT('ORDERS BACKORDERED')
+     A            CAORD         11P 2       TEXT('ORDERED YTD NET')
+     A            CACAN         11P 2       TEXT('CANCELLED YTD NET')
+     A            CARET         11P 2       TEXT('CREDIT YTD NET')
+     A            CASHP         11P 2       TEXT('SHIPPED YTD GROSS')
+     A            CADSC1        11P 2       TEXT('CST DISC YTD')
+     A            CADSC2        11P 2       TEXT('ELG DISC YTD')
+     A            CADSC3        11P 2       TEXT('SPC DISC YTD')
+     A            CABILL        11P 2       TEXT('BILLING YTD')
+     A            CALIM         11P 2       TEXT('CUSTOMER CREDIT LIMIT')
+     A            CAHITY        11P 2       TEXT('CUSTOMER HIGH CREDIT THIS Y.')
+     A            CAHILY        11P 2       TEXT('CUSTOMER HIGH CREDIT LAST Y.')
+     A            CAHIDT         6  0       TEXT('DATE OF HIGH CREDIT')
+     A            CALPDT         6  0       TEXT('DATE LAST PAYMENT ')
+     A            CAAVGP         3P 0       TEXT('AVERAGE DAYS TO PAY')
+     A            CALODT         6  0       TEXT('DATE LAST ORDER ')
+     A            CALID          6  0       TEXT('LAST INV DATE')
+     A                                      COLHDG('LAST' 'INV.DT.')
+     A            CALINO         6  0       TEXT('LAST INV. NUMBER')
+     A                                      COLHDG('LAST' 'INV#')
+     A****************************************************************
+     A*  CUSTOMER LEDGER FILE
+     A** CSTLDG
+     A            CLDIV          2  0       TEXT('DIVISION')
+     A            CLCUST         9  0       TEXT('CUSTOMER')
+     A            CLYI#          7  0       TEXT('NUMBER INVOICES     E')
+     A            CLYC#          7  0       TEXT('NUMBER CREDS  DUE')
+     A            CLYI$          9  2       TEXT('INV DOL')
+     A            CLYC$          9  2       TEXT('MERCH CRD DL')
+     A            CLLYTD         9  0       TEXT('LY TO DATE NET')
+     A            CL#PAY         9  0       TEXT('NUMBER PAYMENTS')
+     A****************************************************************
+     A*  CUSTOMER SALES DATA FILE
+     A** CSTSLSR
+     A*
+     A            CSNUM          9  0       TEXT('SALES CUST NO')
+     A            CS#INV         9  0       TEXT('INVS YTD')
+     A            CS$INV         9  0       TEXT('INV$ YTD')
+     A****************************************************************
+     A*  CUSTOMER AR/MONTH DATA FILE
+     A** CSTARMR
+     A*
+     A            CSXNUM         9  0
+     A            CSXYR          2  0
+     A            CSXMO          2  0
+     A            CSXBAL        11  2
+     A****************************************************************
+     A*  CUSTOMER DATA FILE
+     A** CSTDTAR
+     A*
+     A            CDNUM          9  0       TEXT('LABEL')
+     A            CDDIV          2  0       TEXT('DIVISION')
+     A            CDYR           2  0       TEXT('YEAR')
+     A            CDMO           2  0       TEXT('MONTH')
+     A            CDOG          11P 2       TEXT('ALLOWABLE CO-OP')
+     A            CDCG          11P 2       TEXT('ENER-B CO-OP')
+     A            CDOD1         11P 2
+     A            CDOD2         11P 2
+     A            CDOD3         11P 2
+     A            CDON          11P 2
+     A            CDCN          11P 2
+     A            CDSG          11P 2       TEXT('ORDER MERCH TOTAL')
+     A            CDSD1         11P 2       TEXT('ORD DISCOUNT TOT 1')
+     A            CDSD2         11P 2       TEXT('ORD DISCOUNT TOT 2')
+     A            CDSD3         11P 2       TEXT('ORD DISCOUNT TOT 3')
+     A            CDSN          11P 2       TEXT('NET SALES & DEBITS')
+     A            CDCD1         11P 2
+     A            CDCD2         11P 2       TEXT('CO-OP DOLLARS')
+     A            CDCD3         11P 2       TEXT('CREDITS')
+     A            CDRN          11P 2       TEXT('RETURNED NET')
+     A****************************************************************
+     A*  PRODUCT   MASTER FILE
+     A** PRDMSTR
+     A*
+     A            PMLAB          2          TEXT('PRODUCT LABEL')
+     A                                      COLHDG('LAB')
+     A            PMNUM          5P 0       TEXT('PRODUCT NUMBER')
+     A                                      COLHDG('NUM')
+     A            PMBULK         1          TEXT('BULK')
+     A                                      COLHDG('BLK')
+     A            PMDESC        30          TEXT('PRODUCT   DESCRIPTION')
+     A                                      COLHDG('DESC')
+     A            PMUOM          2          TEXT('UNIT OF MEASURE')
+     A                                      COLHDG('UOM')
+     A            PMUOM#         5P 0       TEXT('UNIT DIVISION')
+     A                                      COLHDG('UOM#')
+     A            PMPRIC         7P 2       TEXT('LIST PRICE')
+     A                                      COLHDG('LIST' 'PRICE')
+     A            PMLIST         7P 2       TEXT('SUGG RETAIL PRICE')
+     A                                      COLHDG('SUGG' 'RTL' 'PRICE')
+     A            PMPWGT         3P 0       TEXT('POUNDS PER UOM ')
+     A                                      COLHDG('LGBS/' 'UOM ')
+     A            PMOWGT         2P 0       TEXT('OUNCES PER CASE')
+     A                                      COLHDG('ONZ./' 'UOM ')
+     A            PMMCST         7P 2       TEXT('MATERIAL COST')
+     A                                      COLHDG('COST/' 'MTRL')
+     A            PMLCST         7P 2       TEXT('LABOR COST')
+     A                                      COLHDG('LC')
+     A            PMOCST         7P 2       TEXT('OVERHEAD COST')
+     A                                      COLHDG('OVER/' 'COST')
+     A            PMDIV          2P 0       TEXT('DIVISION')
+     A                                      COLHDG('CMP')
+     A            PMGLC          5P 0       TEXT('GL NUMBER')
+     A                                      COLHDG('G/L')
+     A            PMDEAL         1          TEXT('DEAL')
+     A                                      COLHDG('DEAL')
+     A                                      VALUES('Y' 'N' ' ' 'R' 'Z')
+     A            PMDLSF         1          COLHDG('DEAL 1/' 'TICK?')
+     A                                      VALUES('Y' 'N' ' ')
+     A            PMDLSP         1          COLHDG('DEAL' 'SPC PRT')
+     A                                      VALUES('Y' 'N' ' ')
+     A            PMRSN          3          TEXT('REASON CODE')
+     A                                      COLHDG('RSN')
+     A            PMFMT          1          TEXT('FORMAT')
+     A                                      COLHDG('FMT')
+     A            PMCOST         7P 2       TEXT('TOTAL COST PER UOM')
+     A                                      COLHDG('COST')
+     A            PMSIZE        10          COLHDG('SIZE')
+     A            PMOPER        10          COLHDG('LST CHNG' 'OPER')
+     A            PMDATE         6S 0       COLHDG('LST CHNG' 'DATE')
+     A            PMMUSE         5S 0       COLHDG('MONTH' 'USED')
+     A            PMOITM         4          COLHDG('ORVIS' 'ITEM')
+     A            PMOSUF         4          COLHDG('ORVIS' 'SUFF')
+     A            PMOTYP         1          COLHDG('PRD' 'TYP')
+     A            PMOSTA         1          COLHDG('STATUS')
+     A            PMDEL          1          COLHDG('DELETE FLAG')
+     A            PMPLOC         6          COLHDG('PICKING LOCATION')
+     A            PMPSUP         1          COLHDG('PICKING SUPPRESS')
+     A                                      VALUES(' ' 'Y')
+     A            PMCUF          1          COLHDG('COST UPDATE FLAG')
+     A                                      VALUES(' ' 'N')
+     A            PMINCH         5P 0       COLHDG('CUBIC INCHES')
+     A****************************************************************
+     A*  PRODUCT PRICE FILE
+     A** PRDPRCR
+     A*
+     A            PPLAB          2          TEXT('PRODUCT LABEL')
+     A                                      COLHDG('NUMBER')
+     A            PPNUM          5S 0       TEXT('PRODUCT NUMBER')
+     A                                      COLHDG('NUMBER')
+     A            PPBULK         1          TEXT('BULK?')
+     A                                      COLHDG('BULK')
+     A            PPQTY          5P 0       TEXT('QUANTITY BREAK       ')
+     A                                      COLHDG('QTY')
+     A            PPPRC          7P 2       TEXT('PRICE')
+     A                                      COLHDG('PRC')
+     A            PPRSN          3          TEXT('REASON')
+     A            PPEXD          6S 0       TEXT('EXPIRATION DATE')
+     A                                      COLHDG('EXPIRES')
+     A            PPDIV          2          TEXT('DIVISION')
+     A                                      COLHDG('DIV')
+     A            PPOPER        10          TEXT('LAST CHANGE OPER.')
+     A            PPDATE         6S 0       TEXT('LAST CHANGE DATE')
+     A****************************************************************
+     A*  PRODUCT DATA FILE
+     A** PRDDTAR
+     A*
+     A*       SALES INFORMATION - KEYED BY PRODUCT YEAR AND MONTH
+     A*       PDYEAR AND PDMO = 00 -- TODAYS TOTALS
+     A*       PDYR   = '99'        -- YEAR TO DATE TOTALS
+     A*       PDYR   = '00'        -- CURRENT MONTH
+     A*
+     A            PDLAB          2          TEXT('PRODUCT LABEL')
+     A                                      COLHDG('NUMBER')
+     A            PDNUM          5  0       TEXT('PRODUCT NUMBER')
+     A                                      COLHDG('NUMBER')
+     A            PDBULK         1          TEXT('BULK?')
+     A            PDRSN          3          TEXT('REASON')
+     A            PDYR           2  0       TEXT('YEAR')
+     A            PDMO           2  0       TEXT('MONTH')
+     A            PDQO           9P 0
+     A            PDDBG         11P 2
+     A            PDDBN         11P 2
+     A            PDQC           9P 0
+     A            PDDCG         11P 2
+     A            PDDCN         11P 2
+     A            PDQS           9P 0       TEXT('TOTAL QTY SHIPPED')
+     A            PDDSG         11P 2       TEXT('NET SALES (ALL DISC)')
+     A            PDDSN         11P 2       TEXT('NET SALES (NON-COOP DISC)')
+     A            PDQR           9P 0       TEXT('TOTAL QTY RETURNED')
+     A            PDDR          11P 2       TEXT('NET CREDITS (ALL DISC)')
+     A            PDDRN         11P 2       TEXT('NET CREDITS (NON-COOP DISC)')
+     A            PDCMP          2  0       TEXT('DIVISION')
+     A                                      COLHDG('DIV')
+     A****************************************************************
+     A*  PRODUCT WAREHOUSE AND QUANTITY FILE
+     A** PRDWHSR
+     A*
+     A** NOTE - WAREHOUSE '00' = TOTAL
+     A*
+     A            PWLAB          2A         TEXT('PRODUCT LABEL')
+     A                                      COLHDG('NUMBER')
+     A            PWNUM          5  0       TEXT('PRODUCT NUMBER')
+     A                                      COLHDG('NUMBER')
+     A            PWBULK         1          TEXT('BULK?')
+     A                                      COLHDG('BULK?')
+     A            PWWHS          2A         TEXT('WAREHOUSE CODE')
+     A                                      COLHDG('WH')
+     A            PWQOH          9P 0       TEXT('ON HAND')
+     A                                      COLHDG('QOH')
+     A            PWQOO          9P 0       TEXT('ON ORDER')
+     A                                      COLHDG('QTY ON ORDER')
+     A            PWQSHM         9P 0       TEXT('QTY SHIPPED')
+     A                                      COLHDG('QTY SHIPPED ')
+     A            PWQRCM         9P 0       TEXT('QTY RECEIVED')
+     A                                      COLHDG('QTY. REC.')
+     A            PWQRTM         9P 0       TEXT('QTY RETURNED')
+     A                                      COLHDG('QTY. RET.')
+     A            PWQSHY         9P 0       TEXT('QTY SHIPPED')
+     A                                      COLHDG('QTY SHIPPED ')
+     A            PWQRCY         9P 0       TEXT('QTY RECEIVED')
+     A                                      COLHDG('QTY. REC.')
+     A            PWQRTY         9P 0       TEXT('QTY RETURNED')
+     A                                      COLHDG('QTY. RET.')
+     A****************************************************************
+     A*  PRODUCT TRANSACTION REGISTER
+     A** PRDTRNR
+     A*
+     A            PTLAB          2          TEXT('LABEL')
+     A            PTNUM          5  0       TEXT('PRODUCT')
+     A            PTBULK         1          TEXT('BULK?')
+     A            PTCODE         1          TEXT('TYPE')
+     A            PTQTY          9  0       TEXT('QUANTITY')
+     A            PTDA           2  0       TEXT('DAY')
+     A            PTMO           2  0       TEXT('MONTH')
+     A            PTYR           2  0       TEXT('YEAR')
+     A            PTWHS          2          TEXT('WAREHOUSE')
+     A            PTRNUM         9P 0       TEXT('REF NUMBER')
+     A            PTREF1        10          TEXT('RECEIVER')
+     A            PTREFF        30          TEXT('REFERENCE')
+     A            PTSDAT         6  0       TEXT('SYSTEM DATE')
+     A            PTOPR         10          TEXT('OPERATOR')
+     A            PTACD          4  0       TEXT('ACCTG. DATE')
+     A****************************************************************
+     A*  PRODUCT SALES ANALYSIS
+     A** PRDSLSR
+     A*
+     A            PSLAB          2A         TEXT('LABEL')
+     A            PSNUM          5  0       TEXT('PRODUCT')
+     A            PSBULK         1          TEXT('BULK?')
+     A            PDLSD          6  0       TEXT('LAST SALE DATE')
+     A****************************************************************
+     A*  PRODUCT ALLOCATION FILE
+     A** PRDALLR
+     A*
+     A            PALAB          2A         TEXT('PRODUCT LABEL')
+     A                                      COLHDG('NUMBER')
+     A            PANUM          5  0       TEXT('PRODUCT NUMBER')
+     A                                      COLHDG('NUMBER')
+     A            PABULK         1          TEXT('BULK?')
+     A                                      COLHDG('BULK?')
+     A            PAWHS          2A         TEXT('WAREHOUSE CODE')
+     A                                      COLHDG('WH')
+     A            PAQAL          9P 0       TEXT('ALLOCATED')
+     A                                      COLHDG('QAL')
+     A            PAQALB         9P 0       TEXT('BO ALLOC')
+     A****************************************************************
+     A*  INVENTORY AUDIT FILE
+     A** PRDAUDR
+     A*
+     A            PAULAB         2A         TEXT('LABEL')
+     A            PAUNUM         5  0       TEXT('CODE')
+     A            PAUBLK         1          TEXT('BULK')
+     A            PAUWHS         2          TEXT('WHS')
+     A            PAUDA          2  0       TEXT('DAY')
+     A            PAUMO          2  0       TEXT('MONTH')
+     A            PAUYR          2  0       TEXT('YEAR')
+     A            PAUTIM         6  0       TEXT('TIME')
+     A            PAUQYB         9  0       TEXT('QTY BEFORE')
+     A            PAUQYT         9  0       TEXT('QTY TRAN')
+     A            PAUQYA         9  0       TEXT('QTY AFTER')
+     A            PAUPGM        20          TEXT('PROGRAM')
+     A            PAUACT         2  0       TEXT('ACCTNG DATE')
+     A****************************************************************
+     A*  PRODUCT INFORMATION TEXT FILE
+     A** PRDINFR
+     A*
+     A            PILAB          2A          TEXT('LABEL')
+     A            PIPRD          5  0        TEXT('TEXT')
+     A            PIBULK         1           TEXT('BULK?')
+     A            PISEQ          3  0        TEXT('LINE')
+     A            PILIN         70A          TEXT('TEXT')
+     A****************************************************************
+     A*  SPECIAL DEAL MASTER FILE
+     A** DELMSTR
+     A*
+     A            SDLAB          2A          TEXT('LABEL')
+     A            SDPRD          5  0        TEXT('PRODUCT')
+     A            SDSEQ          3  0        TEXT('SEQUENCE')
+     A            SDLITM         5  0        TEXT('LINE ITEM')
+     A            SDLPRC         7P 2        TEXT('PRICE')
+     A            SDLQTY         9P 0        TEXT('QTY')
+     A            SDRSN          3           TEXT('RSN')
+     A            SDOPER        10           TEXT('OPERATOR')
+     A            SDDATE         6  0        TEXT('DATE')
+     A****************************************************************
+     A*  DEAL TEXT
+     A** DELTXTR
+     A            SDTLAB         2A          TEXT('LABEL')
+     A            SDTPRD         5  0        TEXT('PRODUCT')
+     A            SDTL1         80           TEXT('LINE ONE')
+     A            SDTL2         80           TEXT('LINE TWO ')
+     A            SDTL3         80           TEXT('LINE THREE')
+     A****************************************************************
+     A*  UNIVERSAL MESSAGE FILE
+     A** UNIMSGR
+     A*
+     A            UMNUM          3  0        TEXT('MSG')
+     A            UMTXT1        70A          TEXT('TEXT1')
+     A            UMTXT2        70A          TEXT('TEXT2')
+     A            UMTXT3        70A          TEXT('TEXT3')
+     A            UMOPER        10A          TEXT('OPERATOR')
+     A            UMDAT          6  0        TEXT('LAST CHANGE DATE')
+     A****************************************************************
+     A*  DISCOUNT VALIDATION FILE
+     A** DSCMSTR
+     A*
+     A            DSLAB          2A          TEXT('LABEL')
+     A            DSNUM          2A          TEXT('NUMBER')
+     A            DSDESC        30A          TEXT('DESCRIPTION')
+     A            DSGL           5  0        TEXT('G/L')
+     A            DSRSN          3           TEXT('RSN')
+     A            DSOPER        10A          TEXT('OPERATOR')
+     A            DSDATE         6  0        TEXT('DATE')
+     A****************************************************************
+     A*  SPECIAL DISCOUNT
+     A** SPCDSCR
+     A*
+     A            SPLAB          2A          TEXT('LABEL')
+     A            SPNUM          2A          TEXT('NUMBER')
+     A            SPDESC        30A          TEXT('DESCRIPTIONS')
+     A            SPGL           5  0        TEXT('G/L')
+     A            SPGR1          9  0        TEXT('GROSS BREAK ONE')
+     A            SPGR2          9  0
+     A            SPGR3          9  0
+     A            SPGR4          9  0
+     A            SPGR5          9  0
+     A            SPDS1          2  0        TEXT('PERCENT')
+     A            SPDS2          2  0
+     A            SPDS3          2  0
+     A            SPDS4          2  0
+     A            SPDS5          2  0
+     A            SPRN1          3           TEXT('RSN CODE')
+     A            SPRN2          3
+     A            SPRN3          3
+     A            SPRN4          3
+     A            SPRN5          3
+     A            SPRSN          3           TEXT('RSN')
+     A            SPOPER        10           TEXT('OPERATOR')
+     A            SPDATE         6  0        TEXT('DATE')
+     A****************************************************************
+     A*  STATE DISCOUNTS
+     A** STADSCR
+     A*
+     A            STLAB          2           TEXT('LABEL')
+     A            STNUM          2           TEXT('STATE CODE')
+     A            STFRT          9  0        TEXT('FRT BREAK')
+     A            STGR1          9  0        TEXT('GROSS TOTAL')
+     A            STDS1          2  0        TEXT('DISC. %')
+     A            STRN1          3           TEXT('REASON ')
+     A            STGR2          9  0        TEXT('GROSS TOTAL')
+     A            STDS2          2  0        TEXT('DISC. %')
+     A            STRN2          3           TEXT('REASON ')
+     A            STGR3          9  0        TEXT('GROSS TOTAL')
+     A            STDS3          2  0        TEXT('DISC. %')
+     A            STRN3          3           TEXT('REASON ')
+     A            STGR4          9  0        TEXT('GROSS TOTAL')
+     A            STDS4          2  0        TEXT('DISC. %')
+     A            STRN4          3           TEXT('REASON ')
+     A            STGR5          9  0        TEXT('GROSS TOTAL')
+     A            STDS5          2  0        TEXT('DISC. %')
+     A            STRN5          3           TEXT('REASON ')
+     A            STRSN          3           TEXT('RSN')
+     A            STOPER        10
+     A            STDATE         6  0
+     A****************************************************************
+     A*  REASON CODE MASTER
+     A** RSNMSTR
+     A*
+     A            RMNUM          3           TEXT('REASON CODE')
+     A            RMDESC        30           TEXT('DESCRIPTION')
+     A            RMOPER        10           TEXT('OPER')
+     A            RMDATE         6  0        TEXT('DATE')
+     A****************************************************************
+     A*  REASON CODE DATA
+     A** RSNDTAR
+     A*
+     A            RDDIV          2  0
+     A            RDLAB          2
+     A            RDNUM          3
+     A            RDMO           2  0
+     A            RDYR           2  0
+     A            RDDOL         11P 2       TEXT('DOLLARS NET ')
+     A****************************************************************
+     A*  REASON CODE GL XREF
+     A** RSNGLR
+     A*
+     A            RGNUM          3          TEXT('REASON CODE')
+     A            RGGLC         12  0       TEXT('G/L XREF')
+     A            RGMAN         10          TEXT('MANUAL XREF')
+     A****************************************************************
+     A*  SHIP-TO    MASTER FILE
+     A** SHPMSTR
+     A*
+     A
+     A            SHDIV          2S 0       TEXT('COMPANY')
+`    A            SHCUST         9S 0       TEXT('ACCOUNT NUMBER')
+     A                                      COLHDG('CUSTOMER' +
+     A                                      'NUMBER')
+     A            SHSHIP         4S 0       TEXT('SHIP CODE')
+     A                                      COLHDG('SHIP')
+     A            SHNAME        30          TEXT('NAME')
+     A                                      COLHDG('NAME')
+     A            SHADD1        30          TEXT('ADDRESS LINE ONE')
+     A                                      COLHDG('ADDRESS ONE')
+     A            SHADD2        30          TEXT('ADDRESS LINE TWO')
+     A                                      COLHDG('ADDRESS TWO')
+     A            SHADD3        30          TEXT('ADDRESS LINE THREE')
+     A                                      COLHDG('ADDRESS THREE')
+     A            SHCITY        20          TEXT('CITY')
+     A                                      COLHDG('CITY')
+     A            SHST           2          TEXT('STATE')
+     A                                      COLHDG('ST')
+     A            SHZIP1         5          TEXT('FIVE NUMBER ZIP')
+     A                                      COLHDG('ZIP')
+     A            SHZIP2         4          TEXT('ADDITIONAL ZIP')
+     A                                      COLHDG('ZIP+')
+     A            SHSLM1         4S 0       TEXT('ASSIGNED SALES REP')
+     A                                      COLHDG('SLM')
+     A            SHSLM2         4S 0       TEXT('SALESMAN 2')
+     A            SHSLM3         4S 0       TEXT('SALESMAN 3')
+     A            SHSLM4         4S 0       TEXT('SALESMAN 4')
+     A            SHSLM5         4S 0       TEXT('SALESMAN 5')
+     A            SHSPLT         1          TEXT('SPLIT? ')
+     A            SHSPL1         4  2       TEXT('ASSIGNED SALES REP')
+     A                                      COLHDG('SLM')
+     A            SHSPL2         4  2       TEXT('SALESMAN 2')
+     A            SHSPL3         4  2       TEXT('SALESMAN 3')
+     A            SHSPL4         4  2       TEXT('SALESMAN 4')
+     A            SHSPL5         4  2       TEXT('SALESMAN 5')
+     A            SHRATE         4  2       TEXT('RATE')
+     A            SHMSG1         3S 0       TEXT('UNIV. MESSAGE')
+     A            SHMSG2         3S 0
+     A            SHCONT        30          TEXT('CONTACT')
+     A                                      COLHDG('CONTACT')
+     A            SHAFFL         2          TEXT('GROUP AFFILIATION')
+     A                                      COLHDG('GROUP')
+     A            SHTERR         3          TEXT('TERRITORY')
+     A                                      COLHDG('FR')
+     A            SHPRIC         2          TEXT('PRICE CODE')
+     A                                      COLHDG('PR')
+     A            SHREF1         2          TEXT('CLASS SUBFIELD')
+     A                                      COLHDG('R1')
+     A            SHOPER        10          TEXT('LAST CHANGE OPER')
+     A            SHDATE         6S 0       TEXT('LAST CHANGE DATE')
+     A            SHDEL          1          TEXT('DELETE FLAG')
+     A****************************************************************
+     A*  SALESMAN FILE
+     A** SLMMSTR
+     A*
+     A
+     A            SMDIV          2S 0       TEXT('SLM DIVISION')
+     A                                      COLHDG('DIV')
+     A            SMNUM          4S 0       TEXT('REP NUMBER')
+     A                                      COLHDG('CODE')
+     A            SMNAME        30          TEXT('REP NAME')
+     A                                      COLHDG('NAME')
+     A            SMADD1        30          TEXT('REP ADDRESS ONE')
+     A                                      COLHDG('ADDRESS')
+     A            SMADD2        30          TEXT('REP ADDRESS TWO')
+     A                                      COLHDG('EXTENDED ADDRESS')
+     A            SMCITY        20          TEXT('REP CITY')
+     A                                      COLHDG('CITY')
+     A            SMST           2          TEXT('REP STATE')
+     A                                      COLHDG('ST')
+     A            SMZIP1         5          TEXT('REP ZIP ONE')
+     A                                      COLHDG('ZIP')
+     A            SMZIP2         4          TEXT('REP ADDITIONAL ZIP')
+     A                                      COLHDG('ZIP+')
+     A            SMTXT1        70          TEXT('REP COMMENT 1')
+     A            SMTXT2        70          TEXT('REP COMMENT 2')
+     A            SMREF1         3          TEXT('GROUPING CODE 1')
+     A            SMREF2         3          TEXT('GROUPING CODE 2')
+     A            SMREF3         3          TEXT('GROUPING CODE 3')
+     A            SMOPER        10          TEXT('LAST CHANGE OPER.')
+     A            SMDATE         6S 0       TEXT('LAST CHANGE DATE')
+     A            SMDEL          1          TEXT('DELETE FLAG')
+     A            SMSORT         5          TEXT('SORT FIELD - REGION,')
+     A*                                     TERRITORY,BROKER,NUMBER
+     A            SMBRKR         1          TEXT('BROKER')
+     A                                      COLHDG('BROKER')
+     A                                      VALUES(' ' 'Y')
+     A            SMSFRC         2P 0       TEXT('SALES FORCE')
+     A            SMRMGR         1          TEXT('REGIONAL MANAGER')
+     A            SMFLG1         1          TEXT('PRINT ON WORK SHEET N OR " "')
+     A            SMFLG2         1          TEXT('EXTRA FLAG')
+     A            SMFLG3         1          TEXT('EXTRA FLAG')
+     A            SMFLG4         1          TEXT('EXTRA FLAG')
+     A            SMFLG5         1          TEXT('EXTRA FLAG')
+     A****************************************************************
+     A*  SALESMAN DATA FILE
+     A** SLMDTAR
+     A*
+     A            SLDIV          2P 0
+     A            SLNUM          4P 0       TEXT('REP NUMBER')
+     A                                      COLHDG('CD')
+     A            SLYR           2P 0       TEXT('YEAR')
+     A            SLMO           2P 0       TEXT('MONTH')
+     A            SLOBG         11P 2       TEXT('GROSS SALES (NOT SPLIT)')
+     A            SLCBG         11P 2
+     A            SLOBC         11P 2       TEXT('NET SALES BOOKED (SPLIT)')
+     A            SLCBC         11P 2
+     A            SLSG          11P 2
+     A            SLRG          11P 2
+     A            SLSC          11P 2       TEXT('NET SALES BILLED (SPLIT)')
+     A            SLRC          11P 2       TEXT('CREDITS (SPLIT)')
+     A            SLCOST        11P 2       TEXT('COST')
+     A****************************************************************
+     A*  SALESMAN OPEN TO SHIP FILE
+     A** SLMSHPR
+     A*
+     A            SSDIV          2  0       TEXT('SLM DIVISION')
+     A                                      COLHDG('DIV')
+     A            SSNUM          4  0       TEXT('REP NUMBER')
+     A                                      COLHDG('CODE')
+     A            SSOPN         11P 2       TEXT('OPEN TO SHIP')
+     A                                      COLHDG('OPEN TO' 'SHIP')
+     A****************************************************************
+     A*  SALESMAN BOOK/BILL DATA FILE
+     A** SLMBBBR
+     A*
+     A            SBDIV          2  0       COLHDG('DIV')
+     A            SBNUM          4  0       TEXT('REP NUMBER')
+     A                                      COLHDG('REP')
+     A            SBYR           2  0       COLHDG('YEAR')
+     A            SBMO           2  0       COLHDG('MONTH')
+     A*
+     A* BOOKING AND BILLING DEPENDENT ON STATUS OF ORDER IN ORDHDR
+     A*  NO CANCELLATIONS ARE INCLUDED, NO BACKORDERS INCLUDED
+     A*  NO DEPENDENCE ON COMMISSIONABLE
+     A*
+     A            SBBOOK        11P 2       COLHDG('BOOKED')
+     A            SBBILL        11P 2       COLHDG('BILLED')
+     A****************************************************************
+     A*  STATE CODE VALIDATION FILE
+     A** STCVALR
+     A*
+     A            SVNUM          2          TEXT('STATE')
+     A                                      COLHDG('STATE')
+     A            SVDESC        30          TEXT('DESCRIPTION')
+     A                                      COLHDG('DESCRIPTION')
+     A            SVOPER        10          TEXT('OPERATOR')
+     A            SVDATE         6  0       TEXT('DATE')
+     A            SVDEL          1          TEXT('DELETE FLAG')
+     A****************************************************************
+     A*  FREIGHT CODE VALIDATION FILE
+     A** FRTMSTR
+     A*
+     A            FRNUM          2          TEXT('FRT CODE')
+     A            FRDESC        30          TEXT('DESCRIPTION')
+     A            FRRSN          3          TEXT('REASON CODE')
+     A            FROPER        10          TEXT('OPERATOR')
+     A            FRDATE         6  0       TEXT('DATE')
+     A****************************************************************
+     A*  ZONE UPS BY ZIP
+     A** ZONMSTR
+     A            ZNZIP          3          TEXT('ZIP CODE')
+     A                                      COLHDG('ZIP' 'CODE')
+     A            ZNZIP1         6          TEXT('ZIP EXT')
+     A                                      COLHDG('ZIP' 'EXT')
+     A            ZNZON          1          TEXT('ZONE')
+     A                                      COLHDG('ZONE')
+     A            ZNRAT          7  3       TEXT('RATE')
+     A                                      COLHDG('RATE')
+     A****************************************************************
+     A*  TERMS MASTER FILE
+     A** TRMMSTR
+     A*
+     A            TMNUM          2          TEXT('TERMS CODE')
+     A                                      COLHDG('CODE')
+     A            TMDES         30          TEXT('TERMS DESCRIPTION')
+     A                                      COLHDG('DESCRIPTION')
+     A            TMDSC          2P 0       TEXT('CASH DISCOUNT %')
+     A                                      COLHDG('DISC.')
+     A            TMDSD          3P 0       TEXT('DISCOUNT DAYS')
+     A                                      COLHDG('DISC.' 'DAYS')
+     A            TMDUD          3P 0       TEXT('DUE DAYS')
+     A                                      COLHDG('DUE' 'DAYS')
+     A            TMOPR         10          TEXT('LAST CHANGE OPER.')
+     A            TMDAT          6  0       TEXT('LAST CHANGE DATE')
+     A****************************************************************
+     A*  TERMS DOLLARS MASTER FILE
+     A** TRMDOLR
+     A*
+     A            TDDIV          2  0       TEXT('TERMS DIV')
+     A                                      COLHDG('DIV')
+     A            TDPROM         2  0       COLHDG('PROMO')
+     A            TDDOL         11P 2       TEXT('DOLLARS')
+     A                                      COLHDG('DOL$$')
+     A            TDNUM          2          TEXT('TERMS CODE')
+     A                                      COLHDG('CODE')
+     A            TDDES         30          TEXT('TERMS DESCRIPTION')
+     A                                      COLHDG('DESCRIPTION')
+     A            TDOPR         10          COLHDG('LST CHG OPER')
+     A            TDDAT          6  0       COLHDG('LST CHG DATE')
+     A            TDFLG1         1          COLHDG('FLAG 1')
+     A            TDFLG2         1          COLHDG('FLAG 2')
+     A            TDFLG3         1          COLHDG('FLAG 3')
+     A            TDFLG4         1          COLHDG('FLAG 4')
+     A            TDFLG5         1          COLHDG('FLAG 5')
+     A****************************************************************
+     A*  WAREHOUSE MASTER FILE
+     A** WHMSTR
+     A*
+     A            WHNUM          2A         TEXT('WAREHOUSE')
+     A            WHNAME        30A         TEXT('NAME')
+     A            WHADD1        30A         TEXT('ADDRESS 1')
+     A            WHADD2        30A         TEXT('ADDRESS 2')
+     A            WHCITY        20A         TEXT('CITY')
+     A            WHSTAT         2A         TEXT('ST')
+     A            WHZIP         10A         TEXT('ZIP')
+     A            WHOPER        10A         TEXT('LAST CHANGE OPER')
+     A            WHDAT          6  0       TEXT('LAST CHANGE DATE')
+     A****************************************************************
+     A*  LABEL MASTER FILE
+     A** LABMSTR
+     A*
+     A            LMNUM          2A         TEXT('LABEL')
+     A            LMNAME        30A         TEXT('NAME')
+     A            LMDIV          2  0       TEXT('DIVISION')
+     A            LMREF          2          TEXT('G/L REFERENCE NUM.')
+     A            LMWHS          2          TEXT('WAREHOUSE')
+     A            LMRSN          3          TEXT('REASON')
+     A            LMOPER        10A         TEXT('OPERATOR')
+     A            LMDAT          6  0       TEXT('DATE')
+     A****************************************************************
+     A*  LABEL DATA FILE
+     A** LABDTAR
+     A*
+     A            LDNUM          2A         TEXT('LABEL')
+     A            LDDIV          2  0       TEXT('DIVISION')
+     A            LDYR           2  0       TEXT('YEAR')
+     A            LDMO           2  0       TEXT('MONTH')
+     A            LDOG          11P 2       TEXT('BOOKED GROSS 01')
+     A            LDCG          11P 2       TEXT('CANCEL GROSS ')
+     A            LDOD1         11P 2       TEXT('DISCOUNT LEVEL 1')
+     A            LDOD2         11P 2       TEXT('DISCOUNT LEVEL 2')
+     A            LDOD3         11P 2       TEXT('DISCOUNT LEVEL 3')
+     A            LDON          11P 2       TEXT('BOOKED NET   01')
+     A            LDCN          11P 2       TEXT('CANCEL NET   01')
+     A            LDSG          11P 2       TEXT('SHIP   GROSS 01')
+     A            LDSD1         11P 2       TEXT('DISCOUNT LEVEL 1')
+     A            LDSD2         11P 2       TEXT('DISCOUNT LEVEL 2')
+     A            LDSD3         11P 2       TEXT('DISCOUNT LEVEL 3')
+     A            LDSN          11P 2       TEXT('SHIPPED NET   01')
+     A            LDCD1         11P 2       TEXT('DISCOUNT LEVEL 1')
+     A            LDCD2         11P 2       TEXT('DISCOUNT LEVEL 2')
+     A            LDCD3         11P 2       TEXT('DISCOUNT LEVEL 3')
+     A            LDRN          11P 2       TEXT('RETURNED NET')
+     A****************************************************************
+     A*  DIVISION MASTER FILE
+     A** DIVMSTR
+     A*
+     A            DMNUM          2S 0       TEXT('DIVISION')
+     A            DMNAME        30A         TEXT('HEADING')
+     A            DMADD1        30A         TEXT('ADDRESS 1')
+     A            DMADD2        30A         TEXT('ADDRESS 2')
+     A            DMADD3        30A         TEXT('ADDRESS 3')
+     A            DMCITY        20A         TEXT('CITY')
+     A            DMSTAT         2A         TEXT('STATE')
+     A            DMZIP         10A         TEXT('ZIP')
+     A            DMOPR         10A         TEXT('ENTERED')
+     A            DMFRT         11  2       TEXT('FRGT CLNG')
+     A            DMFRTP         5  2       TEXT('FRT PCT')
+     A            DMDATE         6  0       TEXT('DATE')
+     A            DMLAB          2          TEXT('DEFAULT LABEL')
+     A****************************************************************
+     A*  DIVISION DATA FILE
+     A** DIVDTAR
+     A*
+     A            DDNUM          2  0       TEXT('DIV  ')
+     A            DDYR           2  0       TEXT('YEAR')
+     A            DDMO           2  0       TEXT('MONTH')
+     A            DDOG          11P 2       TEXT('BOOKED GROSS 01')
+     A            DDCG          11P 2       TEXT('CANCEL GROSS ')
+     A            DDOD1         11P 2       TEXT('DISCOUNT LEVEL 1')
+     A            DDOD2         11P 2       TEXT('DISCOUNT LEVEL 2')
+     A            DDOD3         11P 2       TEXT('DISCOUNT LEVEL 3')
+     A            DDON          11P 2       TEXT('BOOKED NET   01')
+     A            DDCN          11P 2       TEXT('CANCEL NET   01')
+     A            DDSG          11P 2       TEXT('SHIP   GROSS 01')
+     A            DDSD1         11P 2       TEXT('DISCOUNT LEVEL 1')
+     A            DDSD2         11P 2       TEXT('DISCOUNT LEVEL 2')
+     A            DDSD3         11P 2       TEXT('DISCOUNT LEVEL 3')
+     A            DDSN          11P 2       TEXT('SHIPPED NET   01')
+     A            DDCD1         11P 2       TEXT('DISCOUNT LEVEL 1')
+     A            DDCD2         11P 2       TEXT('DISCOUNT LEVEL 2')
+     A            DDCD3         11P 2       TEXT('DISCOUNT LEVEL 3')
+     A            DDRN          11P 2       TEXT('RETURNED NET')
+     A****************************************************************
+     A*  COMPANY DATA   FILE
+     A** CMPDTAR
+     A*
+     A            CMDNUM         2A         TEXT('COMPANY')
+     A****************************************************************
+     A*  OPEN ORDER HEADER
+     A** ORDHDRR
+     A*
+     A            OHDIV          2P 0       TEXT('DIVISION')
+     A                                      COLHDG('DIVISION')
+     A            OHLAB          2          TEXT('LABEL')
+     A                                      COLHDG('LABEL')
+     A            OHNUM          6  0       TEXT('ORDER NUMBER')
+     A                                      COLHDG('ORDER' 'NUMBER')
+     A            OHSEQ          2  0       TEXT('BO SEQUENCE')
+     A                                      COLHDG('BO SEQUENCE')
+     A            OHTYPE         2          TEXT('ORDER/CREDIT TYPE')
+     A                                      COLHDG('TYPE')
+     A            OHCUST         9  0       TEXT('STORE NUMBER')
+     A                                      COLHDG('ACCT ' 'NUMBER')
+     A            OHSHIP         4  0       TEXT('SHIP ADDRESS')
+     A                                      COLHDG('SHIP')
+     A            OHCSPO        20          TEXT('CUST PO')
+     A                                      COLHDG('PO')
+     A            OHINV          6  0       TEXT('INVOICE NUMBER')
+     A                                      COLHDG('INV')
+     A            OHASSC         6  0       TEXT('PRIMARY ORDER NO')
+     A                                      COLHDG('ASSOC')
+     A            OHPICK         6  0       TEXT('PICKING NUMBER')
+     A            OHSPCF         1          TEXT('SPECIAL ORDER')
+     A                                      COLHDG('SPC.')
+     A            OHTERR         3          TEXT('TERRITORY')
+     A                                      COLHDG('TERR')
+     A            OHCSDA         2  0       TEXT('CUSTOMER REQ DAY')
+     A                                      COLHDG('REQUEST' 'DAY')
+     A                                      RANGE(1 31)
+     A            OHCSMO         2  0       TEXT('CUSTOMER REQ MTH')
+     A                                      COLHDG('REQUEST' 'MTH')
+     A                                      RANGE(1 12)
+     A            OHCSYR         2  0       TEXT('CUSTOMER REQ YEAR')
+     A                                      COLHDG('REQUEST' 'YR')
+     A                                      RANGE(70 99)
+     A            OHCNDA         2  0       TEXT('CUSTOMER CAN DAY')
+     A                                      COLHDG('CANCEL ' 'DAY')
+     A                                      RANGE(1 31)
+     A            OHCNMO         2  0       TEXT('CUSTOMER CAN MTH')
+     A                                      COLHDG('CANCEL ' 'MTH')
+     A                                      RANGE(1 12)
+     A            OHCNYR         2  0       TEXT('CUSTOMER CAN YEAR')
+     A                                      COLHDG('CANCEL ' 'YR')
+     A                                      RANGE(70 99)
+     A            OHBO           1          TEXT('BACKORDER FLAG')
+     A                                      COLHDG('BO')
+     A                                      VALUES(' ' 'Y')
+     A            OHCOMF         1          TEXT('COMMISION?')
+     A                                      COLHDG('COM')
+     A            OHSLM1         4  0       TEXT('SALESMAN1')
+     A                                      COLHDG('SLSMN1')
+     A            OHSLM2         4  0       TEXT('SALESMAN2')
+     A                                      COLHDG('SLSMN2')
+     A            OHSLM3         4  0       TEXT('SALESMAN3')
+     A                                      COLHDG('SLSMN3')
+     A            OHSLM4         4  0       TEXT('SALESMAN4')
+     A                                      COLHDG('SLSMN4')
+     A            OHSLM5         4  0       TEXT('SALESMAN5')
+     A                                      COLHDG('SLSMN5')
+     A            OHSPL1         4P 2       TEXT('SALESMAN1 COMM.SPLT. %')
+     A                                      COLHDG('SLSMN1')
+     A            OHSPL2         4P 2       TEXT('SALESMAN2 COMM.SPLT. %')
+     A                                      COLHDG('SLSMN2')
+     A            OHSPL3         4P 2       TEXT('SALESMAN3 COMM.SPLT. %')
+     A                                      COLHDG('SLSMN3')
+     A            OHSPL4         4P 2       TEXT('SALESMAN4 COMM.SPLT. %')
+     A                                      COLHDG('SLSMN4')
+     A            OHSPL5         4P 2       TEXT('SALESMAN5 COMM.SPLT. %')
+     A                                      COLHDG('SLSMN5')
+     A            OHRATE         4P 2       TEXT('TOTAL COMM.')
+     A            OHCLS1         2          TEXT('CUST. CLASS')
+     A                                      COLHDG('PRICE')
+     A            OHDEPT         6          TEXT('DEPARTMENT')
+     A                                      COLHDG('DEPT')
+     A            OHWHS          2          TEXT('WAREHOUSE')
+     A                                      COLHDG('WHS')
+     A            OHRSN          3          TEXT('REASON')
+     A                                      COLHDG('REASON')
+     A            OHTERM         2          TEXT('TERMS CODE')
+     A                                      COLHDG('TR')
+     A            OHSNAM        30          TEXT('SHIP TO NAME')
+     A                                      COLHDG('SHIP TO')
+     A            OHSAD1        30          TEXT('SHIP TO ADD1')
+     A                                      COLHDG('SHIP TO ADD')
+     A            OHSAD2        30          TEXT('SHIP TO ADD2')
+     A                                      COLHDG('SHIP TO ADD')
+     A            OHSAD3        30          TEXT('SHIP TO ADD3')
+     A                                      COLHDG('SHIP TO ADD')
+     A            OHSCTY        20          TEXT('SHIP TO CITY')
+     A                                      COLHDG('SHIP TO CITY')
+     A            OHSST          2          TEXT('SHIP TO STATE')
+     A                                      COLHDG('SHIP' 'ST')
+     A            OHSZP1         5          TEXT('SHIP TO ZIP 1')
+     A                                      COLHDG('SHIP' 'ZIP')
+     A            OHSZP2         4          TEXT('SHIP TO ADD ZIP')
+     A                                      COLHDG('+')
+     A            OHCMC1         1          TEXT('COMMENT CODE')
+     A            OHCMC2         1
+     A            OHCMC3         1
+     A            OHCOM1        30          TEXT('COMMENTS')
+     A            OHCOM2        30
+     A            OHCOM3        30
+     A            OHPST          2  0       TEXT('PROCESS STATUS')
+     A            OHSTAT         2          TEXT('STATUS FLAG')
+     A                                      COLHDG('STAT')
+     A            OHPCKD         2  0       TEXT('DATE PICKED  PRINT-DAY')
+     A                                      COLHDG('PICK ' 'DAY')
+     A            OHPCKM         2  0       TEXT('DATE PICKED  PRINT-MTH')
+     A                                      COLHDG('PICK ' 'MTH')
+     A            OHPCKY         2  0       TEXT('DATE PICKED  PRINT-YEAR')
+     A                                      COLHDG('PICK ' 'YEAR')
+     A            OHENTD         2  0       TEXT('ENTRY DAY')
+     A                                      COLHDG('ENTRY' 'DAY')
+     A            OHENTM         2  0       TEXT('ENTRY MTH')
+     A                                      COLHDG('ENTRY' 'MTH')
+     A            OHENTY         2  0       TEXT('ENTRY YEAR')
+     A                                      COLHDG('ENTRY' 'YEAR')
+     A            OHENTO        10          TEXT('ENTRY OPERATOR')
+     A            OHCHGD         2  0       TEXT('LAST CHANGE DATE-DAY')
+     A                                      COLHDG('LAST CHG' 'DAY')
+     A            OHCHGM         2  0       TEXT('LAST CHANGE DATE-MTH')
+     A                                      COLHDG('LAST CHG' 'MTH')
+     A            OHCHGY         2  0       TEXT('LAST CHANGE DATE-YEAR')
+     A                                      COLHDG('LAST CHG' 'YEAR')
+     A            OHCHGO        10          TEXT('LAST CHANGE OPER.')
+     A            OHSHDA         2  0       TEXT('ACTUAL SHIP DAY')
+     A                                      COLHDG('SHIP' 'DAY')
+     A                                      RANGE(1 31)
+     A            OHSHMO         2  0       TEXT('SHIP MONTH')
+     A                                      COLHDG('SHIP' 'MONTH')
+     A                                      RANGE(1 12)
+     A            OHSHYR         2  0       TEXT('SHIP YEAR')
+     A                                      COLHDG('SHIP' 'YEAR')
+     A                                      RANGE(80 99)
+     A            OHCOND         2  0       TEXT('CONFIRMATION DAY')
+     A            OHCONM         2  0       TEXT('CONFIRMATION MONTH')
+     A            OHCONY         2  0       TEXT('CONFIRMATION YEAR')
+     A            OHCONO        10          TEXT('OPERATOR')
+     A            OHVIAC         2          TEXT('VIA CODE')
+     A            OHVIA         30          TEXT('SHIP VIA')
+     A            OHCTNS         7P         TEXT('CARTONS SHIPPED')
+     A            OHGTOT        11P 2       TEXT('INVOICE GROSS TOTAL')
+     A*                                          'FINAL CALC IN BILL1'
+     A*                                          'INCLUDES FREIGHT   '
+     A*                                          'PRIOR TO BILL1 NO  '
+     A*                                          'FREIGHT            '
+     A            OHMTOT        11P 2       TEXT('MERCHANDISE TOTAL')
+     A            OHNTOT        11P 2       TEXT('** UNUSED FIELD **')
+     A            OHDTO1        11P 2       TEXT('CUSTOMER DISCOUNT')
+     A            OHDTO2        11P 2       TEXT('OTHER DISCOUNT')
+     A            OHDTO3        11P 2
+     A            OHDTO4        11P 2
+     A            OHDTO5        11P 2
+     A            OHDRN1         3
+     A            OHDRN2         3
+     A            OHDRN3         3
+     A            OHDRN4         3
+     A            OHDRN5         3
+     A            OHCDSC         2  0       TEXT('DISCOUNT PERCENT ')
+     A            OH$DSC         2  0
+     A            OH$DCD         2          TEXT('DOLLAR ELIG DISC')
+     A            OHSDS1         2  0
+     A            OHSCD1         2          TEXT('SPECIAL DISC 1.')
+     A            OHSDS2         2S 0
+     A            OHSCD2         2          TEXT('SPECIAL DISC 2.')
+     A            OHSDS3         2  0
+     A            OHSCD3         2          TEXT('SPECIAL DISC 3.')
+     A            OHFRTF         1          TEXT('FREIGHT FLAG')
+     A            OHFRT         11P 2       TEXT('FREIGHT')
+     A            OHSPWT         7P 0       TEXT('WEIGHT IN POUNDS')
+     A            OHSPRR         5P 2       TEXT('RATE')
+     A            OHACDT         4S 0       TEXT('ACCOUNTING MO/YR')
+     A            OHMSG1         3S 0       TEXT('UNIMSG1')
+     A                                      COLHDG('MESSAGE 1')
+     A            OHMSG2         3S 0       TEXT('UNIMSG2')
+     A                                      COLHDG('MESSAGE 2')
+     A            OHLNNO         3  0       TEXT('TOTAL LINES')
+     A            OHUSR1         1          TEXT('PROCESSED COD TAG')
+     A            OHUSR2         1
+     A            OHUSR3         1
+     A            OHUSR4         1
+     A            OHUSR5         1          TEXT('NATIONAL PARCEL EXPIDITERS')
+     A            OHUSR6         1          TEXT('Y-STD OE/N-NONSTD OE')
+     A            OHUSR7         1
+     A            OHUSR8         1
+     A            OHUSR9         1          TEXT('LINE DISC OVERRIDE')
+     A****************************************************************
+     A*  ORDER DETAIL
+     A** ORDDETR
+     A*
+     A            ODDIV          2S 0
+     A            ODLAB          2
+     A            ODNUM          6  0       TEXT('ORDER NUMBER')
+     A            ODSEQ          2  0       TEXT('SEQUENCE')
+     A            ODLIN          3  0       TEXT('LINE NUMBER')
+     A            ODLINT         1          TEXT('LINE TYPE')
+     A            ODRSN          3          TEXT('REASON CODE')
+     A            ODINV          6  0       TEXT('INVOICE')
+     A            ODCUST         9  0       TEXT('CUSTOMER')
+     A            ODSHIP         4  0       TEXT('SHIP-TO')
+     A            ODCOMF         1          TEXT('COMMISSION?')
+     A            ODRATE         4P 2       TEXT('COMM.RATE')
+     A            ODSLM1         4  0       TEXT('SALESMAN1')
+     A                                      COLHDG('SLSMN1')
+     A            ODSLM2         4  0       TEXT('SALESMAN2')
+     A                                      COLHDG('SLSMN2')
+     A            ODSLM3         4  0       TEXT('SALESMAN3')
+     A                                      COLHDG('SLSMN3')
+     A            ODSLM4         4  0       TEXT('SALESMAN4')
+     A                                      COLHDG('SLSMN4')
+     A            ODSLM5         4  0       TEXT('SALESMAN5')
+     A                                      COLHDG('SLSMN5')
+     A            ODSPL1         4P 2       TEXT('SALESMAN1')
+     A                                      COLHDG('SLSMN1')
+     A            ODSPL2         4P 2       TEXT('SALESMAN2')
+     A                                      COLHDG('SLSMN2')
+     A            ODSPL3         4P 2       TEXT('SALESMAN3')
+     A                                      COLHDG('SLSMN3')
+     A            ODSPL4         4P 2       TEXT('SALESMAN4')
+     A                                      COLHDG('SLSMN4')
+     A            ODSPL5         4P 2       TEXT('SALESMAN5')
+     A                                      COLHDG('SLSMN5')
+     A            ODTERR         3          TEXT('TERRITORY')
+     A                                      COLHDG('TERR')
+     A            ODDSC1         2  0       TEXT('CUST  DISCOUNT')
+     A                                      COLHDG('DSC')
+     A            ODDCC1         2          TEXT('DISCOUNT CODE    ')
+     A                                      COLHDG('DS.CD.')
+     A            ODSTAT         2          TEXT('STATUS')
+     A                                      COLHDG('STAT')
+     A            ODBOFL         1          TEXT('BACKORDER FLAG')
+     A                                      COLHDG('B/O')
+     A            ODPROD         5  0       TEXT('PRODUCT')
+     A                                      COLHDG('PRODUCT')
+     A            ODBULK         1          TEXT('BULK?')
+     A                                      COLHDG('BK?')
+     A            ODWHS          2          TEXT('WHSE')
+     A                                      COLHDG('WHS')
+     A            ODQYDO         7P 0       TEXT('DOZENS ORDERED')
+     A                                      COLHDG('DZ.O')
+     A            ODQYHO         1P 0       TEXT('HALF DOZEN ORDERED')
+     A                                      COLHDG('HD.O')
+     A            ODQYEO         7P 0       TEXT('EACHES ORDERED')
+     A                                      COLHDG('EA.O')
+     A            ODQYDS         7P 0       TEXT('DOZENS SHIPPED')
+     A                                      COLHDG('DZ.S')
+     A            ODQYHS         1P 0       TEXT('HALF DOZEN SHIPPED')
+     A                                      COLHDG('HD.S')
+     A            ODQYES         7P 0       TEXT('EACHES SHIPPED')
+     A                                      COLHDG('EA.S')
+     A            ODQYDC         7P 0       TEXT('DOZENS CANCELED')
+     A                                      COLHDG('DZ.C')
+     A            ODQYHC         1P 0       TEXT('HALF DOZEN CANCELED')
+     A                                      COLHDG('HD.C')
+     A            ODQYEC         7P 0       TEXT('EACHES CANCELED')
+     A                                      COLHDG('EA.C')
+     A            ODQYDB         7P 0       TEXT('DOZENS B/O')
+     A                                      COLHDG('DZ.B')
+     A            ODQYHB         1P 0       TEXT('HALF DOZEN B/O')
+     A                                      COLHDG('HD.B')
+     A            ODQYEB         7P 0       TEXT('EACHES B/O')
+     A                                      COLHDG('EA.B')
+     A            ODLQYO        11  0       TEXT('TOTAL QY ORD.')
+     A            ODLQYS        11  0       TEXT('QY SHIP')
+     A            ODLQYC        11  0       TEXT('QY CANC')
+     A            ODLQYB        11  0       TEXT('QY BO')
+     A                                      COLHDG('EA.B')
+     A            ODPRC          7P 2       TEXT('UOM   PRICE')
+     A                                      COLHDG('UOM.PRC')
+     A            ODUPRC        11P 5       TEXT('UNIT PRICE')
+     A                                      COLHDG('UNIT.PRC')
+     A            ODGRSP        11P 2       TEXT('EXTENDED GROSS')
+     A                                      COLHDG('EXT.GRSS')
+     A            ODNETP        11P 2       TEXT('EXTENDED NET')
+     A                                      COLHDG('EXT.NET')
+     A            ODSHMO         2  0       TEXT('SHIP MON')
+     A            ODSHDA         2  0       TEXT('SHIP DAY ')
+     A            ODSHYR         2  0       TEXT('SHIP YEAR')
+     A            ODACDT         4  0       TEXT('ACTDATE')
+     A****************************************************************
+     A*  CREDIT AND DEBIT HEADER FILE
+     A** CRDHDRR
+     A*
+     A            CRDIV          2  0       TEXT('DIVISION')
+     A            CRTYPE         2          TEXT('CREDIT TYPE')
+     A            CRNUM          6  0       TEXT('HEADER CREDIT NUM.')
+     A            CRLAB          2          TEXT('LABEL')
+     A                                      COLHDG('LABEL')
+     A            CRSHIP         4  0       TEXT('SHIP TO')
+     A            CRCUST         9  0       TEXT('STORE NUMBER')
+     A                                      COLHDG('ACCT ' 'NUMBER')
+     A            CRNAME        30          TEXT('NAME')
+     A            CRADD1        30          TEXT('ADDRESS 1')
+     A            CRADD2        30          TEXT('ADDRESS 2')
+     A            CRCITY        20          TEXT('CITY')
+     A            CRST           2          TEXT('STATE')
+     A            CRZIP1         5          TEXT('ZIP1')
+     A            CRZIP2         4          TEXT('ZIP2')
+     A            CRTRAN         2          TEXT('TRANSACTION CODE')
+     A            CRRSN          3          TEXT('REASON CODE')
+     A            CRRECN        10          TEXT('RECEIVER')
+     A            CRAUT         10          TEXT('AUTHORIZATION')
+     A            CRINV          9  0       TEXT('INVOICE')
+     A            CRTERR         3          TEXT('TERRITORY')
+     A                                      COLHDG('TERR')
+     A            CRARR1        10          TEXT('AR REF 1.')
+     A            CRARR2        10          TEXT('AR REF 2.')
+     A            CRCOMF         1          TEXT('COMMISION?')
+     A                                      COLHDG('COM')
+     A            CRSLM1         4  0       TEXT('SALESMAN1')
+     A                                      COLHDG('SLSMN1')
+     A            CRSLM2         4  0       TEXT('SALESMAN2')
+     A                                      COLHDG('SLSMN2')
+     A            CRSLM3         4  0       TEXT('SALESMAN3')
+     A                                      COLHDG('SLSMN3')
+     A            CRSLM4         4  0       TEXT('SALESMAN4')
+     A                                      COLHDG('SLSMN4')
+     A            CRSLM5         4  0       TEXT('SALESMAN5')
+     A                                      COLHDG('SLSMN5')
+     A            CRSPL1         4P 2       TEXT('SALESMAN1')
+     A                                      COLHDG('SLSMN1')
+     A            CRSPL2         4P 2       TEXT('SALESMAN2')
+     A                                      COLHDG('SLSMN2')
+     A            CRSPL3         4P 2       TEXT('SALESMAN3')
+     A                                      COLHDG('SLSMN3')
+     A            CRSPL4         4P 2       TEXT('SALESMAN4')
+     A                                      COLHDG('SLSMN4')
+     A            CRSPL5         4P 2       TEXT('SALESMAN5')
+     A                                      COLHDG('SLSMN5')
+     A            CRRATE         4P 2       TEXT('TOTAL COMM.')
+     A            CRCLS1         2          TEXT('CUST. CLASS')
+     A                                      COLHDG('PRICE')
+     A            CRWHS          2          TEXT('WAREHOUSE')
+     A                                      COLHDG('WHS')
+     A            CRCOM1        30          TEXT('COMMENTS')
+     A            CRCOM2        30
+     A            CRCOM3        30
+     A            CRPST          2  0       TEXT('PROCESS STATUS')
+     A            CRSTAT         2          TEXT('STATUS FLAG')
+     A                                      COLHDG('STAT')
+     A            CRENTD         2  0       TEXT('ENTRY DAY')
+     A                                      COLHDG('ENTRY' 'DAY')
+     A            CRENTM         2  0       TEXT('ENTRY MTH')
+     A                                      COLHDG('ENTRY' 'MTH')
+     A            CRENTY         2  0       TEXT('ENTRY YEAR')
+     A                                      COLHDG('ENTRY' 'YEAR')
+     A            CRINVD         2  0       TEXT('INV DAY')
+     A            CRINVM         2  0       TEXT('INV MONTH')
+     A            CRINVY         2  0       TEXT('INV YEAR')
+     A            CRENTO        10          TEXT('ENTRY OPERATOR')
+     A            CRGTOT        11P 2       TEXT('CREDIT TOTAL')
+     A*                                         'FINAL CALC IN BIL2UPD'
+     A            CRMTOT        11P 2       TEXT('MERCHANDISE TOTAL')
+     A            CRTO$1        11  2       TEXT('DOLLAR TOTALS 1.')
+     A            CRTO$2        11  2       TEXT('DOLLAR TOTALS 2.')
+     A            CRTO$3        11  2       TEXT('DOLLAR TOTALS 3.')
+     A            CRTO$4        11  2       TEXT('DOLLAR TOTALS 4.')
+     A            CRTO$5        11  2       TEXT('DOLLAR TOTALS 5.')
+     A            CRRSPR         2          TEXT('REASON CODE PREFIX')
+     A            CRMRSN         3          TEXT('MRCH REASON')
+     A            CRRSN1         3          TEXT('REASON ONE')
+     A            CRRSN2         3
+     A            CRRSN3         3
+     A            CRRSN4         3
+     A            CRRSN5         3
+     A            CRDSC1         2  0       TEXT('CUST DISC.')
+     A            CRDSC2         2  0       TEXT('ADD. DISC.')
+     A            CRDSC3         2  0       TEXT('ADD. DISC.')
+     A            CRDSC4         2  0       TEXT('ADD. DISC.')
+     A            CRDCD1         2          TEXT('CUST CODE.')
+     A            CRDCD2         2          TEXT('DSC. CODE.')
+     A            CRDCD3         2          TEXT('DSC. CODE.')
+     A            CRDCD4         2          TEXT('DSC. CODE.')
+     A            CRFRT         11P 2       TEXT('FREIGHT')
+     A            CRFRSN         3          TEXT('FREIGHT REASON')
+     A            CRNTOT        11P 2       TEXT('INVOICE NET (NO FRT)')
+     A            CRACDT         4S 0       TEXT('ACCOUNTING MO/YR')
+     A            CRMSG1         3S 0       TEXT('UNIMSG1')
+     A                                      COLHDG('MESSAGE 1')
+     A            CRMSG2         3S 0       TEXT('UNIMSG2')
+     A                                      COLHDG('MESSAGE 2')
+     A            CRLNNO         3  0       TEXT('TOTAL LINES')
+     A            CRUSR1         1          TEXT('COOP CREDIT YEAR PART 1')
+     A            CRUSR2         1          TEXT('COOP CREDIT YEAR PART 2')
+     A            CRUSR3         1          TEXT('CREDIT VS. DEBIT / CANCELLED')
+     A            CRUSR4         1          TEXT('DEBIT MEMO TERMS CD')
+     A            CRUSR5         1
+     A            CRUSR6         1
+     A            CRUSR7         1
+     A            CRUSR8         1          TEXT('C=CASH APLICATION')
+     A            CRUSR9         1
+     A            CRCOYR         2P 0       TEXT('COOP APPLIED YEAR')
+     A****************************************************************
+     A*  MERCHANDISE CREDIT DETAIL
+     A** CRDDETR
+     A*
+     A            CXDIV          2S 0
+     A            CXLAB          2
+     A            CXTYPE         2          TEXT('ORDER NUMBER')
+     A            CXNUM          6  0       TEXT('SEQUENCE')
+     A            CXLIN          3  0       TEXT('LINE NUMBER')
+     A            CXRSN          3          TEXT('REASON CODE')
+     A            CXCUST         9  0       TEXT('CUSTOMER')
+     A            CXCOMF         1          TEXT('COMMISSION?')
+     A            CXRATE         4P 2       TEXT('COMM.RATE')
+     A            CXSLM1         4  0       TEXT('SALESMAN1')
+     A                                      COLHDG('SLSMN1')
+     A            CXSLM2         4  0       TEXT('SALESMAN2')
+     A                                      COLHDG('SLSMN2')
+     A            CXSLM3         4  0       TEXT('SALESMAN3')
+     A                                      COLHDG('SLSMN3')
+     A            CXSLM4         4  0       TEXT('SALESMAN4')
+     A                                      COLHDG('SLSMN4')
+     A            CXSLM5         4  0       TEXT('SALESMAN5')
+     A                                      COLHDG('SLSMN5')
+     A            CXSPL1         4P 2       TEXT('SALESMAN1')
+     A                                      COLHDG('SLSMN1')
+     A            CXSPL2         4P 2       TEXT('SALESMAN2')
+     A                                      COLHDG('SLSMN2')
+     A            CXSPL3         4P 2       TEXT('SALESMAN3')
+     A                                      COLHDG('SLSMN3')
+     A            CXSPL4         4P 2       TEXT('SALESMAN4')
+     A                                      COLHDG('SLSMN4')
+     A            CXSPL5         4P 2       TEXT('SALESMAN5')
+     A                                      COLHDG('SLSMN5')
+     A            CXTERR         3          TEXT('TERRITORY')
+     A                                      COLHDG('TERR')
+     A            CXDSC1         2  0       TEXT('CUST  DISCOUNT')
+     A                                      COLHDG('DSC')
+     A            CXDCC1         2          TEXT('DISCOUNT CODE    ')
+     A                                      COLHDG('DS.CD.')
+     A            CXSTAT         2          TEXT('STATUS')
+     A                                      COLHDG('STAT')
+     A            CXPROD         5  0       TEXT('PRODUCT')
+     A                                      COLHDG('PRODUCT')
+     A            CXBULK         1          TEXT('BULK?')
+     A                                      COLHDG('BK?')
+     A            CXWHS          2          TEXT('WHSE')
+     A                                      COLHDG('WHS')
+     A            CXLQYO        11  0       TEXT('TOTAL QY ORD.')
+     A            CXPRC          7P 2       TEXT('UOM   PRICE')
+     A                                      COLHDG('UOM.PRC')
+     A            CXUPRC        11P 5       TEXT('UNIT PRICE')
+     A                                      COLHDG('UNIT.PRC')
+     A            CXGRSP        11P 2       TEXT('EXTENDED GROSS')
+     A                                      COLHDG('EXT.GRSS')
+     A            CXNETP        11P 2       TEXT('EXTENDED NET')
+     A                                      COLHDG('EXT.NET')
+     A****************************************************************
+     A* CREDIT/DEBIT COMMENTS FILE
+     A**
+     A*
+     A            CCDIV          2  0
+     A            CCTYPE         2
+     A            CCNUM          6  0
+     A            CCSEQ          3  0
+     A            CCLIN         70
+     A****************************************************************
+     A*  TRANSACTION MASTER FILE
+     A** TRNMSTR
+     A*
+     A* TRANSACTIONS ARE CODED ON PREFIX AND REASON CODE -
+     A* THESE ARE REQUIRED FOR DEBIT ENTRY, BUT NOT FOR CASH
+     A* APPLICATION
+     A*
+     A            TRNNUM         2          TEXT('TRANS PREF')
+     A            TRNRSN         3          TEXT('REASON CODE')
+     A            TRNDES        20          TEXT('TRANS DESCRIPTION')
+     A            TRNMRC         1          TEXT('MERCHANDISE?')
+     A                                      VALUES('Y' 'N')
+     A            TRNSLF         1          TEXT('SALESMAN?')
+     A                                      VALUES('Y' 'N' ' ')
+     A            TRNCSF         1          TEXT('CUSTOMER SALES?')
+     A                                      VALUES('Y' 'N' ' ')
+     A            TRNGLC         7  0       TEXT('GENERAL LEDGER CODE')
+     A            TRNOPR        10          TEXT('LAST CHANGE OPER')
+     A            TRNDAT         6  0       TEXT('LAST CHANGE DATE')
+     A****************************************************************
+     A*  A/R CASH BATCH
+     A** CSHBCH
+     A*
+     A            CBBTCH         4  0       TEXT('CASH BATCH NUMBER')
+     A                                      COLHDG('BATCH#')
+     A            CBTYPE         1          TEXT('TYPE CODE - INV,CR,DR,FB')
+     A                                      COLHDG('TYPE' 'CODE')
+     A*
+     A*  B = INVOICE, C = CREDIT, D = DEBIT, F = FB-FREIGHT
+     A*
+     A            CBDIV          2  0
+     A            CBCUST         9  0       TEXT('CUSTOMER ACCT NUMBER')
+     A                                      COLHDG('CUST#')
+     A            CBINV#         8          TEXT('INVOICE/DR/CR NUMBER')
+     A                                      COLHDG('INV/DR/CR#')
+     A            CBBANK         2  0       TEXT('BANK')
+     A                                      COLHDG('BANK#')
+     A            CBCHK#        12          TEXT('CHECK #')
+     A                                      COLHDG('CHECK #')
+     A            CBCKAM        11P 2       TEXT('CHECK AMOUNT')
+     A                                      COLHDG('CHECK' 'AMT')
+     A            CBCKMO         2  0       TEXT('CHECK DATE - MONTH')
+     A                                      COLHDG('CHECK' 'MO')
+     A            CBCKDA         2  0       TEXT('CHECK DATE - DAY')
+     A                                      COLHDG('CHECK' 'DA')
+     A            CBCKYR         2  0       TEXT('CHECK DATE - YEAR')
+     A                                      COLHDG('CHECK' 'YR')
+     A            CBINV$        11P 2       TEXT('INVOICE AMOUNT')
+     A                                      COLHDG('INV AMT')
+     A            CBTRCD         2          TEXT('TRANSACTION CODE')
+     A                                      COLHDG( 'TRANS' 'CODE')
+     A            CBINMO         2  0       TEXT('INVOICE DATE - MONTH')
+     A                                      COLHDG('INV' 'MO')
+     A            CBINDA         2  0       TEXT('INVOICE DATE - DAY')
+     A                                      COLHDG('INV' 'DA')
+     A            CBINYR         2  0       TEXT('INVOICE DATE - YEAR')
+     A                                      COLHDG('INV' 'YR')
+     A            CBDUMO         2  0       TEXT('DUE DATE - MONTH')
+     A                                      COLHDG('DUE' 'MO')
+     A            CBDUDA         2  0       TEXT('DUE DATE - DAY')
+     A                                      COLHDG('DUE' 'DA')
+     A            CBDUYR         2  0       TEXT('DUE DATE - YEAR')
+     A                                      COLHDG('DUE' 'YR')
+     A            CBPYMT         1          TEXT('PAYMENT TYPE - D,N,A,U')
+     A                                      COLHDG('PAYMT' 'TYPE')
+     A            CBPAID        11  2       TEXT('AMOUNT PAID')
+     A            CBRSN1         3          TEXT('REASON CODE ONE')
+     A            CBDISC         9  2       TEXT('DISCOUNT')
+     A            CBRSN2         3          TEXT('REASON CODE TWO')
+     A            CBFRT          9  2       TEXT('FREIGHT')
+     A            CBRSN3         3          TEXT('REASON CODE THREE')
+     A            CBACCT         7  0       TEXT('G/L ACCT#')
+     A                                      COLHDG('G/L' 'ACCT#')
+     A            CBGLAM        11P 2       TEXT('G/L AMT')
+     A                                      COLHDG('G/L AMT')
+     A            CBARAM        11P 2       TEXT('A/R AMOUNT')
+     A                                      COLHDG('A/R AMT')
+     A            CBREF1        30          TEXT('DESCR/REF 1')
+     A                                      COLHDG('REF 1')
+     A            CBREF2        20          TEXT('DESCR/REF 2')
+     A                                      COLHDG('REF 2')
+     A            CBREF3        20          TEXT('DESCR/REF 3')
+     A                                      COLHDG('REF 3')
+     A            CBPSMO         2  0       TEXT('POSTING DATE - MONTH')
+     A                                      COLHDG('POSTING' 'MO')
+     A            CBPSDA         2  0       TEXT('POSTING DATE - DAY')
+     A                                      COLHDG('POSTING' 'DA')
+     A            CBPSYR         2  0       TEXT('POSTING DATE - YEAR')
+     A                                      COLHDG('POSTING' 'YR')
+     A            CBDATE         6  0       TEXT('CREATION DATE')
+     A            CBACDT         4  0       TEXT('ACCOUNTING MO/YR')
+     A            CBOPER        10          TEXT('OPERATOR')
+     A            CBUTYP         1          TEXT('UPDATE TYPE')
+     A*
+     A            CBALPH        10          TEXT('CUST ALPH FOR MONTH')
+     A****************************************************************
+     A*  A/R CASH RECEIPTS CONTROL FILE
+     A** ARCTRLR
+     A            ABATCH         4S 0
+     A            ACHECK        12
+     A            ACHAMT        11S 2
+     A            AVARNC        11S 2
+     A            APOSMO         2S 0
+     A            APOSDA         2S 0
+     A            APOSYR         2S 0
+     A            APSTAT         2
+     A            APYRMO         4S 0
+     A            APBANK         2S 0
+     A****************************************************************
+     A*  NON-AR GENERAL LEDGER CASH POSTING FILE
+     A** GLCBCH    / GLTRN
+     A*
+     A            GLPBCH         4  0
+     A            GLPCHK        12
+     A            GLPRSN         3
+     A            GLPCKA        11P 2
+     A            GLPCKM         2  0
+     A            GLPCKD         2  0
+     A            GLPCKY         2  0
+     A            GLPYMO         4  0
+     A            GLPGLC         7  0
+     A            GLPAMT        11P 2
+     A            GLPDS1        20
+     A            GLPDS2        20
+     A            GLPDS3        20
+     A            GLPSEQ         3P 0
+     A            GLPDAT         6  0
+     A            GLPRFD         2  0
+     A            GLPRFM         2  0
+     A            GLPRFY         2  0
+     A            GLPBNK         2  0
+     A****************************************************************
+     A*  BANK MASTER FILE
+     A** BNKMSTR
+     A*
+     A            BNNUM          2  0       TEXT('BANK NUMBER')
+     A                                      COLHDG('BANK#')
+     A            BNNAME        30          TEXT('BANK NAME')
+     A                                      COLHDG('BANK' 'NAME')
+     A            BNADD1        30          TEXT('BANK ADDRESS 1')
+     A            BNADD2        30          TEXT('BANK ADDRESS 2')
+     A            BNCITY        20          TEXT('BANK CITY')
+     A            BNSTAT         2          TEXT('BANK STATE')
+     A            BNZIP1         5          TEXT('ZIP 1')
+     A            BNZIP2         4          TEXT('ZIP 2')
+     A****************************************************************
+     A*  ACCOUNTS RECEIVABLE OPEN ITEM MASTER FILE
+     A** OPNITMR
+     A*
+     A            OISTAT         1          TEXT('STATUS')
+     A*
+     A* BLANK = OPEN ITEM, 1 = IN TRANSITION-PAID BUT NO FINAL UPDATE,
+     A*   2 = FULLY SATISFIED
+     A*
+     A            OITYPE         1          TEXT('TYPE - INV,CR,DR,FB')
+     A                                      COLHDG('TYPE')
+     A*
+     A*  B = INVOICE, C = CREDIT, D = DEBIT, F = FB-FREIGHT
+     A*
+     A            OIDIV          2  0
+     A            OICUST         9  0       TEXT('CUSTOMER NUMBER')
+     A            OIINV          8          TEXT('INVOICE NUMBER')
+     A*  FIRST TWO BYTES ARE TO HELP EXPLAINE ENTRY
+     A*       I =INVOICE,CR=CREDIT,CB=CHARGE BACK,BC=BOUNCED CHECK,
+     A*       IN=INVOICE MANUALY RE-ENTERED AFTER BEING KEYED OFF OR
+     A*          WHEN AN INVOICE IS TRANSFERED TO ANOTHER CUSTOMER
+     A*       OA=ON-ACCOUNT
+     A            OIINVT         2          TEXT('INVOICE TYPE')
+     A            OIRSN          3          TEXT('REASON CODE ')
+     A            OIINVD         2  0       TEXT('INVOICE DAY')
+     A            OIINVM         2  0       TEXT('INVOICE MONTH')
+     A            OIINVY         2  0       TEXT('INVOICE YEAR')
+     A            OITRMS         2          TEXT('TERMS CODE')
+     A            OIDUED         2  0       TEXT('DUE DATE DAY')
+     A            OIDUEM         2  0       TEXT('DUE DATE MONTH')
+     A            OIDUEY         2  0       TEXT('DUE DATE YEAR')
+     A            OIACDT         4  0       TEXT('ACCOUNTING MO/YR')
+     A            OIDSCD         3  0       TEXT('DISCOUNT DAYS')
+     A            OIPDD          2  0       TEXT('PAID DAY')
+     A            OIPDM          2  0       TEXT('PAID MONTH')
+     A            OIPDY          2  0       TEXT('PAID YEAR')
+     A            OINET         11  2       TEXT('INVOICE NET')
+     A            OIOPN         11  2       TEXT('DOLLARS OPEN')
+     A            OIPDAT         6  0       TEXT('CREATION DATE')
+     A            OIREF1        10          TEXT('REFERENCE ONE')
+     A            OIREF2        20          TEXT('REFERENCE2')
+     A            OIJUL          5  0       TEXT('JULIAN DUE DATE')
+     A            OIPTYP         1          TEXT('PAY TYPE')
+     A            OIRN$1        11  2       TEXT('REASON $ 1.')
+     A            OIRN$2        11  2       TEXT('REASON $ 2.')
+     A            OIRN$3        11  2       TEXT('REASON $ 3.')
+     A            OIRNC1         3          TEXT('REASON CODE 1.')
+     A            OIRNC2         3          TEXT('REASON CODE 2.')
+     A            OIRNC3         3          TEXT('REASON CODE 3.')
+     A            OIP$1         11  2       TEXT('PARTIAL $ 1.')
+     A            OIPD1          6  0       TEXT('PARTIAL DATE 1.')
+     A            OIP$2         11  2       TEXT('PARTIAL $ 2.')
+     A            OIPD2          6  0       TEXT('PARTIAL DATE 2.')
+     A            OIP$3         11  2       TEXT('PARTIAL $ 3')
+     A            OIPD3          6  0       TEXT('PARTIAL DATE 3.')
+     A***************************************************************
+     A*  MONTH TO DATE TOTALS FOR INVOICES,CREDITS & DEBITS
+     A** MTDTOTR
+     A*
+     A            MTDIV          2S 0       TEXT('MTD DIV')
+     A            MTTYPE         2          TEXT('MTD TYPE')
+     A*
+     A*                      VALID MTTYPES: IN=INVOICE
+     A*                                     CR=CREDITS
+     A*                                     DR=DEBITS
+     A*
+     A            MTYY           2S 0       TEXT('MTD YEAR')
+     A            MTMM           2S 0       TEXT('MTD MONTH')
+     A            MTAMT         11S 2       TEXT('MTD FIGURE')
+     A            MTLDU          6S 0       TEXT('LAST DATE UPDATE')
+      *
+      ****
+      *
+     A            EXPYR          4S 0       TEXT('EXPIRATION DATE - YEAR')
+     A            EXPMN          2S 0       TEXT('EXPIRATION DATE - MONTH')
+      *
+      ****
+      *

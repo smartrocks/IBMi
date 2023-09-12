@@ -444,7 +444,7 @@ dountil &forever
     CPYFRMSTMF FROMSTMF(&ifsFile) +
     TOMBR(&mbrPath) MBROPT(*REPLACE) STMFCCSID(*STMF) DBFCCSID(*FILE)    
 
-    CHGPFM FILE(&LIB/QCLLESRC) MBR(&name) SRCTYPE(CMD) 
+    CHGPFM FILE(&LIB/QCMDSRC) MBR(&name) SRCTYPE(CMD) 
 
     CRTCMD CMD(&LIB/&NAME) PGM(&LIB/&NAME) SRCFILE(&LIB/QCMDSRC)                                                                  
 enddo

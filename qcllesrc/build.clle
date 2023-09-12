@@ -17,9 +17,20 @@ pgm (&lib &path)
 
 dcl &lib  *char (10)
 dcl &path *char (256)
+dcl &srcFile *char (256)
 
-/* chgvar &lib 'DAVIDKECK1' */
-/* chgvar &path '/home/davidkeck/smartrocks/ibmi' */
+/* Compile remaining BUILD Utility elements */
+chgvar &srcFile (&path *tcat '/qcllesrc/build1.clle')
+CRTBNDCL PGM(&lib/BUILD1) +
+    SRCSTMF(&srcFile) +
+    TEXT('create source PFs and IFSLIST utility') DFTACTGRP(*NO) +
+    ACTGRP(QILE) DBGVIEW(*ALL)  
+
+chgvar &srcFile (&path *tcat '/qcllesrc/build2.clle') 
+CRTBNDCL PGM(&lib/BUILD2) +
+    SRCSTMF(&srcFile) +
+    TEXT('create source PFs and IFSLIST utility') DFTACTGRP(*NO) +
+    ACTGRP(QILE) DBGVIEW(*ALL) 
 
 call build1 (&lib &path)  /* create source PF's and IFSLIST utility        */
 call build2 (&lib &path)  /* copy all src from IFS to src PF's and compile */

@@ -1,6 +1,14 @@
 # IBMi
 IBM  i Stuff
 
+## Assumptions
+1. The target library will contain both source and objects.
+2. 
+
+## Notes
+1. /copy file directives of the form /copy NBTYGPL/QRPGLESRC,ILEHeader should be changed to reflect the target environment. One option is to change the command to /copy QRPGLESRC,ILEHeader removing the explicit library reference. In this way the /copy will the library list of teh job that's running teh BUILD command. Also, it's a good idea to use INCLUDE instead of COPY. The syntax is the same and it handles SQL related includes better.
+1. The build utility will create source PF's as needed will replace any source PF members which have the same source file and member name. Source PF members which are not named the same as what the BUILD utility is importing will NOT be affected.
+
 ## Steps to clone and compile imported code from Github
 
 ### install git
@@ -17,7 +25,7 @@ IBM  i Stuff
 1. Clone github repository https://github.com/smartrocks/IBMi to an IBM i IFS
 
 ### Copy cloned source from IFS to Source PF's and compile all objects
-1.  Change IFS path and target libbrary below as needed
+1.  Change IFS path and target library below as needed
 1.  CRTBNDCL PGM(DAVIDKECK1/BUILD) 
     SRCSTMF('/home/davidkeck/smartrocks/ibmi/qcllesrc/build.clle') 
     TEXT('Copy src from IFS and build objects') DFTACTGRP(*NO) 

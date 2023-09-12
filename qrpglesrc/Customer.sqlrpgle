@@ -1,5 +1,5 @@
-     /copy NBTYGPL/QRPGLESRC,ILEHeader
-     h bnddir('TOOLBIND':'MFGBIND') alwnull(*usrctl)
+     h Option(*SrcStmt:*NoDebugIO)
+     h alwnull(*usrctl)
      H PgmInfo(*PCML:*MODULE) dftactgrp(*no) Actgrp('QILE')
       **********************************************************************************************
       * Program Name: CUSTOMER

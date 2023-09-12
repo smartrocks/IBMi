@@ -1,5 +1,5 @@
       /If not Defined (PROTOTYPE)
-      /include QGPL/QSRVSRC,QILEHeader
+     H dftactgrp(*no) actgrp(*caller)
      H Bnddir('QC2LE':'RXSBND':'TOOLBIND':'STRINGSP')
 
      T* System value/network attribute procedures.

@@ -17,7 +17,7 @@
       *------------------------------------------------------------------------------------------
       * Prototypes
      D/define PROTOTYPES
-     D/include nbtygpl/qrpglesrc,MESSAGE
+     D/include qsrvsrc,MESSAGE
      D/undefine PROTOTYPES
 
       * Entry Parameters

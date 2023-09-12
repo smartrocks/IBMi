@@ -5,10 +5,10 @@
       *            for which we want to capture start and end times in the RunLog table.
       *            The captured data can be used to prioritize optimization efforts.
       *
-      *            Program run durations are logged to table NBTYGPL/RUNLOG.
-      *            Corresponding program stacks are logged to table NBTYGPL/STACKLOG.
+      *            Program run durations are logged to table RUNLOG.
+      *            Corresponding program stacks are logged to table STACKLOG.
       *
-      *            This utility can be implemented via the LOG command (NBTYGPL/LOG)
+      *            This utility can be implemented via the LOG command (LOG)
       *
       * Sample implementation in a CLP
       *   log ('PGMA')  // first instance logs program start time and program stack
@@ -40,9 +40,9 @@
       * LogError                ERROR            log error message to table ERRORLOG
 
      D/define PROTOTYPES
-     D/include nbtygpl/qrpglesrc,VALUE
-     D/include nbtygpl/qrpglesrc,STRING
-     D/include nbtygpl/qrpglesrc,ERROR
+     D/include qsrvsrc,VALUE
+     D/include qsrvsrc,STRING
+     D/include qsrvsrc,MESSAGE
      D/undefine PROTOTYPES
 
       ***********************
@@ -98,7 +98,7 @@
           // Log the current program call to table RunLog and capture the stack
           Select;
              when Event = 'START';
-                Stacklog(StackLogID); // capture stack in NBTYGPL/STACKLOG
+                Stacklog(StackLogID); // capture stack in STACKLOG
                 if StacklogID = *zero;
                    exsr Exit;  // the call to StackLog failed - exit
                 else;

@@ -27,8 +27,8 @@
         //-------------------------------------------------------------------------
         // Prototypes
        /define PROTOTYPES
-       /include nbtygpl/qrpglesrc,MESSAGE
-       /include nbtygpl/qrpglesrc,STRING
+       /include qsrvsrc,MESSAGE
+       /include qsrvsrc,STRING
        /undefine PROTOTYPES
 
       //  Dcl-PR DisplayCustomerRecord  extpgm('CSTDET1');

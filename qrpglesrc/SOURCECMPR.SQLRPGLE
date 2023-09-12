@@ -19,8 +19,8 @@
      d IgnoreCmts      s              1
       *--------------------------------------------------------------------
       /define PROTOTYPES
-      /include nbtygpl/qrpglesrc,API
-      /include nbtygpl/qrpglesrc,ERROR
+      /include qsrvsrc,API
+      /include qsrvsrc,MESSAGE
       /undefine PROTOTYPES
 
      c     *entry        plist
@@ -39,7 +39,7 @@
                '   IgnoreComments: ' + IgnoreCmts;
          function = 'SOURCECMP';
 
-         logError(function: msg);
+         logMsg(function: msg);
 
          // Base PF    Field Name Field Description         Key Tp  Pos  Len Dec
          // QRPGLESRC  SRCSEQ                                   S     1     6  2

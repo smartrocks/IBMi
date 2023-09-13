@@ -12,11 +12,7 @@
 /*  -------------                                                             */
 /*    Date     PGMR         Project  Description                         Scan */
 /* ----------  -----------  -------  ----------------------------------  ---- */
-/* 04/09/2015  Senthil                                                        */
-/* 01/05/2019  A.Santos     CH62184  Modify SFTP Utility to remove the        */
-/*                                   timestamp from the filename              */
-/* 07/26/2019  M.Santerre   PRJ-506  Replace hard-coded SFTPlogout in    MS01 */
-/*                                   &CMD with value from &FTPLOG.       MS01 */
+
 /*----------------------------------------------------------------------------*/
    PGM   PARM(&PGMNAME &FILENAME &LIBNAM)
      DCL        VAR(&PGMNAME)     TYPE(*CHAR) LEN(10)
@@ -49,27 +45,31 @@
      DCL        VAR(&IFSARCHPTH)  TYPE(*CHAR) LEN(90)
      DCL        VAR(&MSGF)        TYPE(*CHAR) LEN(10)
      DCL        VAR(&MSGFLIB)     TYPE(*CHAR) LEN(10)
-     DCL        VAR(&FLAG)        TYPE(*CHAR) LEN(1)
+     DCL        VAR(&recFound)    TYPE(*lgl)
      DCL        VAR(&CMD)         TYPE(*CHAR) LEN(500)
      DCL        VAR(&OODPW)       TYPE(*CHAR) LEN(50)
      DCL        VAR(&STATEMENT)   TYPE(*CHAR) LEN(80)
      DCL        VAR(&SCRIPT1)     TYPE(*CHAR) LEN(80)
      DCL        VAR(&RMFILE)      TYPE(*CHAR) LEN(100)
      DCL        VAR(&FTPLOG)      TYPE(*CHAR) LEN(50)
+     dcl        var(&todayNum)    TYPE(*DEC)  LEN(6 0)
+     dcl        var(&todayAlpha)  TYPE(*CHAR) LEN(6)
+     dcl        var(&seq)         type(*dec)  len(6 0)
+     dcl        var(&sql)         type(*char) len(256)
+     dcl        var(&quote)       type(*char) len(1) value('''')
+     dcl        var(&scriptLib)   type(*char) len(10)
+     dcl        var(&ScriptFil)   type(*char) len(10)
+
      DCLF       FILE(FTPINBOUTB)
 
-     CHKOBJ     OBJ(QTEMP/BATCHSFTP) OBJTYPE(*FILE)
-     MONMSG     MSGID(CPF9801) EXEC(DO)
-     CRTSRCPF   FILE(QTEMP/BATCHSFTP) RCDLEN(112) MBR(BATCHSFTP)
-     ENDDO
+     callsubr init /* initialization */
 
-     CLRPFM     FILE(QTEMP/BATCHSFTP)
+     OVRDBF FILE(FTPINBOUTB) POSITION(*KEY 1 FTPINOUTR C) + 
+     OVRSCOPE(*JOB) 
 
-     /*CHGVAR     VAR(&OODPW) VALUE('ftpnonprodnbtysldc')*/
-     CHGVAR     VAR(&FLAG) VALUE('N')
-     MONMSG     MSGID(CPF0000) EXEC(GOTO CMDLBL(ABEND))
+     /*OVRDBF FILE(FTPINBOUTB) POSITION(*KEY 1 FTPINOUTR &PGMNAME) + */
+     /*OVRSCOPE(*JOB) */
 
-     LOOP:
      RCVF
      MONMSG     MSGID(CPF0864) EXEC(CHGVAR VAR(&EOF) +
                 VALUE('1'))
@@ -84,15 +84,11 @@
      CHGVAR     VAR(&DAYS)           VALUE(&ARCHDAYS)
      CHGVAR     VAR(&IFSFILE)        VALUE(&IFSFILNAM)
      CHGVAR     VAR(&IFSFILEXTN)     VALUE(&IFSFILEXT)
-     CHGVAR     VAR(&FLAG)           VALUE('Y')
-     GOTO       CMDLBL(CONT)
-     ENDDO
-     IF         COND(&EOF *EQ '0') THEN(DO)
-     GOTO       CMDLBL(LOOP)
+     CHGVAR     VAR(&recFound)       VALUE('1') /* true */
      ENDDO
 
      CONT:
-     IF         COND(&FLAG *EQ 'N') THEN(DO)
+     IF         COND(&recFound *EQ '0') THEN(DO)
      GOTO       CMDLBL(ESCAPE)
      ENDDO
 
@@ -111,92 +107,27 @@
                                  '_' *TCAT &MONTH *TCAT &DAY *TCAT &YEAR *TCAT +
                                  &TIME *TCAT &IFSFILEXT)
 
-  /* CHGVAR  VAR(&RMFILE)  VALUE(&IFSFILE *TCAT +                            */
-  /*                       '_' *TCAT &MONTH *TCAT &DAY *TCAT &YEAR *TCAT +   */
-  /*                             &TIME *TCAT &IFSFILEXT)              /*ASA01*/
+     IF         COND(&INTERFACE *EQ 'TIEOUTCL') THEN(DO)
+     CHGVAR     VAR(&RMFILE) VALUE(&IFSFILE *TCAT '_' *TCAT +
+                  &MONTH *TCAT &DAY *TCAT &YEAR *TCAT &TIME +
+                  *TCAT &IFSFILEXT)
+     ENDDO
+     ELSE (DO)
+     CHGVAR     VAR(&RMFILE) VALUE(&IFSFILE *TCAT &IFSFILEXT)
+     ENDDO
 
-  /*AS01*/   IF         COND(&INTERFACE *EQ 'TIEOUTCL') THEN(DO)
-  /*AS01*/   CHGVAR     VAR(&RMFILE) VALUE(&IFSFILE *TCAT '_' *TCAT +
-  /*AS01*/                &MONTH *TCAT &DAY *TCAT &YEAR *TCAT &TIME +
-  /*AS01*/                *TCAT &IFSFILEXT)
-  /*AS01*/   ENDDO
-  /*AS01*/   ELSE (DO)
-  /*AS01*/   CHGVAR     VAR(&RMFILE) VALUE(&IFSFILE *TCAT &IFSFILEXT)
-  /*AS01*/   ENDDO
+    callsubr CrtScript   /* Create the script */
 
+    CHGVAR  VAR(&FTPLOG) VALUE(&IFSOUTPATH *TCAT '/' +
+                              *TCAT 'SFTPlogoutput.txt')
+   
+    ADDENVVAR ENVVAR(QIBM_QSH_CMD_ESCAPE_MSG) VALUE(Y) +
+                REPLACE(*YES)
 
-     CHGVAR  VAR(&FTPLOG) VALUE(&IFSOUTPATH *TCAT '/' +
-                                 *TCAT 'SFTPlogoutput.txt')
-
-    /* Create script                                                 */
-
-              CHGVAR  VAR(&STATEMENT) VALUE('   cd' *BCAT &RMTDIR)
-
-              WRTSRC  SRCFILE(QTEMP/BATCHSFTP) MBR(BATCHSFTP) +
-                                  STMT(&STATEMENT)
-
-              CHGVAR  VAR(&STATEMENT) VALUE('   lcd' +
-                              *bcat &IFSOUTPATH)
-              WRTSRC  SRCFILE(QTEMP/BATCHSFTP) MBR(BATCHSFTP) +
-                                  STMT(&STATEMENT)
-
-              CHGVAR  VAR(&STATEMENT) VALUE('   put' +
-                                            *bcat &IFSFILNAM *tcat &IFSFILEXT +
-                                            *bcat &RMFILE)
-              WRTSRC  SRCFILE(QTEMP/BATCHSFTP) MBR(BATCHSFTP) +
-                                  STMT(&STATEMENT)
-
-              CHGVAR  VAR(&STATEMENT) VALUE('   chmod 664' *bcat &RMFILE)
-
-              WRTSRC  SRCFILE(QTEMP/BATCHSFTP) MBR(BATCHSFTP) +
-                                  STMT(&STATEMENT)
-
-              CHGVAR  VAR(&STATEMENT) VALUE('   exit')
-              WRTSRC  SRCFILE(QTEMP/BATCHSFTP) MBR(BATCHSFTP) +
-                                  STMT(&STATEMENT)
-
-              CHGVAR  VAR(&SCRIPT1) VALUE(&IFSOUTBND *TCAT '/' +
-                                           *TCAT 'script.txt')
-             CPYTOIMPF  FROMFILE(QTEMP/BATCHSFTP) TOSTMF(&SCRIPT1) +
-                          MBROPT(*REPLACE) STMFCODPAG(437) +
-                          RCDDLM(*CRLF) STRDLM(*NONE)
-
-       ADDENVVAR ENVVAR(QIBM_QSH_CMD_ESCAPE_MSG) VALUE(Y) +
-                    REPLACE(*YES)
-       CHGVAR     VAR(&CMD) VALUE(' ')
-
-/*MS01*(d)     IF COND(&INTERFACE *EQ 'REGCRD') THEN(DO)               */
-/*MS01*(d)       CHGVAR     VAR(&CMD) +                                */
-/*MS01*(d)            VALUE('/QOpenSys/usr/bin/sftp -vvv -b' +         */
-/*MS01*(d)            *BCAT &script1 *BCAT &FTPSRVR *TCAT +            */
-/*MS01*(d)            '> /INVOICEREG/CREDIT/SFTPlogoutput.txt 2>&1')   */
-/*MS01*(d)     ENDDO                                                   */
-/*MS01*(d)                                                             */
-/*MS01*(d)     IF COND(&INTERFACE *EQ 'REGCRD1') THEN(DO)              */
-/*MS01*(d)       CHGVAR     VAR(&CMD) +                                */
-/*MS01*(d)           VALUE('/QOpenSys/usr/bin/sftp -vvv -b' +          */
-/*MS01*(d)           *BCAT &script1 *BCAT &FTPSRVR *TCAT +             */
-/*MS01*(d)           '> /INVOICEREG/DEBIT/SFTPlogoutput.txt 2>&1')     */
-/*MS01*(d)     ENDDO                                                   */
-/*MS01*(d)                                                             */
-/*MS01*(d)     IF COND(&INTERFACE *EQ 'REGINV1C') THEN(DO)             */
-/*MS01*(d)       CHGVAR     VAR(&CMD) +                                */
-/*MS01*(d)           VALUE('/QOpenSys/usr/bin/sftp -vvv -b' +          */
-/*MS01*(d)           *BCAT &script1 *BCAT &FTPSRVR *TCAT +             */
-/*MS01*(d)           '> /INVOICEREG/REGINV/SFTPlogoutput.txt 2>&1')    */
-/*MS01*(d)     ENDDO                                                   */
-/*MS01*(d)                                                             */
-/*MS01*(d)     IF COND(&INTERFACE *EQ 'TIEOUTCL') THEN(DO)             */
-/*MS01*(d)       CHGVAR     VAR(&CMD) +                                */
-/*MS01*(d)           VALUE('/QOpenSys/usr/bin/sftp -vvv -b' +          */
-/*MS01*(d)           *BCAT &script1 *BCAT &FTPSRVR *TCAT +             */
-/*MS01*(d)           '> /INVOICEREG/TIEFILE/SFTPlogoutput.txt 2>&1')   */
-/*MS01*(d)     ENDDO                                                   */
-
-/*MS01*/  CHGVAR     VAR(&CMD) +
-             VALUE('/QOpenSys/usr/bin/sftp -vvv -b' +
-             *BCAT &script1 *BCAT &FTPSRVR *TCAT +
-             '>'  *BCAT &FTPLOG *BCAT  '2>&1')
+    CHGVAR     VAR(&CMD) +
+          VALUE('/QOpenSys/usr/bin/sftp -vvv -b' +
+          *BCAT &script1 *BCAT &FTPSRVR *TCAT +
+          '>'  *BCAT &FTPLOG *BCAT  '2>&1')
 
     /*CHECK FOF THE EXISTECE OF FILE*/
      CHKOBJ     OBJ(&LIBNAM/&FILENAME) OBJTYPE(*FILE)
@@ -229,24 +160,94 @@
 
      GOTO       CMDLBL(END)
 
-   ABEND:
 
-     RCVMSG     MSGTYPE(*LAST) MSGDTA(&MSGDTA) MSGID(&MSGID) +
-                  RTNTYPE(&RTNTYPE) MSGF(&MSGF) +
-                  SNDMSGFLIB(&MSGFLIB)
-     IF         COND((&RTNTYPE *EQ '15') *OR (&RTNTYPE *EQ +
-                  '17')) THEN(DO)
-     SNDPGMMSG  MSGID(&MSGID) MSGF(&MSGF) MSGDTA(&MSGDTA) +
-                  MSGTYPE(*DIAG)
-     ENDDO
  Escape:
      SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
                 MSGDTA('Program' *BCAT &PGMNAME *BCAT +
                 'ended abnormally') MSGTYPE(*ESCAPE)
+
      SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
                 MSGDTA('FTP Record not found')
 
-   END:
-     ENDPGM
+  
 
 
+
+/***************/
+/* SUBROUTINES */
+/***************/
+
+
+
+subr crtScript
+  CHGVAR  VAR(&STATEMENT) VALUE('   cd' *BCAT &RMTDIR)
+  callsubr WriteSrc /* write script line to Src PF */
+
+  CHGVAR  VAR(&STATEMENT) VALUE('   lcd' +
+                  *bcat &IFSOUTPATH)
+  callsubr WriteSrc 
+
+  CHGVAR  VAR(&STATEMENT) VALUE('   put' +
+                                *bcat &IFSFILNAM *tcat &IFSFILEXT +
+                                *bcat &RMFILE)
+  callsubr WriteSrc 
+
+  CHGVAR  VAR(&STATEMENT) VALUE('   chmod 664' *bcat &RMFILE)
+  callsubr WriteSrc 
+
+  CHGVAR  VAR(&STATEMENT) VALUE('   exit')
+  callsubr WriteSrc 
+
+  CHGVAR  VAR(&SCRIPT1) VALUE(&IFSOUTBND *TCAT '/' +
+                                *TCAT 'script.txt')
+  CPYTOIMPF  FROMFILE(QTEMP/BATCHSFTP) TOSTMF(&SCRIPT1) +
+              MBROPT(*REPLACE) STMFCODPAG(437) +
+              RCDDLM(*CRLF) STRDLM(*NONE)
+
+endsubr
+
+
+
+/* Write source record (FTP script line) to source physical file */
+Subr WriteSrc 
+  chgvar &seq (&seq + 1)  /* source line number) */
+
+  chgvar &sql ('insert into'                                                +
+                *bcat &Scriptlib *tcat '/' *tcat &scriptFil                 +
+                *bcat '(SRCSEQ, SRCDAT, SRCDTA) VALUES ('                   +  
+                *tcat %char(&seq) *tcat ','                                 +
+                *bcat &todayAlpha *tcat ','                                 +
+                *bcat &quote *tcat %trim(&statement) *tcat &quote *tcat ')' +      
+              )
+
+  RUNSQL SQL(&SQL) COMMIT(*NONE) NAMING(*SYS) 
+
+  /* +
+    insert into davidkeck1.qftpsrc    +         
+    (SRCSEQ, SRCDAT, SRCDTA)          +         
+    VALUES (1, 091223, 'My Data')     +
+  */
+endsubr
+
+
+
+/* Initialization */
+subr init 
+  rtvjoba     date(&todayAlpha)
+
+  /* initialize the script file in QTEMP*/
+  CHKOBJ     OBJ(QTEMP/BATCHSFTP) OBJTYPE(*FILE)
+  MONMSG     MSGID(CPF9801) EXEC(DO)
+    CRTSRCPF   FILE(QTEMP/BATCHSFTP) RCDLEN(112) MBR(BATCHSFTP)
+  ENDDO
+
+  CLRPFM     FILE(QTEMP/BATCHSFTP)
+
+  CHGVAR     VAR(&recFound) VALUE('0')
+  chgvar &scriptLib 'QTEMP'
+  chgvar &scriptFil 'BATCHSFTP'
+endsubr
+
+END:
+
+ENDPGM

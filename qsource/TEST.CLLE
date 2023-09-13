@@ -1,0 +1,11 @@
+     pgm
+     dcl        var(&todayNum)    TYPE(*DEC)  LEN(6 0)
+     dcl        var(&todayAlpha)  TYPE(*CHAR) LEN(6)
+
+     DCLF       FILE(FTPINBOUTB)
+
+     rtvjoba     date(&todayAlpha)
+     chgvar      &todayNum &todayAlpha  /* dec to alpha */
+    
+    sndpgmmsg msg("Done")
+    endpgm

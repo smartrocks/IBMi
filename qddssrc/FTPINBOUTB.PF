@@ -10,6 +10,7 @@
      /* --------  --------- -------  ------------------------------------ */
      /* 03/24/15   SENTHIL                                                */
      /*-------------------------------------------------------------------*/
+     A                                      UNIQUE
      A          R FTPINOUTR
      A            INTERFACE     10          COLHDG('INTERFACE_NAME')
      A            FTPSRVR       50          COLHDG('FTP_SERVER_IP')
@@ -23,3 +24,4 @@
      A            IFSARCHFLR    90          COLHDG('IFS_ARCHIVE_FOLDER')
      A            RMTDIR        90          COLHDG('FTP_REMOTE_DIRECTORY')
      A            ARCHDAYS       4          COLHDG('IFS_ARCHIVE_DAYS')
+     A          K INTERFACE     10       

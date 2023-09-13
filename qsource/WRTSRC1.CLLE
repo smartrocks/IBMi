@@ -3,18 +3,18 @@
 /*                                                          */
 /* Assumptions                                              */
 /* 1. Source file and member already exist, best in QTEMP   */
-/*    to avoud locks and collisions.                        */
-/* 2. This program will add the input statement to the end  */
+/*    to avoid locks and collisions.                        */
+/* 2. Any needed OVRDBF to specify the library and member   */
+/*    if needed, before executing the WRTSRC command.       */
+/* 3. The target source member has been cleared, if needed, */
+/*    before executing the WRTSRC command.                  */
+/* 4. This program will add the input statement to the end  */
 /*    of the target source file.                            */
 /************************************************************/
-pgm &qualFile &mbr &stmt 
-dcl &qualFile *char (20)
-dcl &mbr      *char (10)
+pgm &file &stmt 
+dcl &file *char (20)
 dcl &stmt     *char (80)
 
-dcl &file *char (10)
-Dcl &lib  *char (10)
-dcl &msg  *char (100)
 dcl &sql  *char (256)
 
 chgvar &file %sst(&qualFile 1 10)

@@ -14,164 +14,173 @@
 /* ----------  -----------  -------  ----------------------------------  ---- */
 
 /*----------------------------------------------------------------------------*/
-   PGM   PARM(&PGMNAME &FILENAME &LIBNAM)
-     DCL        VAR(&PGMNAME)     TYPE(*CHAR) LEN(10)
-     DCL        VAR(&FILENAME)    TYPE(*CHAR) LEN(10)
-     DCL        VAR(&LIBNAM)      TYPE(*CHAR) LEN(10)
-     DCL        VAR(&FTPSITE)     TYPE(*CHAR) LEN(50)
-     DCL        VAR(&IFSPATH)     TYPE(*CHAR) LEN(90)
-     DCL        VAR(&FTPUSER)     TYPE(*CHAR) LEN(10)
-     DCL        VAR(&FTPPWD)      TYPE(*CHAR) LEN(10)
-     DCL        VAR(&IFSARCH)     TYPE(*CHAR) LEN(90)
-     DCL        VAR(&RCDCNT)      TYPE(*DEC)  LEN(10 0)
-     DCL        VAR(&YEAR)        TYPE(*CHAR) LEN(2)
-     DCL        VAR(&DAY)         TYPE(*CHAR) LEN(2)
-     DCL        VAR(&MONTH)       TYPE(*CHAR) LEN(2)
-     DCL        VAR(&TIME)        TYPE(*CHAR) LEN(8)
-     DCL        VAR(&FROMFILE)    TYPE(*CHAR) LEN(90)
-     DCL        VAR(&TOFILE)      TYPE(*CHAR) LEN(90)
-     DCL        VAR(&DAYS)        TYPE(*CHAR) LEN(4)
-     DCL        VAR(&RMTDIR)      TYPE(*CHAR) LEN(90)
-     DCL        VAR(&INTERFACE)   TYPE(*CHAR) LEN(10)
-     DCL        VAR(&IFSFILE)     TYPE(*CHAR) LEN(25)
-     DCL        VAR(&IFSFILEXTN)  TYPE(*CHAR) LEN(10)
-     DCL        VAR(&MSGKEY)      TYPE(*CHAR) LEN(4)
-     DCL        VAR(&MSGID)       TYPE(*CHAR) LEN(7)
-     DCL        VAR(&MSGDTA)      TYPE(*CHAR) LEN(256)
-     DCL        VAR(&RTNTYPE)     TYPE(*CHAR) LEN(2)
-     DCL        VAR(&EOF)         TYPE(*LGL)  VALUE('0')
-     DCL        VAR(&IFSINBPATH)  TYPE(*CHAR) LEN(90)
-     DCL        VAR(&IFSOUTPATH)  TYPE(*CHAR) LEN(90)
-     DCL        VAR(&IFSARCHPTH)  TYPE(*CHAR) LEN(90)
-     DCL        VAR(&MSGF)        TYPE(*CHAR) LEN(10)
-     DCL        VAR(&MSGFLIB)     TYPE(*CHAR) LEN(10)
-     DCL        VAR(&recFound)    TYPE(*lgl)
-     DCL        VAR(&CMD)         TYPE(*CHAR) LEN(500)
-     DCL        VAR(&OODPW)       TYPE(*CHAR) LEN(50)
-     DCL        VAR(&STATEMENT)   TYPE(*CHAR) LEN(80)
-     DCL        VAR(&SCRIPT1)     TYPE(*CHAR) LEN(80)
-     DCL        VAR(&RMFILE)      TYPE(*CHAR) LEN(100)
-     DCL        VAR(&FTPLOG)      TYPE(*CHAR) LEN(50)
-     dcl        var(&todayNum)    TYPE(*DEC)  LEN(6 0)
-     dcl        var(&todayAlpha)  TYPE(*CHAR) LEN(6)
-     dcl        var(&seq)         type(*dec)  len(6 0)
-     dcl        var(&sql)         type(*char) len(256)
-     dcl        var(&quote)       type(*char) len(1) value('''')
-     dcl        var(&scriptLib)   type(*char) len(10)
-     dcl        var(&ScriptFil)   type(*char) len(10)
+PGM   PARM(&PGMNAME &FILENAME &LIBNAM)
+DCL        VAR(&PGMNAME)     TYPE(*CHAR) LEN(10)
+DCL        VAR(&FILENAME)    TYPE(*CHAR) LEN(10)
+DCL        VAR(&LIBNAM)      TYPE(*CHAR) LEN(10)
 
-     DCLF       FILE(FTPINBOUTB)
+DCL        VAR(&FTPSITE)     TYPE(*CHAR) LEN(50)
+DCL        VAR(&IFSPATH)     TYPE(*CHAR) LEN(90)
+DCL        VAR(&FTPUSER)     TYPE(*CHAR) LEN(10)
+DCL        VAR(&FTPPWD)      TYPE(*CHAR) LEN(10)
+DCL        VAR(&IFSARCH)     TYPE(*CHAR) LEN(90)
+DCL        VAR(&RCDCNT)      TYPE(*DEC)  LEN(10 0)
+DCL        VAR(&YEAR)        TYPE(*CHAR) LEN(2)
+DCL        VAR(&DAY)         TYPE(*CHAR) LEN(2)
+DCL        VAR(&MONTH)       TYPE(*CHAR) LEN(2)
+DCL        VAR(&TIME)        TYPE(*CHAR) LEN(8)
+DCL        VAR(&FROMFILE)    TYPE(*CHAR) LEN(90)
+DCL        VAR(&TOFILE)      TYPE(*CHAR) LEN(90)
+DCL        VAR(&DAYS)        TYPE(*CHAR) LEN(4)
+DCL        VAR(&RMTDIR)      TYPE(*CHAR) LEN(90)
+DCL        VAR(&INTERFACE)   TYPE(*CHAR) LEN(10)
+DCL        VAR(&IFSFILE)     TYPE(*CHAR) LEN(25)
+DCL        VAR(&IFSFILEXTN)  TYPE(*CHAR) LEN(10)
+DCL        VAR(&MSGKEY)      TYPE(*CHAR) LEN(4)
+DCL        VAR(&MSGID)       TYPE(*CHAR) LEN(7)
+DCL        VAR(&MSGDTA)      TYPE(*CHAR) LEN(256)
+DCL        VAR(&RTNTYPE)     TYPE(*CHAR) LEN(2)
+DCL        VAR(&EOF)         TYPE(*LGL)  VALUE('0')
+DCL        VAR(&IFSINBPATH)  TYPE(*CHAR) LEN(90)
+DCL        VAR(&IFSOUTPATH)  TYPE(*CHAR) LEN(90)
+DCL        VAR(&IFSARCHPTH)  TYPE(*CHAR) LEN(90)
+DCL        VAR(&MSGF)        TYPE(*CHAR) LEN(10)
+DCL        VAR(&MSGFLIB)     TYPE(*CHAR) LEN(10)
+DCL        VAR(&recFound)    TYPE(*lgl)
+DCL        VAR(&CMD)         TYPE(*CHAR) LEN(500)
+DCL        VAR(&OODPW)       TYPE(*CHAR) LEN(50)
+DCL        VAR(&STATEMENT)   TYPE(*CHAR) LEN(80)
+DCL        VAR(&SCRIPT1)     TYPE(*CHAR) LEN(80)
+DCL        VAR(&RMFILE)      TYPE(*CHAR) LEN(100)
+DCL        VAR(&FTPLOG)      TYPE(*CHAR) LEN(50)
+dcl        var(&todayNum)    TYPE(*DEC)  LEN(6 0)
+dcl        var(&todayAlpha)  TYPE(*CHAR) LEN(6)
+dcl        var(&seq)         type(*dec)  len(6 0)
+dcl        var(&sql)         type(*char) len(256)
+dcl        var(&quote)       type(*char) len(1) value('''')
+dcl        var(&scriptLib)   type(*char) len(10)
+dcl        var(&ScriptFil)   type(*char) len(10)
+DCL        VAR(&RTNCOD)      TYPE(*CHAR) LEN(10)
 
-     callsubr init /* initialization */
+DCLF       FILE(FTPINBOUTB)
 
-     OVRDBF FILE(FTPINBOUTB) POSITION(*KEY 1 FTPINOUTR C) + 
-     OVRSCOPE(*JOB) 
+callsubr init /* initialization */
 
-     /*OVRDBF FILE(FTPINBOUTB) POSITION(*KEY 1 FTPINOUTR &PGMNAME) + */
-     /*OVRSCOPE(*JOB) */
+OVRDBF FILE(FTPINBOUTB) POSITION(*KEY 1 FTPINOUTR C) + 
+OVRSCOPE(*JOB) 
 
-     RCVF
-     MONMSG     MSGID(CPF0864) EXEC(CHGVAR VAR(&EOF) +
-                VALUE('1'))
-     IF         COND((&EOF *EQ '0') *AND (&INTERFACE *EQ &PGMNAME)) THEN(DO)
-     CHGVAR     VAR(&FTPSITE)        VALUE(&FTPSRVR)
-     CHGVAR     VAR(&FTPUSER)        VALUE(&FTPUSER)
-     CHGVAR     VAR(&FTPPWD)         VALUE(&FTPPWD)
-     CHGVAR     VAR(&IFSINBPATH)     VALUE(&IFSINBND)
-     CHGVAR     VAR(&IFSOUTPATH)     VALUE(&IFSOUTBND)
-     CHGVAR     VAR(&IFSARCH)        VALUE(&IFSARCHFLR)
-     CHGVAR     VAR(&RMTDIR)         VALUE(&RMTDIR)
-     CHGVAR     VAR(&DAYS)           VALUE(&ARCHDAYS)
-     CHGVAR     VAR(&IFSFILE)        VALUE(&IFSFILNAM)
-     CHGVAR     VAR(&IFSFILEXTN)     VALUE(&IFSFILEXT)
-     CHGVAR     VAR(&recFound)       VALUE('1') /* true */
-     ENDDO
+call batchsftp1 (&PGMNAME &FTPSRVR &FTPUSER &FTPPWD &IFSINBND &IFSOUTBND +
+                &IFSARCHFLR &RMTDIR &ARCHDAYS &IFSFILNAM &IFSFILEXT     +
+                &RTNCOD)
 
-     CONT:
-     IF         COND(&recFound *EQ '0') THEN(DO)
-     GOTO       CMDLBL(ESCAPE)
-     ENDDO
-
-     RTVSYSVAL  SYSVAL(QYEAR)  RTNVAR(&YEAR)
-     RTVSYSVAL  SYSVAL(QMONTH) RTNVAR(&MONTH)
-     RTVSYSVAL  SYSVAL(QDAY)   RTNVAR(&DAY)
-     RTVSYSVAL  SYSVAL(QTIME)  RTNVAR(&TIME)
-
-     CHGVAR  VAR(&FROMFILE) VALUE(&IFSOUTPATH *TCAT '/' +
-                                  *TCAT &IFSFILE *TCAT &IFSFILEXT)
-
-     CHGVAR  VAR(&IFSARCH) VALUE(&IFSARCHFLR)
-
-     CHGVAR  VAR(&TOFILE)  VALUE(&IFSOUTPATH *TCAT '/' *TCAT &IFSARCH +
-                                 *TCAT '/' *TCAT &IFSFILE *TCAT +
-                                 '_' *TCAT &MONTH *TCAT &DAY *TCAT &YEAR *TCAT +
-                                 &TIME *TCAT &IFSFILEXT)
-
-     IF         COND(&INTERFACE *EQ 'TIEOUTCL') THEN(DO)
-     CHGVAR     VAR(&RMFILE) VALUE(&IFSFILE *TCAT '_' *TCAT +
-                  &MONTH *TCAT &DAY *TCAT &YEAR *TCAT &TIME +
-                  *TCAT &IFSFILEXT)
-     ENDDO
-     ELSE (DO)
-     CHGVAR     VAR(&RMFILE) VALUE(&IFSFILE *TCAT &IFSFILEXT)
-     ENDDO
-
-    callsubr CrtScript   /* Create the script */
-
-    CHGVAR  VAR(&FTPLOG) VALUE(&IFSOUTPATH *TCAT '/' +
-                              *TCAT 'SFTPlogoutput.txt')
-   
-    ADDENVVAR ENVVAR(QIBM_QSH_CMD_ESCAPE_MSG) VALUE(Y) +
-                REPLACE(*YES)
-
-    CHGVAR     VAR(&CMD) +
-          VALUE('/QOpenSys/usr/bin/sftp -vvv -b' +
-          *BCAT &script1 *BCAT &FTPSRVR *TCAT +
-          '>'  *BCAT &FTPLOG *BCAT  '2>&1')
-
-    /*CHECK FOF THE EXISTECE OF FILE*/
-     CHKOBJ     OBJ(&LIBNAM/&FILENAME) OBJTYPE(*FILE)
-     MONMSG     MSGID(CPF9801) EXEC(DO)
-     SNDPGMMSG  MSGID(CPF9801) MSGF(QCPFMSG) +
-                MSGDTA('FILE ' *BCAT &FILENAME *BCAT +
-                'NOT FOUND') MSGTYPE(*ESCAPE)
-     GOTO       CMDLBL(END)
-     ENDDO
-
-    /* COPY WORK FILE TO IFS FOLDER IN .TXT FORMAT */
-     CPYTOIMPF  FROMFILE(&LIBNAM/&FILENAME) +
-                TOSTMF(&FROMFILE) MBROPT(*REPLACE) +
-                STMFCODPAG(*PCASCII) RCDDLM(*CRLF) +
-                STRDLM(*NONE) FLDDLM(*TAB)
-
-    /* CHECK THE NUMBER OF RECORDS IN ACOSTAATB FILE AND FTP */
-     RTVMBRD    FILE(&LIBNAM/&FILENAME) NBRCURRCD(&RCDCNT)
-     MONMSG     MSGID(CPF3019)
-
-     IF COND(&RCDCNT *GT 0) THEN(DO)
-        QSH CMD(&CMD)
-        MOV OBJ(&FROMFILE) TOOBJ(&TOFILE)
-     ENDDO
-
-     /* Purge IFS Archive files by modified days greater than 30 */
-     CHGVAR VAR(&IFSARCHPTH) VALUE(&IFSOUTPATH *TCAT '/' *TCAT &IFSARCH)
-
-     CALL PGM(IFSPURGE) PARM(&IFSARCHPTH &DAYS &PGMNAME)
-
-     GOTO       CMDLBL(END)
+SELECT
+WHEN COND(&rtnCod *eq 'ERROR') THEN(goto SQLFAIL)
+WHEN COND(&rtnCod *eq 'NOT FOUND') THEN(CHGVAR &EOF '1')
+ENDSELECT
 
 
- Escape:
-     SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
-                MSGDTA('Program' *BCAT &PGMNAME *BCAT +
-                'ended abnormally') MSGTYPE(*ESCAPE)
+IF         COND(&EOF *EQ '0') THEN(DO)
+/* SFTP control record was found */
+CHGVAR     VAR(&INTERFACE)      VALUE(&PGMNAME)
+CHGVAR     VAR(&FTPSITE)        VALUE(&FTPSRVR)
+CHGVAR     VAR(&FTPUSER)        VALUE(&FTPUSER)
+CHGVAR     VAR(&FTPPWD)         VALUE(&FTPPWD)
+CHGVAR     VAR(&IFSINBPATH)     VALUE(&IFSINBND)
+CHGVAR     VAR(&IFSOUTPATH)     VALUE(&IFSOUTBND)
+CHGVAR     VAR(&IFSARCH)        VALUE(&IFSARCHFLR)
+CHGVAR     VAR(&RMTDIR)         VALUE(&RMTDIR)
+CHGVAR     VAR(&DAYS)           VALUE(&ARCHDAYS)
+CHGVAR     VAR(&IFSFILE)        VALUE(&IFSFILNAM)
+CHGVAR     VAR(&IFSFILEXTN)     VALUE(&IFSFILEXT)
+CHGVAR     VAR(&recFound)       VALUE('1') /* true */
+ENDDO
 
-     SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
-                MSGDTA('FTP Record not found')
+CONT:
+IF         COND(&recFound *EQ '0') THEN(DO)
+GOTO       CMDLBL(ESCAPE)
+ENDDO
 
-  
+RTVSYSVAL  SYSVAL(QYEAR)  RTNVAR(&YEAR)
+RTVSYSVAL  SYSVAL(QMONTH) RTNVAR(&MONTH)
+RTVSYSVAL  SYSVAL(QDAY)   RTNVAR(&DAY)
+RTVSYSVAL  SYSVAL(QTIME)  RTNVAR(&TIME)
+
+CHGVAR  VAR(&FROMFILE) VALUE(&IFSOUTPATH *TCAT '/' +
+                            *TCAT &IFSFILE *TCAT &IFSFILEXT)
+
+CHGVAR  VAR(&IFSARCH) VALUE(&IFSARCHFLR)
+
+CHGVAR  VAR(&TOFILE)  VALUE(&IFSOUTPATH *TCAT '/' *TCAT &IFSARCH +
+                            *TCAT '/' *TCAT &IFSFILE *TCAT +
+                            '_' *TCAT &MONTH *TCAT &DAY *TCAT &YEAR *TCAT +
+                            &TIME *TCAT &IFSFILEXT)
+
+IF         COND(&INTERFACE *EQ 'TIEOUTCL') THEN(DO)
+CHGVAR     VAR(&RMFILE) VALUE(&IFSFILE *TCAT '_' *TCAT +
+            &MONTH *TCAT &DAY *TCAT &YEAR *TCAT &TIME +
+            *TCAT &IFSFILEXT)
+ENDDO
+ELSE (DO)
+CHGVAR     VAR(&RMFILE) VALUE(&IFSFILE *TCAT &IFSFILEXT)
+ENDDO
+
+callsubr CrtScript   /* Create the script */
+
+CHGVAR  VAR(&FTPLOG) VALUE(&IFSOUTPATH *TCAT '/' +
+                          *TCAT 'SFTPlogoutput.txt')
+
+ADDENVVAR ENVVAR(QIBM_QSH_CMD_ESCAPE_MSG) VALUE(Y) +
+            REPLACE(*YES)
+
+CHGVAR     VAR(&CMD) +
+      VALUE('/QOpenSys/usr/bin/sftp -vvv -b' +
+      *BCAT &script1 *BCAT &FTPSRVR *TCAT +
+      '>'  *BCAT &FTPLOG *BCAT  '2>&1')
+
+/*CHECK FOF THE EXISTECE OF FILE*/
+CHKOBJ     OBJ(&LIBNAM/&FILENAME) OBJTYPE(*FILE)
+MONMSG     MSGID(CPF9801) EXEC(DO)
+SNDPGMMSG  MSGID(CPF9801) MSGF(QCPFMSG) +
+          MSGDTA('FILE ' *BCAT &FILENAME *BCAT +
+          'NOT FOUND') MSGTYPE(*ESCAPE)
+GOTO       CMDLBL(END)
+ENDDO
+
+/* COPY WORK FILE TO IFS FOLDER IN .TXT FORMAT */
+CPYTOIMPF  FROMFILE(&LIBNAM/&FILENAME) +
+            TOSTMF(&FROMFILE) MBROPT(*REPLACE) +
+            STMFCODPAG(*PCASCII) RCDDLM(*CRLF) +
+            STRDLM(*NONE) FLDDLM(*TAB)
+
+/* CHECK THE NUMBER OF RECORDS IN ACOSTAATB FILE AND FTP */
+RTVMBRD    FILE(&LIBNAM/&FILENAME) NBRCURRCD(&RCDCNT)
+MONMSG     MSGID(CPF3019)
+
+IF COND(&RCDCNT *GT 0) THEN(DO)
+  QSH CMD(&CMD)
+  MOV OBJ(&FROMFILE) TOOBJ(&TOFILE)
+ENDDO
+
+/* Purge IFS Archive files by modified days greater than 30 */
+CHGVAR VAR(&IFSARCHPTH) VALUE(&IFSOUTPATH *TCAT '/' *TCAT &IFSARCH)
+
+CALL PGM(IFSPURGE) PARM(&IFSARCHPTH &DAYS &PGMNAME)
+
+GOTO       CMDLBL(END)
 
 
+Escape:
+    SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+              MSGDTA('Program' *BCAT &PGMNAME *BCAT +
+              'ended abnormally') MSGTYPE(*ESCAPE)
+
+    SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+              MSGDTA('FTP Record not found')
+
+  SQLFAIL:
+      SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) +
+              MSGDTA('Program' *BCAT &PGMNAME *BCAT +
+              'ended abnormally in BATCHSFTP1') MSGTYPE(*ESCAPE)
 
 /***************/
 /* SUBROUTINES */

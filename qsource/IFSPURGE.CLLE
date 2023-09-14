@@ -1,0 +1,31 @@
+/*-------------------------------------------------------------------*/
+/*                                                                   */
+/* Program Name: IFS Purge                                           */
+/* Description : Purge older IFS files.                              */
+/*                                                                   */
+/*-------------------------------------------------------------------*/
+/*  MODIFICATIONS:                                                   */
+/*  -------------                                                    */
+/*   Date      PGMR    Project  Description                          */
+/* --------  --------- -------  ------------------------------------ */
+/* 03/24/15   Senthil                                                */
+/* 08/22/15   Joaquin  INC1011599 Add CPF4102 for member not found   */
+/*            JM01                                                   */
+/*-------------------------------------------------------------------*/
+   PGM             PARM(&DIR &DAYS)
+        DCL        VAR(&DIR)      TYPE(*CHAR)   LEN(90)
+        DCL        VAR(&DAYS)     TYPE(*CHAR)   LEN(4)
+        DCL        VAR(&CMD)      TYPE(*CHAR)   LEN(250)
+
+        OVRDBF     FILE(STDOUT) TOFILE(IFSPURGLST) MBR(&PGMNAME)
+
+        CHGVAR     VAR(&CMD) VALUE('find' *BCAT &DIR *BCAT +
+                    '-mtime +' *CAT &DAYS *BCAT '-type f')
+
+        STRQSH     CMD(&CMD)
+
+        DLTOVR     FILE(STDOUT)
+        OVRDBF     FILE(IFSPURGLST) TOFILE(IFSPURGLST) +
+                          MBR(&PGMNAME)
+
+   ENDPGM

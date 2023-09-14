@@ -1,0 +1,51 @@
+/*-------------------------------------------------------------------*/
+/*                                                                   */
+/* Program Name: IFS Purge                                           */
+/* Description : Purge older IFS files.                              */
+/*                                                                   */
+/*-------------------------------------------------------------------*/
+/*  MODIFICATIONS:                                                   */
+/*  -------------                                                    */
+/*   Date      PGMR    Project  Description                          */
+/* --------  --------- -------  ------------------------------------ */
+/* 03/24/15   Senthil                                                */
+/* 08/22/15   Joaquin  INC1011599 Add CPF4102 for member not found   */
+/*            JM01                                                   */
+/*-------------------------------------------------------------------*/
+   PGM             PARM(&DIR &DAYS &PGMNAME)
+        DCL        VAR(&DIR)      TYPE(*CHAR)   LEN(90)
+        DCL        VAR(&DAYS)     TYPE(*CHAR)   LEN(4)
+        DCL        VAR(&CMD)      TYPE(*CHAR)   LEN(250)
+        DCL        VAR(&EOF) TYPE(*LGL) LEN(1) VALUE('0')
+        DCL        VAR(&PGMNAME) TYPE(*CHAR) LEN(10)
+
+        DCLF       FILE(IFSPURGLST)
+        MONMSG     MSGID(CPF0000)
+
+        CLRPFM     FILE(IFSPURGLST) MBR(&PGMNAME)
+        MONMSG     MSGID(CPF3141) EXEC(DO)
+        ADDPFM     FILE(IFSPURGLST) MBR(&PGMNAME)
+        ENDDO
+
+        OVRDBF     FILE(STDOUT) TOFILE(IFSPURGLST) MBR(&PGMNAME)
+
+        CHGVAR     VAR(&CMD) VALUE('find' *BCAT &DIR *BCAT +
+                    '-mtime +' *CAT &DAYS *BCAT '-type f')
+
+        STRQSH     CMD(&CMD)
+
+        DLTOVR     FILE(STDOUT)
+        OVRDBF     FILE(IFSPURGLST) TOFILE(IFSPURGLST) +
+                          MBR(&PGMNAME)
+ LOOP:
+        RCVF
+/* JM01      MONMSG     MSGID(CPF0864) EXEC(CHGVAR VAR(&EOF) +   */
+             MONMSG     MSGID(CPF0864 CPF4102) EXEC(CHGVAR VAR(&EOF) +
+                          VALUE('1'))
+        IF         COND(&EOF *EQ '0') THEN(DO)
+                   QSYS/DEL   OBJLNK(&IFSPURGE)
+        GOTO       CMDLBL(LOOP)
+        ENDDO
+
+        DLTOVR     FILE(IFSPURGST)
+   ENDPGM

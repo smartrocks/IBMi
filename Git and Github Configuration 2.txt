@@ -1,0 +1,114 @@
+SSH Configuration for Git
+
+Youtube video with clear instructions and demo: https://www.youtube.com/watch?v=8X4u9sca3Io&t=318s
+
+1) Navigate to your home directory using bash.
+	cd ~
+
+2) generate a new SSH key pair
+	ssh-keygen -t rsa -b 4096 -C "davidkeck2014@gmail.com"
+	// file names created: nbty_git_rsa (for private key) and nbty_git_rsa.pub (for public keys)
+
+3) Press Enter to accept the default file location (~/.ssh/id_rsa) and provide a secure passphrase when prompted. 
+	// passphrase is optional but recommended
+
+4 ) Start the ssh-agent in the background.
+	eval "$(ssh-agent -s)"
+
+5) Add your SSH private key to the ssh-agent.
+	ssh-add ~/.ssh/id_rsa
+
+6) Ensure that your SSH key files have the correct permissions.
+	chmod 700 ~/.ssh
+		There is no general requirement to keep the entire contents of this directory secret, 
+		but the recommended permissions are read/write/execute for the user, and not accessible by others.
+	chmod 644 ~/.ssh/*.pub
+		Contains the public key for authentication. 
+		This file is not sensitive and can (but need not) be readable by anyone.
+	chmod 600 ~/.ssh/id_rsa
+		This file contains sensitive data (private keys) and should be readable by the user 
+		but not accessible by others (read/write/execute)
+
+7) Copy the SSH public key to your clipboard from ~/.ssh/id_rsa.pub
+
+8) Visit your GitHub SSH and GPG keys settings page.
+
+9) Click on the "New SSH key" or "Add SSH key" button.
+
+10) Provide a title for the new SSH key, and paste your public key into the "Key" field.
+
+11) Click "Add SSH key" to save.
+
+12) Test your SSH connection to GitHub.
+	ssh -vT git@github.com
+
+13) Clone repository from GitHub using SSH (from bash command line)
+	Get to a bash comand line and navigate to the directory where you want to clone the repository,
+	usually your home directory.
+	In this case the repository is called IBMi and is located in the smartrocks account on GitHub.
+	The local folder will be called IBMi and will be created under the home directory. 
+	git clone git@github.com:smartrocks/IBMi.git
+
+## Setup Complete
+
+
+
+## Old Notes
+
+touch config   // to create config file
+
+add following to config file
+	Host *
+		AddKeystoAgent
+		IdentityFile ~/.ssh/id_rsa   (substitute your private key file name)
+
+Add your public key to the github repository.
+	ssh-add ~/.ssh/id_rsa
+
+The ssh-add command prompts the user for a private key password and 
+adds it to the list maintained by ssh-agent . Once you add a password 
+to ssh-agent , you will not be prompted for it when using SSH or scp 
+to connect to hosts with your public key.
+
+$ ssh -T git@github.com
+The authenticity of host 'github.com (140.82.114.4)' can't be established.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
+Hi smartrocks! You've successfully authenticated, but GitHub does not provide shell access.
+
+
+git remote -v		// to list the origins for push and fetch 
+
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/*
+
+
+Other Git NOTES
+---------------
+-bash-5.1$ git config --global user.email "davidkeck2014@gmail.com"
+-bash-5.1$ git config --global user.name "David Keck"
+-bash-5.1$ git config --global user.name "smartrocks"
+-bash-5.1$ git remote add origin git@github.com:smartrocks/IBMi.git
+
+
+git rev-parse --abbrev-ref HEAD
+git push --set-upstream origin main
+git clone https://github.com/smartrocks/IBMi.git  <-- use ssh instead
+git config --list
+git add --all
+git status
+
+ssh-keygen -t ed25519 -C davidkeck2014@gmail.com
+eval "$(shh-agent -s)"
+
+
+Show history of repository branches and merges etc. in a somewhat graphical form.
+	git log --oneline --graph --all --decorate
+
+Remove a file from both the local and remote repository
+	rm ~/myfolder/myfile.txt      	// note that Linux IS case sensitive
+	git add -u 						// tells git that deleted files are to be staged
+	git commit -m "some comment"
+	git push 

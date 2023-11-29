@@ -6,8 +6,8 @@ IBM  i Stuff
 2. 
 
 ## Notes
-1. /copy file directives of the form /copy NBTYGPL/QRPGLESRC,ILEHeader should be changed to reflect the target environment. One option is to change the command to /copy QRPGLESRC,ILEHeader removing the explicit library reference. In this way the /copy will the library list of teh job that's running teh BUILD command. Also, it's a good idea to use INCLUDE instead of COPY. The syntax is the same and it handles SQL related includes better.
-1. The build utility will create source PF's as needed will replace any source PF members which have the same source file and member name. Source PF members which are not named the same as what the BUILD utility is importing will NOT be affected.
+1. /copy file directives of the form /copy NBTYGPL/QRPGLESRC,ILEHeader should be changed to reflect the target environment. One option is to change the command to /copy QRPGLESRC,ILEHeader removing the explicit library reference. In this way the /copy will use the library list of the job that's running the BUILD command. Also, it's a good idea to use INCLUDE instead of COPY. The syntax is the same and it handles SQL related includes better.
+1. The build utility will create source PF's as needed and will replace any source PF members which have the same source file and member name. Source PF members which are not named the same as what the BUILD utility is importing will NOT be affected.
 
 ## Steps to clone and compile imported code from Github
 

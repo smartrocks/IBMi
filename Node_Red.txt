@@ -1,0 +1,32 @@
+Node Red
+
+Node Red is a visual programming tool for wiring together hardware devices, 
+APIs and online services in new and interesting ways. It provides a browser-based editor 
+that makes it easy to wire together flows using the wide range of nodes in the palette 
+that can be deployed to its runtime in a single-click.  Node-RED is built on Node.js, 
+taking full advantage of its event-driven, non-blocking model. 
+This makes it ideal to run at the edge of the network on low-cost hardware such as the 
+Raspberry Pi as well as in the cloud.                       
+
+Installation
+    npm install -g --unsafe-perm node-red
+        The -g flag installs Node-RED globally so that it can be run from any directory.
+        The --unsafe-perm flag is sometimes needed on Linux systems to avoid permission issues.
+
+Starting Node Red
+    node-red
+        This will start Node-RED as a background service and display the process ID (PID) 
+        of the started process. This is useful if you need to kill the process later on.
+
+Access Node-RED Editor
+    Open a web browser and go to http://localhost:1880. 
+    This is the default address where the Node-RED editor is accessible. 
+    If you're running Node-RED on a different machine, replace localhost with the IP address 
+    or hostname of that machine.
+
+Explore Node-RED
+    Once the Node-RED editor is open in your browser, you can start building flows, 
+    connecting nodes, and exploring the available nodes from the palette.
+
+References
+    https://nodered.org/docs/getting-started/local

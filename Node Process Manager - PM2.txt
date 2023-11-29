@@ -1,0 +1,86 @@
+Node Process Manager - PM2
+
+Node Process manager - PM2
+    PM2 is a process manager for Node.js applications. 
+    It allows you to keep applications alive forever, to reload them without downtime and to facilitate common system admin tasks.
+
+    Install PM2
+        npm install pm2@latest -g
+
+    Start an application
+        pm2 start app.js
+
+    Stop an application
+        pm2 stop app_name_or_id
+
+    Restart an application
+        pm2 restart app_name_or_id
+
+    List all running applications
+        pm2 list
+
+    Monitor application CPU and memory usage
+        pm2 monit
+
+    Get more details about an application
+        pm2 show app_name_or_id
+
+    Get logs for an application
+        pm2 logs app_name_or_id
+
+    Get logs for all applications
+        pm2 logs
+
+    Get logs for all applications in streaming mode
+        pm2 logs --lines 1000
+
+    Delete an application
+        pm2 delete app_name_or_id
+
+    Delete all applications
+        pm2 delete all
+
+    Reload all applications
+        pm2 reload all
+
+    Reload an application
+        pm2 reload app_name_or_id
+
+    Update PM2
+        pm2 update
+
+    Update PM2 to the latest version
+        pm2 self-update
+
+    Save the list of applications started with PM2
+        pm2 save
+
+    Restore the list of applications started with PM2
+        pm2 resurrect
+
+    Generate a startup script to respawn PM2 on boot
+        pm2 startup
+
+    Freeze an application process in case of memory leak
+        pm2 freeze app_name_or_id
+
+    Unfreeze an application process
+        pm2 unfreeze app_name_or_id
+
+    Start an application and keep it alive after logout
+        pm2 start app.js --no-daemon
+
+    Start an application and keep it alive after logout with logs
+        pm2 start app.js --no-daemon --log
+
+    Start an application and keep it alive after logout with logs and specify log file
+        pm2 start app.js --no-daemon --log /path/to/log/file
+
+    Start an application and keep it alive after logout with logs and specify log file and error file
+        pm2 start app.js --no-daemon --log /path/to/log/file --error /path/to/error/file
+
+    Start an application and keep it alive after logout with logs and specify log file and error file and pid file
+        pm2 start app.js
+
+    Start an application and keep it alive after logout with logs and specify log file and error file and pid file and specify name of application
+        pm2 start app.js --name app_name

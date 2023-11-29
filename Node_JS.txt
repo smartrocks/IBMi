@@ -1,0 +1,57 @@
+Node.js 
+
+Setup
+    Step 1: Install Node.js on IBM i
+        Ensure that Node.js is installed on your IBM i system. 
+
+        Use the yum command to install Node.js:
+            yum install nodejs20   (or most currect version supported on the IBM i)
+
+            or
+
+            IBM Access Client Solutions (ACS) -> Open Source Package Management -> Install Node.js
+
+Hello World
+    Reference: https://www.seidengroup.com/2021/02/23/node-js-ibm-i-getting-started-guide/
+
+Node.js has a build in web server so you don't need to run Apache or NGINX,
+        although it is common when running in production to use a front end web server on top of Node.js.  
+
+To make use of the Node.js web server, we use a module called express.js. express.js is a free and open-source 
+framework that makes using the Node.js web APIs a ton easier by wrapping them in simpler functions we use.
+
+To install express.js (‘express’ for short), we need to use the Node Package Manager (npm for short). 
+npm is installed along with Node.js and is available to use on the command line (just like the node command).
+
+Install express to your project / working directory:
+    1) Open your terminal (either from the command line or VS Code).
+    2) Make sure your working directory is your project directory.
+            use mkdir to create a new directory
+    3) First, we run command  
+            npm init    (or  npm init -y  to accept all the default values)
+        This creates a package.json file. 
+        You only need to do this if it’s a new project and the package.json does not exist. 
+        This file tracks information about your project, like the name and dependencies.
+    4) Use npm install express to import express into your application directory.
+            npm install express   // installs to folder node_modules
+
+Run your node application
+    node app.js     // the node application entry point is app.js or index.js
+
+Create a Node.js Project
+
+Create a new directory for your Node.js project:
+    mkdir ~/nodeSolutions
+    mkdir ~/nodeSolutions/getCountryInfo
+    cd myproject
+
+
+
+
+
+
+
+References
+https://www.seidengroup.com/category/node-js/
+https://www.seidengroup.com/2021/02/23/node-js-ibm-i-getting-started-guide/
+

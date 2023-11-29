@@ -1,0 +1,24 @@
+NGINX
+
+Capabilities
+    Web server
+    Reverse proxy
+    Load balancer
+        load balance HTTP and HTTPS traffic across a pool of Node.js application servers
+    HTTP + HTTPS
+
+#1 web server at the 100,000 busiest websites in the world
+
+NGINX Plus is the commercially supported version of NGINX Open Source. NGINX Plus is a complete application delivery platform, extending the power of NGINX Open Source with a host of enterprise‑ready capabilities that enhance a Node.js deployment and are instrumental to building web applications at scale:
+    Full‑featured HTTP, TCP, and UDP load balancing
+    Intelligent session persistence
+    High‑performance reverse proxy
+    Caching and offload of dynamic and static content
+    Adaptive streaming to deliver audio and video to any device
+    Application-aware health checks and high availability
+    Advanced activity monitoring available via a dashboard or API
+    Management and real‑time configuration changes with DevOps‑friendly tools
+
+Reference
+    https://docs.nginx.com/nginx/deployment-guides/load-balance-third-party/node-js/
+

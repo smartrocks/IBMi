@@ -1,0 +1,10 @@
+Networking Notes
+
+IBM i Navigator (for network configuration and status)
+    http://idevusr045.idevcloud.com:2002/Navigator/login
+
+Test whether an outbound port is open
+    telnet portquiz.net 80 (or any port number)
+    curl portquiz.net:80
+    nc -v portquiz.net 80
+    wget -qO- portquiz:80
